@@ -14,20 +14,32 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const SignUpPage = props => {
+  const { pendingSignUp, signedUp } = props;
+
   const handleSignUp = e => {
     e.preventDefault();
-    const { currentTarget } = e;
-    const userInput = getAllFormInput(currentTarget);
-    console.log(props);
+    const userInput = getAllFormInput(e.currentTarget);
     props.dispatch(signUpUser(userInput));
-    console.log(props);
   };
 
-  return (
-    <div className="SignUpPage d-flex flex-column justify-content-center align-items-center w-100">
-      <SignUpForm onSignUpClick={handleSignUp} />
-    </div>
-  );
+  switch (true) {
+    case pendingSignUp:
+      return <div>pending</div>;
+
+    case signedUp:
+      return (
+        <div className="SignUpPage d-flex flex-column justify-content-center align-items-center w-100">
+          Signed In!
+        </div>
+      );
+
+    default:
+      return (
+        <div className="SignUpPage d-flex flex-column justify-content-center align-items-center w-100">
+          <SignUpForm onSignUpClick={handleSignUp} />
+        </div>
+      );
+  }
 };
 
 export default connect(mapStateToProps)(SignUpPage);

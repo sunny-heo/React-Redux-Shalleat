@@ -14,13 +14,11 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const SignInPage = props => {
+  const { pendingSignIn, signedIn } = props;
   const handleSignIn = e => {
     e.preventDefault();
-    const { currentTarget } = e;
-    const userInput = getAllFormInput(currentTarget);
-    console.log(props);
+    const userInput = getAllFormInput(e.currentTarget);
     props.dispatch(signInUser(userInput));
-    console.log(props);
   };
 
   const handleGuestMode = e => {
@@ -32,92 +30,29 @@ const SignInPage = props => {
     props.dispatch(signInUser(guest));
   };
 
-  return (
-    <SignInForm
-      onSignInClick={handleSignIn}
-      onGuestModeClick={handleGuestMode}
-      // thirdPartySignIn={thirdPartySignIn}
-      // updateThirdPartySignIn={updateThirdPartySignIn}
-    />
-  );
+  switch (true) {
+    case pendingSignIn:
+      return <div>pending</div>;
+
+    case signedIn:
+      return (
+        <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
+          Signed In!
+        </div>
+      );
+
+    default:
+      return (
+        <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
+          <SignInForm
+            onSignInClick={handleSignIn}
+            onGuestModeClick={handleGuestMode}
+            // thirdPartySignIn={thirdPartySignIn}
+            // updateThirdPartySignIn={updateThirdPartySignIn}
+          />
+        </div>
+      );
+  }
 };
 
-// return user ? (
-//   <Redirect to="/" />
-// ) : (
-//   <div
-//     className="SignInPage d-flex flex-column justify-content-center align-items-center w-100"
-//     style={
-//       isMobile
-//         ? {}
-//         : {
-//             height: "94vh"
-//           }
-//     }
-//   >
-//     <div
-//       className="SignInMethods shadow-sm bg-white rounded"
-//       style={
-//         isMobile
-//           ? {
-//               padding: "48px 40px"
-//             }
-//           : {
-//               width: "450px",
-//               height: "448px",
-//               minHeight: "390px",
-//               padding: "48px 40px"
-//             }
-//       }
-//     >
-//       <h1 className="display-4 auth-title mb-4">Sign In</h1>
-//       <Animated
-//         animationIn="fadeIn"
-//         animationOut="fadeOut"
-//         isVisible={thirdPartySignIn}
-//         style={
-//           thirdPartySignIn
-//             ? {
-//                 display: "flex",
-//                 flexDirection: "column",
-//                 justifyContent: "space-around",
-//                 height: "80%"
-//               }
-//             : { display: "none" }
-//         }
-//       >
-//         <GoogleSignIn setAuthType={(setAuthType, authType)} />
-//         <FacebookSignIn setAuthType={setAuthType} />
-
-//         <button
-//           className="btn btn-info text-capitalize ml-auto"
-//           onClick={e => {
-//             e.preventDefault();
-//             updateThirdPartySignIn(!thirdPartySignIn);
-//           }}
-//         >
-//           Sign in with ShallEat Account
-//         </button>
-//       </Animated>
-
-//       <Animated
-//         animationIn="fadeIn"
-//         animationOut="fadeOut"
-//         isVisible={!thirdPartySignIn}
-//         style={!thirdPartySignIn ? {} : { display: "none" }}
-//       >
-//         <SignInForm
-//           onSignInClick={handleSignIn}
-//           onGuestModeClick={handleGuestMode}
-//           thirdPartySignIn={thirdPartySignIn}
-//           updateThirdPartySignIn={updateThirdPartySignIn}
-//         />
-//       </Animated>
-//     </div>
-//   </div>
-// );
-// }
-// );
-
-// export default SignInPage;
 export default connect(mapStateToProps)(SignInPage);
