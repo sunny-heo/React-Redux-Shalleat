@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import service from "../_requests/AxiosService";
 import { signInUser } from "../actions/userAction";
 import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 import "../styles/css/App.css";
 
 const mapStateToProps = (state, ownProps) => {
@@ -17,7 +18,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SignInPage />
+        {/* <SignInPage /> */}
+        <SignUpPage />
       </div>
     );
   }
