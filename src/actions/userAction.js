@@ -1,27 +1,52 @@
+import userConstants from "../_constants/userConstants";
 import userService from "../_requests/userService";
 
-const userObj = {
-  email: "sunny@gmail.com",
-  password: "superSecret1@"
-};
-export const fetchUser = () => async dispatch => {
-  dispatch({ type: "FETCH_USER_PENDING" });
+const {
+  SIGNIN_USER_PENDING,
+  SIGNIN_USER_REJECTED,
+  SIGNIN_USER_FULFILLED,
+  SIGNUP_USER_PENDING,
+  SIGNUP_USER_REJECTED,
+  SIGNUP_USER_FULFILLED,
+  SIGNOUT_USER_PENDING,
+  SIGNOUT_USER_REJECTED,
+  SIGNOUT_USER_FULFILLED
+} = userConstants;
+
+// const userObj = {
+//   email: "sunny@gmail.com",
+//   password: "superSecret1@"
+// };
+
+export const signInUser = userInput => async dispatch => {
+  dispatch({ type: SIGNIN_USER_PENDING });
 
   try {
-    const user = await userService.signIn(userObj);
-    dispatch({ type: "FETCH_USER_FULFILLED", payload: user });
+    const user = await userService.signIn(userInput);
+    dispatch({ type: SIGNIN_USER_FULFILLED, payload: user });
   } catch (error) {
-    dispatch({ type: "FETCH_USER_REJECTED", payload: error });
+    dispatch({ type: SIGNIN_USER_REJECTED, payload: error });
   }
 };
 
-export const createUser = newUser => async dispatch => {
-  dispatch({ type: "CREATE_USER_PENDING" });
+export const signUpUser = userInput => async dispatch => {
+  dispatch({ type: SIGNUP_USER_PENDING });
 
   try {
-    const user = await userService.signUp(newUser);
-    dispatch({ type: "CREATE_USER_FULFILLED", payload: user });
+    const user = await userService.signUp(userInput);
+    dispatch({ type: SIGNUP_USER_FULFILLED, payload: user });
   } catch (error) {
-    dispatch({ type: "CREATE_USER_REJECTED", payload: error });
+    dispatch({ type: SIGNUP_USER_REJECTED, payload: error });
+  }
+};
+
+export const signOutUser = () => async dispatch => {
+  dispatch({ type: SIGNOUT_USER_PENDING });
+
+  try {
+    await userService.signOut();
+    dispatch({ type: SIGNOUT_USER_FULFILLED, payload: {} });
+  } catch (error) {
+    dispatch({ type: SIGNOUT_USER_REJECTED, payload: error });
   }
 };

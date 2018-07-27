@@ -1,21 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import service from "../_requests/AxiosService";
-import { fetchUser } from "../actions/userAction";
-
+import { signInUser } from "../actions/userAction";
+import SignInPage from "./pages/SignInPage";
 import "../styles/css/App.css";
 
-const mapStateToProps = (state, action) => {
+const mapStateToProps = (state, ownProps) => {
   return {
     user: state.userReducer.user,
-    userFetching: state.userReducer.fetching,
-    userFetched: state.userReducer.fetched
+    pendingSignIn: state.userReducer.pendingSignIn,
+    signedIn: state.userReducer.signedIn
   };
 };
 
 class App extends Component {
   render() {
-    console.log("this.props => ", this.props);
     return (
       <div className="App">
         <header className="App-header">
@@ -24,7 +23,8 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button
+        <SignInPage />
+        {/* <button
           onClick={async e => {
             const data = await service.post("/restaurants/all", {
               lat: 49.282205100000006,
@@ -38,11 +38,11 @@ class App extends Component {
         </button>
         <button
           onClick={e => {
-            this.props.dispatch(fetchUser());
+            this.props.dispatch(signInUser());
           }}
         >
           Sign in
-        </button>
+        </button> */}
       </div>
     );
   }
