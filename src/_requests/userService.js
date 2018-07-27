@@ -1,18 +1,18 @@
 import service from "./AxiosService";
 
 export default {
-  async signUp(user) {
+  async signUp(userInput) {
     try {
-      const newUser = await service.post("/users/signup", user);
+      const newUser = await service.post("/users/signup", userInput);
       return newUser;
     } catch (error) {
       console.log("Error in signUp request => ", error);
     }
   },
 
-  async signIn(user) {
+  async signIn(userInput) {
     try {
-      const signedInUser = await service.post("/users/signin", user);
+      const signedInUser = await service.post("/users/signin", userInput);
       return signedInUser;
     } catch (error) {
       console.log("Error in signIn request => ", error);
@@ -43,7 +43,7 @@ export default {
 
   async signOut() {
     try {
-      const signOutMessage = await service.post("/users/signout");
+      const signOutMessage = await service.get("/users/signout");
       return signOutMessage;
     } catch (error) {
       console.log("Error in signOut request => ", error);
