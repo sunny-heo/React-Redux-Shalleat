@@ -13,11 +13,6 @@ const {
   SIGNOUT_USER_FULFILLED
 } = userConstants;
 
-// const userObj = {
-//   email: "sunny@gmail.com",
-//   password: "superSecret1@"
-// };
-
 export const signInUser = userInput => async dispatch => {
   dispatch({ type: SIGNIN_USER_PENDING });
 
