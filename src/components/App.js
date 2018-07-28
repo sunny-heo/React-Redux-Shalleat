@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import service from "../_requests/AxiosService";
-import { signInUser } from "../actions/userAction";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
+
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import "../styles/css/App.css";
@@ -18,8 +23,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <SignInPage /> */}
-        <SignUpPage />
+        <SignInPage />
+        {/* <SignUpPage /> */}
       </div>
     );
   }

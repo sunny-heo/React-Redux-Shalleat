@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import Loader from "react-loader-spinner";
 import { signInUser } from "../../actions/userAction";
 import { getAllFormInput } from "../../_helpers/formHelper.js";
 
@@ -32,8 +33,9 @@ const SignInPage = props => {
 
   switch (true) {
     case pendingSignIn:
-      return <div>pending</div>;
-
+      return (
+        <Loader type="TailSpin" color="#00BFFF" height="100" width="100" />
+      );
     case signedIn:
       return (
         <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
