@@ -6,7 +6,7 @@ import { signInUser } from "../../actions/userAction";
 import { getAllFormInput } from "../../_helpers/formHelper.js";
 
 import Loader from "react-loader-spinner";
-import SignInForm from "../forms/SignInForm";
+import SignInForm from "../authentications/SignInForm";
 
 const mapStateToProps = (state, ownProps) => {
   return {
