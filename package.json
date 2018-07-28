@@ -4,14 +4,18 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "daemonite-material": "^4.1.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
+    "react-loader-spinner": "^2.1.0",
     "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-promise-middleware": "^5.1.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "rmwc": "^1.8.3"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
