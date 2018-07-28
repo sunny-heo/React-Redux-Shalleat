@@ -32,31 +32,51 @@ const SignInPage = props => {
     };
     props.dispatch(signInUser(guest));
   };
+  const SwitchComponent = () => {
+    switch (true) {
+      case pendingSignIn:
+        return (
+          <Loader type="TailSpin" color="#00BFFF" height="100" width="100" />
+        );
+      case signedIn:
+        return (
+          <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
+            Signed In!
+          </div>
+        );
 
-  switch (true) {
-    case pendingSignIn:
-      return (
-        <Loader type="TailSpin" color="#00BFFF" height="100" width="100" />
-      );
-    case signedIn:
-      return (
-        <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
-          Signed In!
-        </div>
-      );
-
-    default:
-      return (
-        <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
-          <SignInForm
-            onSignInClick={handleSignIn}
-            onGuestModeClick={handleGuestMode}
-            // thirdPartySignIn={thirdPartySignIn}
-            // updateThirdPartySignIn={updateThirdPartySignIn}
-          />
-        </div>
-      );
-  }
+      default:
+        return (
+          <div>
+            <h1 className="display-4 auth-title mb-4">Sign In</h1>
+            <SignInForm
+              onSignInClick={handleSignIn}
+              onGuestModeClick={handleGuestMode}
+              // thirdPartySignIn={thirdPartySignIn}
+              // updateThirdPartySignIn={updateThirdPartySignIn}
+            />
+          </div>
+        );
+    }
+  };
+  return (
+    <div
+      className="SignInPage d-flex flex-column justify-content-center align-items-center w-100"
+      style={{ height: "94vh" }}
+    >
+      <div
+        className="SignInMethods shadow-sm bg-white rounded"
+        style={{
+          width: "450px",
+          height: "448px",
+          minHeight: "390px",
+          padding: "48px 40px"
+        }}
+      >
+        <SwitchComponent />
+      </div>
+    </div>
+  );
 };
 
 export default withRouter(connect(mapStateToProps)(SignInPage));
