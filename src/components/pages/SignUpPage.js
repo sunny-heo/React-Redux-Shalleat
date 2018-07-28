@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { signUpUser } from "../../actions/userAction";
 import { getAllFormInput } from "../../_helpers/formHelper.js";
 
+import Loader from "react-loader-spinner";
 import SignUpForm from "../forms/SignUpForm";
 
 const mapStateToProps = (state, ownProps) => {
@@ -25,7 +26,9 @@ const SignUpPage = props => {
 
   switch (true) {
     case pendingSignUp:
-      return <div>pending</div>;
+      return (
+        <Loader type="TailSpin" color="#00BFFF" height="100" width="100" />
+      );
 
     case signedUp:
       return (
