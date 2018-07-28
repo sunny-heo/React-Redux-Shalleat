@@ -1,9 +1,11 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import Loader from "react-loader-spinner";
+
 import { signInUser } from "../../actions/userAction";
 import { getAllFormInput } from "../../_helpers/formHelper.js";
 
+import Loader from "react-loader-spinner";
 import SignInForm from "../forms/SignInForm";
 
 const mapStateToProps = (state, ownProps) => {
@@ -57,4 +59,4 @@ const SignInPage = props => {
   }
 };
 
-export default connect(mapStateToProps)(SignInPage);
+export default withRouter(connect(mapStateToProps)(SignInPage));
