@@ -39,17 +39,6 @@ const SignInForm = ({
         autoComplete="current-password"
         style={{ paddingBottom: "1rem" }}
       />
-      {/* <div className="floating-label">
-          <label htmlFor="password">Password</label>
-          <input
-            name="password"
-            aria-describedby="passwordHelp"
-            className="form-control"
-            id="password"
-            type="password"
-            autoComplete="current-password"
-          />
-        </div> */}
     </div>
     <div className="d-flex justify-content-end align-items-center">
       <a
@@ -68,11 +57,6 @@ const SignInForm = ({
       className="d-flex justify-content-between align-items-center flex-wrap"
       style={{ marginTop: "2rem" }}
     >
-      {/* <Button
-          class="btn btn-secondary text-capitalize"
-          name="sign in"
-          type="submit"
-        /> */}
       <button className="btn btn-secondary text-capitalize" type="submit">
         sign in
       </button>

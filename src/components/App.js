@@ -17,8 +17,6 @@ const mapStateToProps = state => {
   };
 };
 
-// const history = createBrowserHistory();
-
 class App extends Component {
   render() {
     return (
