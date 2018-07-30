@@ -8,7 +8,10 @@ class Navbar extends Component {
     navigateTo: null
   };
 
-  navigateTo = path => () => this.props.history.push(path);
+  navigateTo = path => evt => {
+    evt.preventDefault();
+    this.props.history.push(path);
+  };
 
   render() {
     return (

@@ -1,12 +1,7 @@
 import React from "react";
 import { TextField } from "rmwc/TextField";
 
-const SignInForm = ({
-  onSignInClick,
-  onGuestModeClick
-  // thirdPartySignIn,
-  // updateThirdPartySignIn
-}) => (
+const SignInForm = ({ onSignInClick, onGuestModeClick }) => (
   <form onSubmit={onSignInClick}>
     <div className="form-group">
       <TextField
