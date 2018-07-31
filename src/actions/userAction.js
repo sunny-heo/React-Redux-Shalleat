@@ -14,8 +14,8 @@ const {
 } = userConstants;
 
 export const signInUser = userInput => async dispatch => {
+  console.log(userInput);
   dispatch({ type: SIGNIN_USER_PENDING });
-
   try {
     const user = await userService.signIn(userInput);
     dispatch({ type: SIGNIN_USER_FULFILLED, payload: user });

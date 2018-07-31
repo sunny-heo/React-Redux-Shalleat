@@ -7,10 +7,14 @@
 
 :root {
   --mdc-theme-primary: #ff4081;
-  --mdc-theme-text-primary-on-light: #fafafa;
-  --mdc-theme-text-primary-on-background: #fff;
-  --mdc-theme-text-secondary-on-background: rgba(255, 255, 255, 0.5);
+  /* --mdc-theme-text-primary-on-light: #fafafa; */
+  /* --mdc-theme-text-primary-on-background: #fff; */
+  /* --mdc-theme-text-secondary-on-background: rgba(255, 255, 255, 0.5); */
 }
 .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
   color: #ff4081;
+}
+
+button:focus {
+  outline: none;
 }

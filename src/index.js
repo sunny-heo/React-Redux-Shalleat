@@ -9,9 +9,28 @@ import "./styles/css/index.css";
 import App from "./components/App";
 import registerServiceWorker from "./registerServiceWorker";
 
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+  typography: {
+    fontSize: 14
+  },
+  palette: {
+    primary: {
+      main: "#f0ffff"
+    },
+    secondary: {
+      main: "#40ffbe"
+    },
+    tonalOffset: 0
+  }
+});
+
 ReactDOM.render(
   <Provider store={store()}>
-    <App />
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
 );

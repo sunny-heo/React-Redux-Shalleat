@@ -5,7 +5,7 @@ import { signUpUser } from "../../actions/userAction";
 import { getAllFormInput } from "../../_helpers/formHelper.js";
 
 import Loader from "react-loader-spinner";
-import SignUpForm from "../forms/SignUpForm";
+import SignUpForm from "../authentications/SignUpForm";
 
 const mapStateToProps = (state, ownProps) => {
   return {
