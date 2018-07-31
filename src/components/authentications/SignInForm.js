@@ -1,20 +1,43 @@
 import React from "react";
-import { TextField } from "rmwc/TextField";
+import { compose } from "recompose";
+import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
 
-const SignInForm = ({ onSignInClick, onGuestModeClick }) => (
+import Button from "@material-ui/core/Button";
+
+const styles = {
+  root: {
+    background: "black"
+  },
+  input: {
+    color: "white"
+  },
+  textFieldFormLabel: {
+    color: "white"
+  }
+};
+const enhance = compose(withStyles(styles));
+
+const SignInForm = enhance(({ classes, onSignInClick, onGuestModeClick }) => (
   <form onSubmit={onSignInClick}>
     <div className="form-group">
       <TextField
         className="w-100 mb-0"
         label="Email address"
         name="email"
-        style={{ paddingBottom: "1rem" }}
+        style={{ paddingBottom: "1rem", color: "white" }}
+        InputProps={{
+          className: classes.input
+        }}
+        InputLabelProps={{
+          className: classes.textFieldFormLabel
+        }}
         autoComplete="username email"
       />
     </div>
     <div className="d-flex justify-content-end align-items-center">
       <a
-        className="text-info disabled"
+        className="text-white disabled"
         htmlFor="findEmail"
         style={{
           cursor: "not-allowed",
@@ -33,11 +56,17 @@ const SignInForm = ({ onSignInClick, onGuestModeClick }) => (
         type="password"
         autoComplete="current-password"
         style={{ paddingBottom: "1rem" }}
+        InputProps={{
+          className: classes.input
+        }}
+        InputLabelProps={{
+          className: classes.textFieldFormLabel
+        }}
       />
     </div>
     <div className="d-flex justify-content-end align-items-center">
       <a
-        className="text-info disabled"
+        className="text-white disabled"
         htmlFor="findPassword"
         style={{
           cursor: "not-allowed",
@@ -52,12 +81,12 @@ const SignInForm = ({ onSignInClick, onGuestModeClick }) => (
       className="d-flex justify-content-between align-items-center flex-wrap"
       style={{ marginTop: "2rem" }}
     >
-      <button className="btn btn-secondary text-capitalize" type="submit">
+      <Button className="btn btn-secondary text-capitalize" type="submit">
         sign in
-      </button>
+      </Button>
       <a
         href=""
-        className="text-info"
+        className="text-white"
         htmlFor="triggerGuestMode"
         onClick={onGuestModeClick}
         // style={isMobile ? { marginTop: "1rem" } : {}}
@@ -75,6 +104,6 @@ const SignInForm = ({ onSignInClick, onGuestModeClick }) => (
         </button> */}
     </div>
   </form>
-);
+));
 
 export default SignInForm;

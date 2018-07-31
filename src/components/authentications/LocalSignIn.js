@@ -46,7 +46,7 @@ const SwitchComponent = enhance(
 
 const LocalSignIn = props => (
   <div>
-    <h1 className="display-4 auth-title mb-4">ShallEat Account</h1>
+    <h1 className="display-4 auth-title mb-4 text-white">ShallEat Account</h1>
     <SwitchComponent {...props} />
   </div>
 );

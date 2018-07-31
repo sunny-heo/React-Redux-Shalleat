@@ -18,18 +18,18 @@ const GoogleSignIn = () => {
       href={`${domain}?scope=${scope}&access_type=${accessType}&redirect_uri=${redirectURL}&response_type=${responseType}&client_id=${clientId}`}
       style={{ textDecoration: "none" }}
     >
-      <div className="d-flex align-items-center shadow-sm bg-white rounded mb-4">
+      <div className="d-flex align-items-center shadow-sm rounded mb-4">
         <Icon
           icon="google"
           width="48px"
           height="48px"
           style={{
-            fill: "#8bc34a",
+            fill: "#ff5433",
             borderBottomLeftRadius: "2px",
             borderTopLeftRadius: "2px"
           }}
         />
-        <span className="h4 mx-auto mb-0 text-dark">Sign in with Google</span>
+        <span className="h4 mx-auto mb-0 text-white">Sign in with Google</span>
       </div>
     </a>
   );

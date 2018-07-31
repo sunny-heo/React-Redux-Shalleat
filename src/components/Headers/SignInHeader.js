@@ -15,14 +15,18 @@ const styles = theme => {
   console.log("theme => ", theme);
   return {
     SignInHeader: {
-      backgroundColor: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)"
+      // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)"
+      background: "linear-gradient(to left, #5433ff, #20bdff, #a5fecb);"
+    },
+    indicator: {
+      backgroundColor: "#fff"
     }
   };
 };
 
 const enhance = compose(
   withTheme(),
-  withStyles(styles),
+  // withStyles(styles),
   withState("value", "setValue", 0),
   withHandlers({
     handleOnChange: props => evt => {
@@ -35,10 +39,7 @@ const enhance = compose(
       evt.preventDefault();
       props.setValue(value);
     },
-    handleChangeIndex: props => (evt, index) => {
-      console.log("evt => ", evt);
-      console.log("index => ", index);
-      // evt.preventDefault();
+    handleChangeIndex: props => index => {
       props.setValue(index);
     }
   })
@@ -46,18 +47,25 @@ const enhance = compose(
 
 const SignInHeader = enhance(props => {
   const { value, theme, classes, handleChange, handleChangeIndex } = props;
-  console.log(classes);
   return (
-    <div className={classes.SignInHeader}>
-      <AppBar position="static" color="default">
+    <div className="{classes.SignInHeader}">
+      <AppBar
+        position="static"
+        color="default"
+        style={{
+          background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)"
+        }}
+      >
         <Tabs
           value={value}
           onChange={handleChange}
           indicatorColor="primary"
-          // textColor="#ff4081"
-          inkBarStyle={{
-            background: "#ff4081"
-          }}
+          textColor="primary"
+          // tabIndicatorProps={{
+          //   // height: 10, // change height of the bottom indicator
+          //   backgroundColor: "white"
+          //   // etc, ..
+          // }}
           fullWidth
         >
           <Tab label="Social Sign In" />
@@ -81,8 +89,8 @@ const SignInHeader = enhance(props => {
 });
 
 SignInHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
+  // theme: PropTypes.object.isRequired
 };
 
 export default SignInHeader;
