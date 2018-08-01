@@ -1,5 +1,6 @@
 import React from "react";
 import { compose, withHandlers } from "recompose";
+import { withStyles } from "@material-ui/core/styles";
 
 import { guest, getAllFormInput } from "../../_helpers/index";
 import { signInUser } from "../../actions/userAction";
@@ -7,7 +8,21 @@ import { signInUser } from "../../actions/userAction";
 import AuthPending from "./AuthPending";
 import SignInForm from "./SignInForm";
 
+const styles = theme => {
+  return {
+    LocalSignIn: {
+      color: "white",
+      marginBottom: 8 * 3,
+      fontSize: "2.125rem",
+      fontWeight: 400,
+      letterSpacing: 0,
+      lineHeight: 1.176471
+    }
+  };
+};
+
 const enhance = compose(
+  withStyles(styles),
   withHandlers({
     handleSignIn: props => evt => {
       evt.preventDefault();
@@ -44,10 +59,10 @@ const SwitchComponent = enhance(
   }
 );
 
-const LocalSignIn = props => (
-  <div>
-    <h1 className="display-4 auth-title mb-4 text-white">ShallEat Account</h1>
+const LocalSignIn = enhance(props => (
+  <div className="LocalSignIn">
+    <h1 className={props.classes.LocalSignIn}>ShallEat Account</h1>
     <SwitchComponent {...props} />
   </div>
-);
+));
 export default LocalSignIn;

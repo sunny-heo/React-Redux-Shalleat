@@ -6,7 +6,7 @@ import GoogleSignIn from "./oAuthSignIn/GoogleSignIn";
 
 const styles = theme => {
   return {
-    authTitle: {
+    OAuthSignIn: {
       color: "white",
       marginBottom: 8 * 3,
       fontSize: "2.125rem",
@@ -21,7 +21,7 @@ const enhance = compose(withStyles(styles));
 
 const OAuthSignIn = enhance(props => (
   <div className="OAuthSignIn">
-    <h1 className={props.classes.authTitle}>Social Media Account</h1>
+    <h1 className={props.classes.OAuthSignIn}>Social Account</h1>
     <GoogleSignIn {...props} />
   </div>
 ));
