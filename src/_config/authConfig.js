@@ -5,7 +5,8 @@ export const GOOGLE = {
   accessType: "online",
   clientId:
     "648697180446-j8hrcvmuu8avoiferc473fcc821elrll.apps.googleusercontent.com",
-  redirectURL: "https://www.shalleat.com/auth/google",
+  // redirectURL: "https://www.shalleat.com/auth/google",
+  redirectURL: "http://localhost:3001/auth/google",
   responseType: "token"
 };
 

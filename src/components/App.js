@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./Headers/Navbar";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
+import OAuthPage from "./pages/OAuthPage";
 import NoMatchPage from "./pages/NoMatchPage";
 
 import "../styles/css/App.css";
@@ -26,6 +27,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/sign_in" component={SignInPage} />
             <Route exact path="/sign_up" component={SignUpPage} />
+            <Route path="/auth" component={OAuthPage} />
             <Route component={NoMatchPage} />
           </Switch>
         </div>

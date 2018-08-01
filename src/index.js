@@ -12,17 +12,23 @@ import registerServiceWorker from "./registerServiceWorker";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
-  typography: {
-    fontSize: 14
-  },
+  // overrides: {
   palette: {
     primary: {
       main: "#f0ffff"
     },
     secondary: {
-      main: "#40ffbe"
-    },
-    tonalOffset: 0
+      main: "#fff"
+    }
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+        color: "white",
+        borderRadius: 2
+      }
+    }
   }
 });
 
