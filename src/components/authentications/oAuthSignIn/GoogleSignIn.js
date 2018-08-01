@@ -1,22 +1,9 @@
 import React from "react";
-import { compose, withHandlers } from "recompose";
+import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
-import { GOOGLE } from "../../../_config/authConfig";
-
-import { oAuthSignIn } from "../../../actions/userAction";
+import { GOOGLE_HREF } from "../../../_config/authConfig";
 
 import Icon from "../../common/Icon";
-
-const {
-  domain,
-  scope,
-  accessType,
-  clientId,
-  redirectURL,
-  responseType
-} = GOOGLE;
-
-const href = `${domain}?scope=${scope}&access_type=${accessType}&redirect_uri=${redirectURL}&response_type=${responseType}&client_id=${clientId}`;
 
 const styles = {
   GoogleSignIn: {
@@ -34,22 +21,23 @@ const styles = {
     fill: "#ff5433",
     borderBottomLeftRadius: "2px",
     borderTopLeftRadius: "2px"
+  },
+  oAuthSpan: {
+    marginRight: "auto",
+    marginLeft: "auto",
+    fontSize: "1.25rem",
+    fontWeight: 500,
+    letterSpacing: "0.02em",
+    lineHeight: 1.4,
+    color: "white"
   }
 };
-const enhance = compose(
-  withStyles(styles),
-  withHandlers({
-    handleSignIn: props => evt => {
-      evt.preventDefault();
-      oAuthSignIn("google")(props.dispatch);
-    }
-  })
-);
+const enhance = compose(withStyles(styles));
 
 const GoogleSignIn = enhance(props => {
   const { classes } = props;
   return (
-    <a href={href} className={classes.goolgeOAuthLink}>
+    <a href={GOOGLE_HREF()} className={classes.goolgeOAuthLink}>
       <div className={classes.GoogleSignIn}>
         <Icon
           icon="google"
@@ -57,7 +45,7 @@ const GoogleSignIn = enhance(props => {
           height="48px"
           style={styles.googleIcon}
         />
-        <span className="h4 mx-auto mb-0 text-white">Sign in with Google</span>
+        <span className={classes.oAuthSpan}>Sign in with Google</span>
       </div>
     </a>
   );

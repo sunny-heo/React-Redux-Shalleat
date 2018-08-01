@@ -58,7 +58,3 @@ export const signOutUser = () => async dispatch => {
     dispatch({ type: SIGNOUT_USER_REJECTED, payload: error });
   }
 };
-
-export const oAuthSignIn = authType => async dispatch => {
-  dispatch({ type: `${authType.toUpperCase()}_SIGN_IN`, payload: authType });
-};

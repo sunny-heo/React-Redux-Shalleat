@@ -9,9 +9,7 @@ const {
   SIGNUP_USER_FULFILLED,
   SIGNOUT_USER_PENDING,
   SIGNOUT_USER_REJECTED,
-  SIGNOUT_USER_FULFILLED,
-  GOOGLE_SIGNIN,
-  FACEBOOK_SIGNIN
+  SIGNOUT_USER_FULFILLED
 } = userConstants;
 
 const initialState = {
@@ -76,20 +74,6 @@ export default (state = initialState, action) => {
         pendingSignOut: false,
         signedOut: true,
         user: action.payload
-      };
-    }
-
-    case GOOGLE_SIGNIN: {
-      return {
-        ...state,
-        authType: action.payload
-      };
-    }
-
-    case FACEBOOK_SIGNIN: {
-      return {
-        ...state,
-        authType: action.payload
       };
     }
 

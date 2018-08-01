@@ -1,9 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
-import { compose, withReducer, withState, lifecycle } from "recompose";
-
 import { withStyles } from "@material-ui/core/styles";
+import { compose, withReducer, lifecycle } from "recompose";
+import PropTypes from "prop-types";
 
 import { googleSignInUser } from "../../actions/userAction";
 import userReducer from "../../reducers/userReducer";
@@ -48,4 +47,11 @@ const OAuthPage = enhance(({ state }) => {
       return <AuthPending />;
   }
 });
+
+OAuthPage.propTypes = {
+  state: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
+};
+
 export default OAuthPage;
