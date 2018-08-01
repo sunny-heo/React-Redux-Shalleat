@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { compose, withHandlers, withState } from "recompose";
 import PropTypes from "prop-types";
 
@@ -11,23 +11,26 @@ import TabContainer from "./TabContainer";
 import LocalSignIn from "../authentications/LocalSignIn";
 import OAuthSignIn from "../authentications/OAuthSignIn";
 
-const styles = theme => {
-  console.log("theme => ", theme);
-  return {
-    SignInHeader: {
-      // background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)"
-      background: "linear-gradient(to left, #5433ff, #20bdff, #a5fecb);"
-    },
-    indicator: {
-      backgroundColor: "#fff"
-    }
-  };
-};
+const styles = theme => ({
+  SignInHeader: {
+    width: "450px",
+    maxWidth: "100%",
+    height: "448px",
+    minHeight: "390px",
+    background: "linear-gradient(to right, #5433ff, #20bdff)",
+    borderRadius: 2
+  },
+  appBar: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    borderTopLeftRadius: 2,
+    borderTopRightRadius: 2
+  }
+});
 
 const enhance = compose(
   withTheme(),
-  // withStyles(styles),
-  withState("value", "setValue", 0),
+  withStyles(styles),
+  withState("index", "setIndex", 0),
   withHandlers({
     handleOnChange: props => evt => {
       evt.preventDefault();
@@ -35,46 +38,35 @@ const enhance = compose(
       setActiveTabIndex(evt.detail.activeTabIndex);
       setOAuth(!oAuth);
     },
-    handleChange: props => (evt, value) => {
+    handleChange: props => (evt, index) => {
       evt.preventDefault();
-      props.setValue(value);
+      props.setIndex(index);
     },
     handleChangeIndex: props => index => {
-      props.setValue(index);
+      props.setIndex(index);
     }
   })
 );
 
 const SignInHeader = enhance(props => {
-  const { value, theme, classes, handleChange, handleChangeIndex } = props;
+  const { index, theme, classes, handleChange, handleChangeIndex } = props;
   return (
-    <div className="{classes.SignInHeader}">
-      <AppBar
-        position="static"
-        color="default"
-        style={{
-          background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)"
-        }}
-      >
+    <div className={classes.SignInHeader}>
+      <AppBar className={classes.appBar} position="static">
         <Tabs
-          value={value}
+          value={index}
           onChange={handleChange}
           indicatorColor="primary"
           textColor="primary"
-          // tabIndicatorProps={{
-          //   // height: 10, // change height of the bottom indicator
-          //   backgroundColor: "white"
-          //   // etc, ..
-          // }}
           fullWidth
         >
-          <Tab label="Social Sign In" />
-          <Tab label="ShallEat Sign In" />
+          <Tab label="Social" />
+          <Tab label="ShallEat" />
         </Tabs>
       </AppBar>
       <SwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-        index={value}
+        index={index}
         onChangeIndex={handleChangeIndex}
       >
         <TabContainer dir={theme.direction}>
@@ -90,7 +82,6 @@ const SignInHeader = enhance(props => {
 
 SignInHeader.propTypes = {
   classes: PropTypes.object.isRequired
-  // theme: PropTypes.object.isRequired
 };
 
 export default SignInHeader;

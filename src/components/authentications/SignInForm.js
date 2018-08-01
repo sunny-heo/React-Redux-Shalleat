@@ -6,9 +6,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
 const styles = {
-  root: {
-    background: "black"
-  },
   input: {
     color: "white"
   },
@@ -81,27 +78,15 @@ const SignInForm = enhance(({ classes, onSignInClick, onGuestModeClick }) => (
       className="d-flex justify-content-between align-items-center flex-wrap"
       style={{ marginTop: "2rem" }}
     >
-      <Button className="btn btn-secondary text-capitalize" type="submit">
-        sign in
-      </Button>
+      <Button type="submit">sign in</Button>
       <a
         href=""
         className="text-white"
         htmlFor="triggerGuestMode"
         onClick={onGuestModeClick}
-        // style={isMobile ? { marginTop: "1rem" } : {}}
       >
         Don't wanna sign in? Use Guest mode.
       </a>
-      {/* <button
-          className="btn btn-info text-capitalize mt-3 ml-auto"
-          onClick={e => {
-            e.preventDefault();
-            updateThirdPartySignIn(!thirdPartySignIn);
-          }}
-        >
-          Go Back
-        </button> */}
     </div>
   </form>
 ));

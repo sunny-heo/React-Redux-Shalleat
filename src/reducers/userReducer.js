@@ -16,10 +16,11 @@ const initialState = {
   user: {},
   pendingSignIn: false,
   signedIn: false,
-  pendingSignUpUser: false,
+  pendingSignUp: false,
   signedUp: false,
   pendingSignOut: false,
   signedOut: false,
+  authType: null,
   error: null
 };
 
@@ -43,18 +44,19 @@ export default (state = initialState, action) => {
     }
 
     case SIGNUP_USER_PENDING: {
-      return { ...state, pendingSignUpUser: true };
+      return { ...state, pendingSignUp: true };
     }
 
     case SIGNUP_USER_REJECTED: {
-      return { ...state, pendingSignUpUser: false, error: action.payload };
+      return { ...state, pendingSignUp: false, error: action.payload };
     }
 
     case SIGNUP_USER_FULFILLED: {
       return {
         ...state,
-        pendingSignUpUser: false,
+        pendingSignUp: false,
         signedUp: true,
+        signedIn: true,
         user: action.payload
       };
     }
