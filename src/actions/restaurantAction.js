@@ -1,6 +1,5 @@
 import restaurantConstants from "../_constants/restaurantConstants";
-import userService from "../_requests/userService";
-import { parseCurrentLocation } from "../_helpers/locationHelper";
+import restaurantService from "../_requests/restaurantService";
 
 const {
   RESTAURANT_ALL_PENDING,
