@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import { getUserLocation } from "../actions/userAction";
+
 import Navbar from "./Headers/Navbar";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -10,15 +12,13 @@ import NoMatchPage from "./pages/NoMatchPage";
 
 import "../styles/css/App.css";
 
-const mapStateToProps = state => {
-  return {
-    user: state.userReducer.user,
-    pendingSignIn: state.userReducer.pendingSignIn,
-    signedIn: state.userReducer.signedIn
-  };
-};
+const mapStateToProps = (state, nextOwnProps) => state.userReducer;
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(getUserLocation());
+  }
+
   render() {
     return (
       <Router>

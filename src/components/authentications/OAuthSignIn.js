@@ -19,11 +19,14 @@ const styles = theme => {
 
 const enhance = compose(withStyles(styles));
 
-const OAuthSignIn = enhance(props => (
-  <div className="OAuthSignIn">
-    <h1 className={props.classes.OAuthSignIn}>Social Account</h1>
-    <GoogleSignIn {...props} />
-  </div>
-));
+const OAuthSignIn = enhance(props => {
+  const { classes, ...restProps } = props;
+  return (
+    <div className="OAuthSignIn">
+      <h1 className={classes.OAuthSignIn}>Social Account</h1>
+      <GoogleSignIn {...restProps} />
+    </div>
+  );
+});
 
 export default OAuthSignIn;

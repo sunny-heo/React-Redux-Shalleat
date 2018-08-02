@@ -1,56 +1,16 @@
-// import React, { Component } from "react";
-// import { withRouter } from "react-router-dom";
-// import { TabBar, Tab } from "rmwc/Tabs";
-
-// class Navbar extends Component {
-//   state = {
-//     activeTabIndex: 0,
-//     navigateTo: null
-//   };
-
-//   navigateTo = path => evt => {
-//     evt.preventDefault();
-//     this.props.history.push(path);
-//   };
-
-//   render() {
-//     return (
-//       <header className="Navbar">
-//         <nav className="navbar navbar-dark bg-dark">
-//           <TabBar
-//             activeTabIndex={this.state.activeTabIndex}
-//             onChange={evt =>
-//               this.setState({ activeTabIndex: evt.detail.activeTabIndex })
-//             }
-//           >
-//             <Tab onClick={this.navigateTo("sign_in")}>Sign In</Tab>
-//             <Tab onClick={this.navigateTo("sign_up")}>Sign Up</Tab>
-//           </TabBar>
-//         </nav>
-//       </header>
-//     );
-//   }
-// }
-
-// export default withRouter(Navbar);
-
 import React from "react";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { compose, withReducer, withState, withHandlers } from "recompose";
-import PropTypes from "prop-types";
+import { compose, withState, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
-import userReducer from "../../reducers/userReducer";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import LocationPending from "../pendings/LocationPending";
 
 const styles = theme => ({
-  root: {
-    marginTop: theme.spacing.unit * 3,
-    width: "100%"
-  },
   flex: {
     flex: 1
   },
@@ -61,34 +21,33 @@ const styles = theme => ({
   authButton: {
     marginLeft: 8,
     marginRight: 8
+  },
+  appBar: {
+    color: "white",
+    background: "linear-gradient(to right, #5433ff, #20bdff)"
   }
 });
 
+const mapStateToProps = (state, nextOwnProps) => state.userReducer;
+
 const enhance = compose(
   withRouter,
+  connect(mapStateToProps),
   withStyles(styles),
-  withReducer("state", "dispatch", userReducer),
   withState("activeTabIndex", "setActiveTabIndex", 0),
   withHandlers({
     handleNavigateTo: props => path => evt => {
       evt.preventDefault();
+      console.log(props);
       props.history.push(path);
     }
   })
 );
 
 const Navbar = enhance(props => {
-  const { classes, handleNavigateTo } = props;
-
+  const { classes, handleNavigateTo, pendingGetLocation } = props;
   return (
-    <AppBar
-      position="static"
-      elevation={0}
-      style={{
-        color: "white",
-        background: "linear-gradient(to right, #5433ff, #20bdff)"
-      }}
-    >
+    <AppBar className={classes.appBar} position="static" elevation={0}>
       <Toolbar>
         <Typography className={classes.flex} type="title" color="inherit">
           What Shall We Eat?
@@ -106,12 +65,9 @@ const Navbar = enhance(props => {
           Sign up
         </Button>
       </Toolbar>
+      {pendingGetLocation ? <LocationPending /> : null}
     </AppBar>
   );
 });
-
-Navbar.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default Navbar;

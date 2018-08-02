@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 const icons = {
   google:
@@ -14,11 +14,11 @@ const Icon = ({ icon, width, height, style }) => (
   </svg>
 );
 
-Icon.propTypes = {
-  icon: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
-  style: PropTypes.object
-};
+// Icon.propTypes = {
+//   icon: PropTypes.string.isRequired,
+//   width: PropTypes.string.isRequired,
+//   height: PropTypes.string.isRequired,
+//   style: PropTypes.object
+// };
 
 export default Icon;

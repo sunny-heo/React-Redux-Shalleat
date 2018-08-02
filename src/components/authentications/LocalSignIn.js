@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { guest, getAllFormInput } from "../../_helpers/index";
 import { signInUser } from "../../actions/userAction";
 
-import AuthPending from "./AuthPending";
+import AuthPending from "../pendings/AuthPending";
 import SignInForm from "./SignInForm";
 
 const styles = theme => {
@@ -27,11 +27,11 @@ const enhance = compose(
     handleSignIn: props => evt => {
       evt.preventDefault();
       const userInput = getAllFormInput(evt.currentTarget);
-      signInUser(userInput)(props.dispatch);
+      props.dispatch(signInUser(userInput));
     },
     handleGuestMode: props => evt => {
       evt.preventDefault();
-      signInUser(guest)(props.dispatch);
+      props.dispatch(signInUser(guest));
     }
   })
 );
@@ -59,10 +59,13 @@ const SwitchComponent = enhance(
   }
 );
 
-const LocalSignIn = enhance(props => (
-  <div className="LocalSignIn">
-    <h1 className={props.classes.LocalSignIn}>ShallEat Account</h1>
-    <SwitchComponent {...props} />
-  </div>
-));
+const LocalSignIn = enhance(props => {
+  const { classes, ...restProps } = props;
+  return (
+    <div className="LocalSignIn">
+      <h1 className={classes.LocalSignIn}>ShallEat Account</h1>
+      <SwitchComponent {...restProps} />
+    </div>
+  );
+});
 export default LocalSignIn;

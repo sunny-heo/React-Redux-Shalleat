@@ -1,8 +1,7 @@
 import React from "react";
 import { compose, withHandlers, withState } from "recompose";
-import PropTypes from "prop-types";
-
 import { withStyles, withTheme } from "@material-ui/core/styles";
+
 import SwipeableViews from "react-swipeable-views";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -31,12 +30,11 @@ const enhance = compose(
   withTheme(),
   withStyles(styles),
   withState("index", "setIndex", 0),
+
   withHandlers({
     handleOnChange: props => evt => {
       evt.preventDefault();
-      const { oAuth, setOAuth, setActiveTabIndex } = props;
-      setActiveTabIndex(evt.detail.activeTabIndex);
-      setOAuth(!oAuth);
+      props.setActiveTabIndex(evt.detail.activeTabIndex);
     },
     handleChange: props => (evt, index) => {
       evt.preventDefault();
@@ -49,7 +47,14 @@ const enhance = compose(
 );
 
 const SignInHeader = enhance(props => {
-  const { index, theme, classes, handleChange, handleChangeIndex } = props;
+  const {
+    index,
+    theme,
+    classes,
+    handleChange,
+    handleChangeIndex,
+    ...restProps
+  } = props;
   return (
     <div className={classes.SignInHeader}>
       <AppBar className={classes.appBar} position="static">
@@ -70,18 +75,14 @@ const SignInHeader = enhance(props => {
         onChangeIndex={handleChangeIndex}
       >
         <TabContainer dir={theme.direction}>
-          <OAuthSignIn {...props} />
+          <OAuthSignIn {...restProps} />
         </TabContainer>
         <TabContainer dir={theme.direction}>
-          <LocalSignIn {...props} />
+          <LocalSignIn {...restProps} />
         </TabContainer>
       </SwipeableViews>
     </div>
   );
 });
-
-SignInHeader.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default SignInHeader;

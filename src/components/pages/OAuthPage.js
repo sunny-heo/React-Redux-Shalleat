@@ -1,13 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
-import { compose, withReducer, lifecycle } from "recompose";
-import PropTypes from "prop-types";
+import { compose, lifecycle } from "recompose";
 
 import { googleSignInUser } from "../../actions/userAction";
-import userReducer from "../../reducers/userReducer";
 
-import AuthPending from "../authentications/AuthPending";
+import AuthPending from "../pendings/AuthPending";
 
 const styles = theme => {
   return {
@@ -20,22 +19,22 @@ const styles = theme => {
     }
   };
 };
+const mapStateToProps = (state, nextOwnProps) => state.userReducer;
 
 const enhance = compose(
+  connect(mapStateToProps),
   withStyles(styles),
-  withReducer("state", "dispatch", userReducer),
   lifecycle({
     componentDidMount() {
       const url = window.location.href;
       const accessToken = url.match(/access_token=([^&]*)/)[1];
-
-      googleSignInUser(accessToken)(this.props.dispatch);
+      this.props.dispatch(googleSignInUser(accessToken));
     }
   })
 );
 
-const OAuthPage = enhance(({ state }) => {
-  const { pendingSignIn, signedIn, error } = state;
+const OAuthPage = enhance(props => {
+  const { pendingSignIn, signedIn, error } = props;
   switch (true) {
     case pendingSignIn:
       return <AuthPending />;
@@ -47,11 +46,5 @@ const OAuthPage = enhance(({ state }) => {
       return <AuthPending />;
   }
 });
-
-OAuthPage.propTypes = {
-  state: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
-};
 
 export default OAuthPage;
