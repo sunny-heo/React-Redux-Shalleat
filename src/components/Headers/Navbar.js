@@ -4,10 +4,13 @@ import { withRouter } from "react-router-dom";
 import { compose, withState, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
+import { signOutUser } from "../../actions/userAction";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import AuthPending from "../pendings/AuthPending";
 import LocationPending from "../pendings/LocationPending";
 
 const styles = theme => ({
@@ -38,32 +41,69 @@ const enhance = compose(
   withHandlers({
     handleNavigateTo: props => path => evt => {
       evt.preventDefault();
-      console.log(props);
+      props.history.push(path);
+    },
+    handleSignOut: props => path => evt => {
+      evt.preventDefault();
+      props.dispatch(signOutUser());
       props.history.push(path);
     }
   })
 );
 
+const SwitchComponent = enhance(props => {
+  const {
+    classes,
+    signedIn,
+    pendingSignIn,
+    pendingSignUp,
+    pendingSignOut,
+    handleNavigateTo,
+    handleSignOut
+  } = props;
+
+  switch (true) {
+    case pendingSignIn:
+    case pendingSignUp:
+    case pendingSignOut:
+      return <AuthPending />;
+
+    case signedIn:
+      return (
+        <Button className={classes.authButton} onClick={handleSignOut("/")}>
+          Sign out
+        </Button>
+      );
+
+    default:
+      return (
+        <div>
+          <Button
+            className={classes.authButton}
+            onClick={handleNavigateTo("/sign_in")}
+          >
+            Sign in
+          </Button>
+          <Button
+            className={classes.authButton}
+            onClick={handleNavigateTo("/sign_up")}
+          >
+            Sign up
+          </Button>
+        </div>
+      );
+  }
+});
+
 const Navbar = enhance(props => {
-  const { classes, handleNavigateTo, pendingGetLocation } = props;
+  const { classes, pendingGetLocation } = props;
   return (
     <AppBar className={classes.appBar} position="static" elevation={0}>
       <Toolbar>
         <Typography className={classes.flex} type="title" color="inherit">
           What Shall We Eat?
         </Typography>
-        <Button
-          className={classes.authButton}
-          onClick={handleNavigateTo("/sign_in")}
-        >
-          Sign in
-        </Button>
-        <Button
-          className={classes.authButton}
-          onClick={handleNavigateTo("/sign_up")}
-        >
-          Sign up
-        </Button>
+        <SwitchComponent />
       </Toolbar>
       {pendingGetLocation ? <LocationPending /> : null}
     </AppBar>

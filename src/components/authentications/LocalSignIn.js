@@ -2,7 +2,7 @@ import React from "react";
 import { compose, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
-import { guest, getAllFormInput } from "../../_helpers/index";
+import { guest, getAllFormInput } from "../../_helpers";
 import { signInUser } from "../../actions/userAction";
 
 import AuthPending from "../pendings/AuthPending";

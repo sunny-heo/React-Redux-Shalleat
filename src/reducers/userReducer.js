@@ -79,6 +79,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pendingSignOut: false,
+        signedIn: false,
         signedOut: true,
         user: action.payload
       };

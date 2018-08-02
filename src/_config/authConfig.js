@@ -10,12 +10,12 @@ const GOOGLE = {
   responseType: "token"
 };
 
-export const FACEBOOK = {
-  domain: "https://www.facebook.com/v3.0/dialog/oauth",
-  clientId: "287954711742714",
-  redirectURL: "https://www.shalleat.com/auth/facebook",
-  responseType: "token"
-};
+// const FACEBOOK = {
+//   domain: "https://www.facebook.com/v3.0/dialog/oauth",
+//   clientId: "287954711742714",
+//   redirectURL: "https://www.shalleat.com/auth/facebook",
+//   responseType: "token"
+// };
 
 export const GOOGLE_HREF = () => {
   const {
