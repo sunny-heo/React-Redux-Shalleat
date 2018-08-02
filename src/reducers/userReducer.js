@@ -9,7 +9,10 @@ const {
   SIGNUP_USER_FULFILLED,
   SIGNOUT_USER_PENDING,
   SIGNOUT_USER_REJECTED,
-  SIGNOUT_USER_FULFILLED
+  SIGNOUT_USER_FULFILLED,
+  GET_USER_LOCATION_PENDING,
+  GET_USER_LOCATION_REJECTED,
+  GET_USER_LOCATION_FULFILLED
 } = userConstants;
 
 const initialState = {
@@ -20,8 +23,11 @@ const initialState = {
   signedUp: false,
   pendingSignOut: false,
   signedOut: false,
-  authType: null,
-  error: null
+  authError: null,
+  pendingGetLocation: true,
+  gotLocation: false,
+  currentLocation: {},
+  geoError: null
 };
 
 export default (state = initialState, action) => {
@@ -31,7 +37,7 @@ export default (state = initialState, action) => {
     }
 
     case SIGNIN_USER_REJECTED: {
-      return { ...state, pendingSignIn: false, error: action.payload };
+      return { ...state, pendingSignIn: false, authError: action.payload };
     }
 
     case SIGNIN_USER_FULFILLED: {
@@ -48,7 +54,7 @@ export default (state = initialState, action) => {
     }
 
     case SIGNUP_USER_REJECTED: {
-      return { ...state, pendingSignUp: false, error: action.payload };
+      return { ...state, pendingSignUp: false, authError: action.payload };
     }
 
     case SIGNUP_USER_FULFILLED: {
@@ -66,7 +72,7 @@ export default (state = initialState, action) => {
     }
 
     case SIGNOUT_USER_REJECTED: {
-      return { ...state, pendingSignOut: false, error: action.payload };
+      return { ...state, pendingSignOut: false, authError: action.payload };
     }
 
     case SIGNOUT_USER_FULFILLED: {
@@ -75,6 +81,32 @@ export default (state = initialState, action) => {
         pendingSignOut: false,
         signedOut: true,
         user: action.payload
+      };
+    }
+
+    case GET_USER_LOCATION_PENDING: {
+      return {
+        ...state,
+        pendingGetLocation: true,
+        gotLocation: false
+      };
+    }
+
+    case GET_USER_LOCATION_REJECTED: {
+      return {
+        ...state,
+        pendingGetLocation: false,
+        gotLocation: false,
+        geoError: action.payload
+      };
+    }
+
+    case GET_USER_LOCATION_FULFILLED: {
+      return {
+        ...state,
+        pendingGetLocation: false,
+        gotLocation: true,
+        currentLocation: action.payload
       };
     }
 

@@ -1,9 +1,7 @@
 import React from "react";
-import { compose, withReducer } from "recompose";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-
-import userReducer from "../../reducers/userReducer";
+import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
 import SignInHeader from "../Headers/SignInHeader";
@@ -19,20 +17,20 @@ const styles = theme => {
     }
   };
 };
+const mapStateToProps = (state, nextOwnProps) => state.userReducer;
 
 const enhance = compose(
-  withStyles(styles),
-  withReducer("state", "dispatch", userReducer)
+  connect(mapStateToProps),
+  withStyles(styles)
 );
 
-const SignInPage = enhance(props => (
-  <div className={props.classes.SignInPage}>
-    <SignInHeader {...props} />
-  </div>
-));
-
-SignInPage.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+const SignInPage = enhance(props => {
+  const { classes, ...restProps } = props;
+  return (
+    <div className={classes.SignInPage}>
+      <SignInHeader {...restProps} />
+    </div>
+  );
+});
 
 export default withRouter(SignInPage);

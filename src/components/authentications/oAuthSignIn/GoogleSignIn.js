@@ -32,8 +32,8 @@ const styles = {
     color: "white"
   }
 };
-const enhance = compose(withStyles(styles));
 
+const enhance = compose(withStyles(styles));
 const GoogleSignIn = enhance(props => {
   const { classes } = props;
   return (
