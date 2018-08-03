@@ -66,7 +66,7 @@ const SwitchComponent = enhance(props => {
     case pendingSignIn:
     case pendingSignUp:
     case pendingSignOut:
-      return <AuthPending />;
+      return <AuthPending height="40" width="40" />;
 
     case signedIn:
       return (

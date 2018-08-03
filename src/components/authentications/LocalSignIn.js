@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { compose, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -43,9 +44,10 @@ const SwitchComponent = enhance(
         return <AuthPending />;
       case signedIn:
         return (
-          <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
-            Signed In!
-          </div>
+          // <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
+          //   Signed In!
+          // </div>
+          <Redirect exact to="/" />
         );
 
       default:
