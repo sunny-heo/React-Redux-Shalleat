@@ -7,10 +7,11 @@ import Button from "@material-ui/core/Button";
 
 const styles = {
   input: {
-    color: "white"
+    // color: "white"
+    color: "black"
   },
   textFieldFormLabel: {
-    color: "white"
+    color: "black"
   }
 };
 const enhance = compose(withStyles(styles));
@@ -22,7 +23,7 @@ const SignInForm = enhance(({ classes, onSignInClick, onGuestModeClick }) => (
         className="w-100 mb-0"
         label="Email address"
         name="email"
-        style={{ paddingBottom: "1rem", color: "white" }}
+        style={{ paddingBottom: "1rem", color: "black" }}
         InputProps={{
           className: classes.input
         }}
@@ -78,7 +79,9 @@ const SignInForm = enhance(({ classes, onSignInClick, onGuestModeClick }) => (
       className="d-flex justify-content-between align-items-center flex-wrap"
       style={{ marginTop: "2rem" }}
     >
-      <Button type="submit">sign in</Button>
+      <button type="submit" className="btn btn-secondary">
+        sign in
+      </button>
       <a
         href=""
         className="text-white"

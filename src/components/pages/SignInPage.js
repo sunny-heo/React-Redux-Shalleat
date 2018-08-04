@@ -20,6 +20,7 @@ const styles = theme => {
 const mapStateToProps = (state, nextOwnProps) => state.userReducer;
 
 const enhance = compose(
+  withRouter,
   connect(mapStateToProps),
   withStyles(styles)
 );
@@ -33,4 +34,4 @@ const SignInPage = enhance(props => {
   );
 });
 
-export default withRouter(SignInPage);
+export default SignInPage;
