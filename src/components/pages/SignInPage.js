@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -33,4 +32,4 @@ const SignInPage = enhance(props => {
   );
 });
 
-export default withRouter(SignInPage);
+export default SignInPage;

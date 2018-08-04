@@ -7,7 +7,7 @@ import GoogleSignIn from "./oAuthSignIn/GoogleSignIn";
 const styles = theme => {
   return {
     OAuthSignIn: {
-      color: "white",
+      color: "#424242",
       marginBottom: 8 * 3,
       fontSize: "2.125rem",
       fontWeight: 400,

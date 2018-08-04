@@ -29,8 +29,6 @@ export const signUpUser = userInput => async dispatch => {
 };
 
 export const signInUser = userInput => async dispatch => {
-  console.log(userInput);
-  console.log(dispatch);
   dispatch({ type: SIGNIN_USER_PENDING });
   try {
     const user = await userService.signIn(userInput);
@@ -42,12 +40,10 @@ export const signInUser = userInput => async dispatch => {
 };
 
 export const googleSignInUser = accessToken => async dispatch => {
-  console.log(accessToken);
   dispatch({ type: SIGNIN_USER_PENDING });
   try {
     const user = await userService.googleSignIn(accessToken);
     dispatch({ type: SIGNIN_USER_FULFILLED, payload: user });
-    console.log(user);
   } catch (error) {
     dispatch({ type: SIGNIN_USER_REJECTED, payload: error });
   }
@@ -74,10 +70,3 @@ export const getUserLocation = () => async dispatch => {
     dispatch({ type: GET_USER_LOCATION_REJECTED, payload: error });
   }
 };
-
-// getCurrentLocation() {
-//   const currentLocation = JSON.parse(
-//     window.sessionStorage.getItem("shalleat")
-//   );
-//   return currentLocation || {};
-// }

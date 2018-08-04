@@ -1,8 +1,9 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { compose, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
-import { guest, getAllFormInput } from "../../_helpers/index";
+import { guest, getAllFormInput } from "../../_helpers";
 import { signInUser } from "../../actions/userAction";
 
 import AuthPending from "../pendings/AuthPending";
@@ -11,7 +12,7 @@ import SignInForm from "./SignInForm";
 const styles = theme => {
   return {
     LocalSignIn: {
-      color: "white",
+      color: "#424242",
       marginBottom: 8 * 3,
       fontSize: "2.125rem",
       fontWeight: 400,
@@ -42,17 +43,13 @@ const SwitchComponent = enhance(
       case pendingSignIn:
         return <AuthPending />;
       case signedIn:
-        return (
-          <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
-            Signed In!
-          </div>
-        );
+        return <Redirect exact to="/" />;
 
       default:
         return (
           <SignInForm
             onSignInClick={handleSignIn}
-            onGuestModeClick={handleGuestMode}
+            handleGuestMode={handleGuestMode}
           />
         );
     }
