@@ -12,7 +12,7 @@ import SignInForm from "./SignInForm";
 const styles = theme => {
   return {
     LocalSignIn: {
-      color: "white",
+      color: "#424242",
       marginBottom: 8 * 3,
       fontSize: "2.125rem",
       fontWeight: 400,
@@ -43,18 +43,13 @@ const SwitchComponent = enhance(
       case pendingSignIn:
         return <AuthPending />;
       case signedIn:
-        return (
-          // <div className="SignInPage d-flex flex-column justify-content-center align-items-center w-100">
-          //   Signed In!
-          // </div>
-          <Redirect exact to="/" />
-        );
+        return <Redirect exact to="/" />;
 
       default:
         return (
           <SignInForm
             onSignInClick={handleSignIn}
-            onGuestModeClick={handleGuestMode}
+            handleGuestMode={handleGuestMode}
           />
         );
     }

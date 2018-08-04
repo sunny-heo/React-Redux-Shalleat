@@ -29,7 +29,7 @@ const styles = {
     fontWeight: 500,
     letterSpacing: "0.02em",
     lineHeight: 1.4,
-    color: "white"
+    color: "#424242"
   }
 };
 

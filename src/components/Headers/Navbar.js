@@ -17,18 +17,6 @@ const styles = theme => ({
   flex: {
     flex: 1
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
-  authButton: {
-    border: "1px solid black",
-    backgroundColor: "transparent",
-    color: "black",
-    borderRadius: 2,
-    marginLeft: 8,
-    marginRight: 8
-  },
   appBar: {
     color: "#424242",
     background: "white",
@@ -76,7 +64,7 @@ const SwitchComponent = enhance(props => {
       return <AuthPending height="40" width="40" />;
 
     case signedIn:
-      return <Btn name="Sign out" onClick={handleSignOut("/")} />;
+      return <Btn name="Sign out" handleSignOut={handleSignOut("/")} />;
 
     default:
       return (
@@ -100,13 +88,6 @@ const Navbar = enhance(props => {
   const { classes, pendingGetLocation } = props;
   return (
     <Fragment>
-      {/* <button
-        onClick={() => {
-          console.log(props);
-        }}
-      >
-        Navbar button
-      </button> */}
       <AppBar className={classes.appBar} position="static" elevation={0}>
         <Toolbar>
           <Typography className={classes.flex} type="title" color="inherit">
@@ -115,7 +96,7 @@ const Navbar = enhance(props => {
           <SwitchComponent />
         </Toolbar>
       </AppBar>
-      <LocationPending pending={pendingGetLocation} color="secondary" />
+      <LocationPending pending={pendingGetLocation} color="primary" />
     </Fragment>
   );
 });

@@ -16,14 +16,12 @@ const styles = theme => ({
     maxWidth: "100%",
     height: "448px",
     minHeight: "390px",
-    background: "linear-gradient(to right, #5433ff, #20bdff)",
+    // background: "linear-gradient(to right, #5433ff, #20bdff)",
     boxShadow:
       "0 0 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)",
     borderRadius: 2
   },
   appBar: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
-    color: "white",
     borderTopLeftRadius: 2,
     borderTopRightRadius: 2
   }
@@ -64,8 +62,8 @@ const SignInHeader = enhance(props => {
         <Tabs
           value={index}
           onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
+          indicatorColor="secondary"
+          textColor="secondary"
           fullWidth
         >
           <Tab label="Social" />

@@ -21,8 +21,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props);
-    const { userReducer: user } = this.props;
     return (
       <Router>
         <div className="App">

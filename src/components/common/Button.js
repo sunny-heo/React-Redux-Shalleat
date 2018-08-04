@@ -54,6 +54,7 @@ const Btn = enhance(props => {
     style,
     classes,
     currentPath,
+    handleSignOut,
     handleNavigateTo,
     handleMouseEnter,
     handleMouseLeave
@@ -62,7 +63,7 @@ const Btn = enhance(props => {
     <Button
       style={currentPath ? { ...style, ...mouseEnterStyle } : style}
       className={classes.authButton}
-      onClick={handleNavigateTo}
+      onClick={handleNavigateTo || handleSignOut}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

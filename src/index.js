@@ -16,26 +16,23 @@ const theme = createMuiTheme({
   palette: {
     type: "dark",
     primary: {
-      // main: "#f0ffff"
-      main: "#ff4081"
+      main: "#424242"
     },
     secondary: {
-      main: "#4081ff"
+      main: "#fff"
       // light: "#0066ff"
       // main: "#40ffbe"
     }
-  },
-  overrides: {
-    MuiButton: {
-      root: {
-        background: "#ff4081",
-        color: "white",
-        borderRadius: 2
-      }
-    }
-  },
-  boxShadow:
-    "0 0 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)"
+  }
+  // overrides: {
+  //   MuiButton: {
+  //     root: {
+  //       background: "#ff4081",
+  //       color: "balck",
+  //       borderRadius: 2
+  //     }
+  //   }
+  // },
 });
 
 ReactDOM.render(
