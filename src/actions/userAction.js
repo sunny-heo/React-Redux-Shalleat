@@ -33,6 +33,7 @@ export const signInUser = userInput => async dispatch => {
   try {
     const user = await userService.signIn(userInput);
     dispatch({ type: SIGNIN_USER_FULFILLED, payload: user });
+    console.log(user);
   } catch (error) {
     dispatch({ type: SIGNIN_USER_REJECTED, payload: error });
   }

@@ -16,7 +16,6 @@ const styles = theme => ({
     maxWidth: "100%",
     height: "448px",
     minHeight: "390px",
-    // background: "linear-gradient(to right, #5433ff, #20bdff)",
     boxShadow:
       "0 0 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)",
     borderRadius: 2

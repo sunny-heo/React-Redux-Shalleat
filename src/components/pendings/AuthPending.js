@@ -1,8 +1,8 @@
 import React from "react";
 import Loader from "react-loader-spinner";
 
-const AuthPending = ({ height, width }) => (
-  <Loader type="TailSpin" color="#00BFFF" height={height} width={width} />
+const AuthPending = () => (
+  <Loader type="TailSpin" color="#00BFFF" height="100" width="100" />
 );
 
 export default AuthPending;
