@@ -64,19 +64,19 @@ const SwitchComponent = enhance(props => {
       return <AuthPending height="40" width="40" />;
 
     case signedIn:
-      return <Btn name="Sign out" handleSignOut={handleSignOut("/")} />;
+      return <Btn name="Sign out" onClick={handleSignOut("/")} />;
 
     default:
       return (
         <Fragment>
           <Btn
             name="Sign in"
-            handleNavigateTo={handleNavigateTo("/sign_in")}
+            onClick={handleNavigateTo("/sign_in")}
             currentPath={location.pathname === "/sign_in"}
           />
           <Btn
             name="Sign up"
-            handleNavigateTo={handleNavigateTo("/sign_up")}
+            onClick={handleNavigateTo("/sign_up")}
             currentPath={location.pathname === "/sign_up"}
           />
         </Fragment>
