@@ -1,12 +1,12 @@
 import React from "react";
 import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
-import { GOOGLE_HREF } from "../../../_config/myAuthConfig";
+import { FACEBOOK_HREF } from "../../../_config/myAuthConfig";
 
 import Icon from "../../common/Icon";
 
 const styles = {
-  GoogleSignIn: {
+  facebookSignIn: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -15,11 +15,11 @@ const styles = {
     boxShadow:
       "0 0 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)"
   },
-  goolgeOAuthLink: {
+  facebookOAuthLink: {
     textDecoration: "none !important"
   },
-  googleIcon: {
-    fill: "#ff5433",
+  facebookIcon: {
+    fill: "#3b5998",
     borderBottomLeftRadius: "2px",
     borderTopLeftRadius: "2px"
   },
@@ -38,15 +38,15 @@ const enhance = compose(withStyles(styles));
 const GoogleSignIn = enhance(props => {
   const { classes } = props;
   return (
-    <a href={GOOGLE_HREF()} className={classes.goolgeOAuthLink}>
-      <div className={classes.GoogleSignIn}>
+    <a href={FACEBOOK_HREF()} className={classes.facebookOAuthLink}>
+      <div className={classes.facebookSignIn}>
         <Icon
-          icon="google"
+          icon="facebook"
           width="48px"
           height="48px"
-          style={styles.googleIcon}
+          style={styles.facebookIcon}
         />
-        <span className={classes.oAuthSpan}>Sign in with Google</span>
+        <span className={classes.oAuthSpan}>Sign in with Facebook</span>
       </div>
     </a>
   );

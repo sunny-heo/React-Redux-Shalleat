@@ -3,6 +3,7 @@ import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
 import GoogleSignIn from "./oAuthSignIn/GoogleSignIn";
+import FacebookSignIn from "./oAuthSignIn/FacebookSignIn";
 
 const styles = theme => {
   return {
@@ -25,6 +26,7 @@ const OAuthSignIn = enhance(props => {
     <div className="OAuthSignIn">
       <h1 className={classes.OAuthSignIn}>Social Account</h1>
       <GoogleSignIn {...restProps} />
+      <FacebookSignIn {...restProps} />
     </div>
   );
 });
