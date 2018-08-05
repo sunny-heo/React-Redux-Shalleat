@@ -9,6 +9,7 @@ import AuthRoute from "./authentications/AuthRoute";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import OAuthPage from "./pages/OAuthPage";
+import MapPage from "./pages/MapPage";
 import NoMatchPage from "./pages/NoMatchPage";
 
 import "../styles/css/App.css";
@@ -26,7 +27,7 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
-            <AuthRoute exact path="/" render={() => <div>Hi</div>} />
+            <AuthRoute exact path="/" render={MapPage} />
             <Route exact path="/sign_in" component={SignInPage} />
             <Route exact path="/sign_up" component={SignUpPage} />
             <Route path="/auth" component={OAuthPage} />
