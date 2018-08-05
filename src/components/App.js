@@ -27,7 +27,7 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Switch>
-            <AuthRoute exact path="/" render={MapPage} />
+            <AuthRoute exact path="/" component={MapPage} />
             <Route exact path="/sign_in" component={SignInPage} />
             <Route exact path="/sign_up" component={SignUpPage} />
             <Route path="/auth" component={OAuthPage} />

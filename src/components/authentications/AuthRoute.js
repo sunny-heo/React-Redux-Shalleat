@@ -7,8 +7,13 @@ const mapStateToProps = (state, nextOwnProps) => state.userReducer;
 const enhance = compose(connect(mapStateToProps));
 
 const AuthRoute = enhance(
-  ({ render, signedIn, ...restProps }) =>
-    signedIn ? render(restProps) : <Redirect exact to="/sign_in" />
+  ({ component: Component, render, signedIn, ...restProps }) => {
+    if (signedIn) {
+      if (typeof render === "function") return render(restProps);
+      else return <Component {...restProps} />;
+    }
+    return <Redirect exact to="/sign_in" />;
+  }
 );
 
 export default AuthRoute;
