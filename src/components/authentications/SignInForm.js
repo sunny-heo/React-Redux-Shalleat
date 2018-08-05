@@ -1,8 +1,10 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose, withHandlers } from "recompose";
-import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
+
+import TextField from "@material-ui/core/TextField";
+import Btn from "../common/Button";
 
 const styles = {
   input: {
@@ -24,7 +26,14 @@ const enhance = compose(
 );
 
 const SignInForm = enhance(
-  ({ classes, onSignInClick, handleNavigateTo, handleGuestMode }) => (
+  ({
+    classes,
+    onSignInClick,
+    handleNavigateTo,
+    handleGuestMode,
+    validEmail,
+    validPassword
+  }) => (
     <form onSubmit={onSignInClick}>
       <div className="form-group">
         <TextField
@@ -41,6 +50,15 @@ const SignInForm = enhance(
           }}
           autoComplete="username email"
         />
+        <span
+          style={
+            validEmail
+              ? { display: "none" }
+              : { display: "block", color: "red" }
+          }
+        >
+          Please provide Email.
+        </span>
       </div>
       <div className="d-flex justify-content-end align-items-center">
         <a
@@ -71,6 +89,15 @@ const SignInForm = enhance(
             className: classes.textFieldFormLabel
           }}
         />
+        <span
+          style={
+            validPassword
+              ? { display: "none" }
+              : { display: "block", color: "red" }
+          }
+        >
+          Please provide password.
+        </span>
       </div>
       <div className="d-flex justify-content-end align-items-center">
         <a
@@ -89,21 +116,9 @@ const SignInForm = enhance(
         className="d-flex justify-content-between align-items-center flex-wrap"
         style={{ marginTop: "2rem" }}
       >
-        <button className="btn border border-dark" type="submit">
-          sign in
-        </button>
-        <a
-          className="btn text-dark border border-dark"
-          onClick={handleNavigateTo("/sign_up")}
-        >
-          sign up
-        </a>
-        <a
-          className="btn text-dark border border-dark"
-          onClick={handleGuestMode}
-        >
-          Guest mode
-        </a>
+        <Btn name="Sign in" type="submit" />
+        <Btn name="Sign up" onClick={handleNavigateTo("/sign_up")} />
+        <Btn name="Guest mode" onClick={handleGuestMode} />
       </div>
     </form>
   )

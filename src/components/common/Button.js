@@ -51,19 +51,20 @@ const enhance = compose(
 );
 const Btn = enhance(props => {
   const {
+    type = null,
     style,
     classes,
     currentPath,
-    handleSignOut,
-    handleNavigateTo,
+    onClick,
     handleMouseEnter,
     handleMouseLeave
   } = props;
   return (
     <Button
+      type={type}
       style={currentPath ? { ...style, ...mouseEnterStyle } : style}
       className={classes.authButton}
-      onClick={handleNavigateTo || handleSignOut}
+      onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
