@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { compose, withHandlers } from "recompose";
+import { compose, withState, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
 import { guest, getAllFormInput } from "../../_helpers";
@@ -24,11 +24,22 @@ const styles = theme => {
 
 const enhance = compose(
   withStyles(styles),
+  withState("validEmail", "setValidEmail", true),
+  withState("validPassword", "setValidPassword", true),
   withHandlers({
     handleSignIn: props => evt => {
       evt.preventDefault();
       const userInput = getAllFormInput(evt.currentTarget);
-      props.dispatch(signInUser(userInput));
+      const { setValidEmail, setValidPassword } = props;
+      const validEmail = !!userInput.email;
+      const validPassword = !!userInput.password;
+
+      setValidEmail(!!userInput.email);
+      setValidPassword(!!userInput.password);
+
+      if (validEmail && validPassword) {
+        props.dispatch(signInUser(userInput));
+      }
     },
     handleGuestMode: props => evt => {
       evt.preventDefault();
@@ -38,7 +49,14 @@ const enhance = compose(
 );
 
 const SwitchComponent = enhance(
-  ({ pendingSignIn, signedIn, handleSignIn, handleGuestMode }) => {
+  ({
+    validEmail,
+    validPassword,
+    signedIn,
+    pendingSignIn,
+    handleSignIn,
+    handleGuestMode
+  }) => {
     switch (true) {
       case pendingSignIn:
         return <AuthPending />;
@@ -48,6 +66,8 @@ const SwitchComponent = enhance(
       default:
         return (
           <SignInForm
+            validEmail={validEmail}
+            validPassword={validPassword}
             onSignInClick={handleSignIn}
             handleGuestMode={handleGuestMode}
           />
