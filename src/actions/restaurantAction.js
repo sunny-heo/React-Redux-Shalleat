@@ -47,15 +47,15 @@ export const getRestaurantDetails = placeId => async dispatch => {
   } catch (error) {
     dispatch({ type: RESTAURANT_DETAILS_REJECTED, payload: error });
   }
+};
 
-  export const getPhotos = (photos, width) => async dispatch => {
-    dispatch({ type: RESTAURANT_PHOTOS_PENDING });
+export const getPhotos = (photos, width) => async dispatch => {
+  dispatch({ type: RESTAURANT_PHOTOS_PENDING });
 
-    try {
-      const restaurants = await restaurantService.getPhotos({ photos, width });
-      dispatch({ type: RESTAURANT_PHOTOS_FULFILLED, payload: restaurants });
-    } catch (error) {
-      dispatch({ type: RESTAURANT_PHOTOS_REJECTED, payload: error });
-    }
-  };
+  try {
+    const restaurants = await restaurantService.getPhotos({ photos, width });
+    dispatch({ type: RESTAURANT_PHOTOS_FULFILLED, payload: restaurants });
+  } catch (error) {
+    dispatch({ type: RESTAURANT_PHOTOS_REJECTED, payload: error });
+  }
 };

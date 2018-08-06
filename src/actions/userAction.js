@@ -6,12 +6,15 @@ const {
   SIGNIN_USER_PENDING,
   SIGNIN_USER_REJECTED,
   SIGNIN_USER_FULFILLED,
+
   SIGNUP_USER_PENDING,
   SIGNUP_USER_REJECTED,
   SIGNUP_USER_FULFILLED,
+
   SIGNOUT_USER_PENDING,
   SIGNOUT_USER_REJECTED,
   SIGNOUT_USER_FULFILLED,
+
   GET_USER_LOCATION_PENDING,
   GET_USER_LOCATION_REJECTED,
   GET_USER_LOCATION_FULFILLED
@@ -33,7 +36,6 @@ export const signInUser = userInput => async dispatch => {
   try {
     const user = await userService.signIn(userInput);
     dispatch({ type: SIGNIN_USER_FULFILLED, payload: user });
-    console.log(user);
   } catch (error) {
     dispatch({ type: SIGNIN_USER_REJECTED, payload: error });
   }
@@ -64,8 +66,8 @@ export const getUserLocation = () => async dispatch => {
   dispatch({ type: GET_USER_LOCATION_PENDING });
 
   try {
-    const currentLocation = await parseCurrentLocation();
-    dispatch({ type: GET_USER_LOCATION_FULFILLED, payload: currentLocation });
+    const location = await parseCurrentLocation();
+    dispatch({ type: GET_USER_LOCATION_FULFILLED, payload: location });
   } catch (error) {
     dispatch({ type: GET_USER_LOCATION_REJECTED, payload: error });
   }

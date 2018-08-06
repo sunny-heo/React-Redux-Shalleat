@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { compose } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
@@ -16,7 +17,7 @@ const styles = theme => {
     }
   };
 };
-const mapStateToProps = (state, nextOwnProps) => state.userReducer;
+const mapStateToProps = (state, nextOwnProps) => state.user;
 
 const enhance = compose(
   connect(mapStateToProps),
@@ -24,8 +25,8 @@ const enhance = compose(
 );
 
 const SignInPage = enhance(props => {
-  const { classes, ...restProps } = props;
-  return (
+  const { classes, signedIn, ...restProps,  } = props;
+  return signedIn ? <Redirect to="/" /> : (
     <div className={classes.SignInPage}>
       <SignInHeader {...restProps} />
     </div>

@@ -41,13 +41,6 @@ const SignInForm = enhance(
           label="Email address"
           name="email"
           style={{ paddingBottom: "1rem", color: "#424242" }}
-          InputProps={{
-            className: classes.input,
-            style: { borderBottom: "1px solid #424242" }
-          }}
-          InputLabelProps={{
-            className: classes.textFieldFormLabel
-          }}
           autoComplete="username email"
         />
         <span
@@ -81,13 +74,6 @@ const SignInForm = enhance(
           type="password"
           autoComplete="current-password"
           style={{ paddingBottom: "1rem" }}
-          InputProps={{
-            className: classes.input,
-            style: { borderBottom: "1px solid #424242" }
-          }}
-          InputLabelProps={{
-            className: classes.textFieldFormLabel
-          }}
         />
         <span
           style={

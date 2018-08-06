@@ -50,7 +50,7 @@ export default {
     }
   },
 
-  async current() {
+  async currentUser() {
     try {
       const currentUser = await service.get("/users/current_user");
       return currentUser;

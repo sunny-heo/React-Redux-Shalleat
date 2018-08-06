@@ -3,7 +3,8 @@ import axios from "axios";
 class AxiosService {
   constructor() {
     let service = axios.create({
-      baseURL: "https://api.shalleat.com/api/v1",
+      // baseURL: "https://api.shalleat.com/api/v1",
+      baseURL: "http://localhost:3000/api/v1",
       timeout: 1000,
       withCredentials: true,
       headers: {
@@ -22,7 +23,7 @@ class AxiosService {
   handleError = error => {
     switch (error.response.status) {
       case 401:
-        this.redirectTo(document, "/");
+        this.redirectTo(document, "/sign_in");
         break;
       case 404:
         this.redirectTo(document, "/404");

@@ -3,12 +3,19 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { compose } from "recompose";
 
-const mapStateToProps = (state, nextOwnProps) => state.userReducer;
+const mapStateToProps = (state, nextOwnProps) => state.user;
 const enhance = compose(connect(mapStateToProps));
+// const enhance = compose();
 
 const AuthRoute = enhance(
-  ({ render, signedIn, ...restProps }) =>
-    signedIn ? render(restProps) : <Redirect exact to="/sign_in" />
+  ({ component: Component, render, something, signedIn, ...restProps }) => {
+    if (signedIn) {
+      if (typeof render === "function") return render(restProps);
+      else return <Component />;
+    } else {
+      return <Redirect exact to="/sign_in" />;
+    }
+  }
 );
 
 export default AuthRoute;

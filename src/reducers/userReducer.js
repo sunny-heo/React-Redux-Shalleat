@@ -19,7 +19,7 @@ const {
 } = userConstants;
 
 const initialState = {
-  user: {},
+  user: null,
   pendingSignIn: false,
   signedIn: false,
   pendingSignUp: false,
@@ -28,9 +28,10 @@ const initialState = {
   signedOut: false,
   authError: null,
   pendingGetLocation: true,
-  gotLocation: false,
-  currentLocation: {},
-  geoError: null
+  gotUserLocation: false,
+  location: null,
+  geoError: null,
+  something: false
 };
 
 export default (state = initialState, action) => {
@@ -83,6 +84,7 @@ export default (state = initialState, action) => {
         ...state,
         pendingSignOut: false,
         signedIn: false,
+        signedUp: false,
         signedOut: true,
         user: action.payload
       };
@@ -92,7 +94,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pendingGetLocation: true,
-        gotLocation: false
+        gotUserLocation: false
       };
     }
 
@@ -100,7 +102,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pendingGetLocation: false,
-        gotLocation: false,
+        gotUserLocation: false,
         geoError: action.payload
       };
     }
@@ -110,7 +112,7 @@ export default (state = initialState, action) => {
         ...state,
         pendingGetLocation: false,
         gotLocation: true,
-        currentLocation: action.payload
+        location: action.payload
       };
     }
 
