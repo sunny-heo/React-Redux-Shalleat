@@ -12,24 +12,28 @@ const mapStateToProps = (state, nextOwnProps) => state;
 const enhance = compose(connect(mapStateToProps));
 const SearchPage = enhance(props => {
   return (
-    <FormControl className="">
-      <TextField
-        className="mb-0"
-        name="keyword"
-        style={{ width: "300px" }}
-        placeholder="e.g. Canadian Food in 5km"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-          // className: classes.input,
-          style: { color: "#424242" }
-        }}
-        // autoComplete="username email"
-      />
-    </FormControl>
+    <div
+      className="d-flex flex-column align-items-center justify-content-start m-5"
+      style={{ height: "90vh" }}
+    >
+      <h1>What shall we eat?</h1>
+      <FormControl className="">
+        <TextField
+          className="mb-0"
+          name="keyword"
+          style={{ width: "50vw" }}
+          placeholder="e.g. Canadian Food in 5km"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+            style: { color: "#424242" }
+          }}
+        />
+      </FormControl>
+    </div>
   );
 });
 
