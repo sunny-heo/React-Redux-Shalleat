@@ -15,25 +15,31 @@ import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 const theme = createMuiTheme({
   // overrides: {
   palette: {
-    type: "dark",
+    // type: "dark",
     primary: {
       main: "#424242"
     },
     secondary: {
       main: "#fff"
-      // light: "#0066ff"
-      // main: "#40ffbe"
+    }
+  },
+  overrides: {
+    MuiInput: {
+      underline: {
+        "&:after": {
+          borderBottomColor: "#ff4081"
+        }
+      }
+    },
+    MuiTab: {
+      root: {
+        color: "rgba(200, 200, 200, 0.54) !important"
+      },
+      selected: {
+        color: "white !important"
+      }
     }
   }
-  // overrides: {
-  //   MuiButton: {
-  //     root: {
-  //       background: "#ff4081",
-  //       color: "balck",
-  //       borderRadius: 2
-  //     }
-  //   }
-  // },
 });
 
 const { store, persistor } = storage();
