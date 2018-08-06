@@ -66,8 +66,8 @@ export const getUserLocation = () => async dispatch => {
   dispatch({ type: GET_USER_LOCATION_PENDING });
 
   try {
-    const currentLocation = await parseCurrentLocation();
-    dispatch({ type: GET_USER_LOCATION_FULFILLED, payload: currentLocation });
+    const location = await parseCurrentLocation();
+    dispatch({ type: GET_USER_LOCATION_FULFILLED, payload: location });
   } catch (error) {
     dispatch({ type: GET_USER_LOCATION_REJECTED, payload: error });
   }
