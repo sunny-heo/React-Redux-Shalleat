@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import store from "./store";
+import storage from "./store";
+import { PersistGate } from "redux-persist/integration/react";
 
 import "material-components-web/dist/material-components-web.min.css";
 import "daemonite-material/css/material.css";
@@ -35,11 +36,14 @@ const theme = createMuiTheme({
   // },
 });
 
+const { store, persistor } = storage();
 ReactDOM.render(
-  <Provider store={store()}>
-    <MuiThemeProvider theme={theme}>
-      <App />
-    </MuiThemeProvider>
+  <Provider store={store}>
+    <PersistGate persistor={persistor}>
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );

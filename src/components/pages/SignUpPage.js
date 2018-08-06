@@ -9,9 +9,9 @@ import SignUpForm from "../authentications/SignUpForm";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.userReducer.user,
-    pendingSignUp: state.userReducer.pendingSignUp,
-    signedUp: state.userReducer.signedUp
+    user: state.user.user,
+    pendingSignUp: state.user.pendingSignUp,
+    signedUp: state.user.signedUp
   };
 };
 

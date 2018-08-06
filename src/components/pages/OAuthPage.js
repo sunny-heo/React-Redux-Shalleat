@@ -19,7 +19,7 @@ const styles = theme => {
     }
   };
 };
-const mapStateToProps = (state, nextOwnProps) => state.userReducer;
+const mapStateToProps = (state, nextOwnProps) => state.user;
 
 const enhance = compose(
   connect(mapStateToProps),

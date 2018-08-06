@@ -25,7 +25,7 @@ const styles = theme => ({
   }
 });
 
-const mapStateToProps = (state, nextOwnProps) => state.userReducer;
+const mapStateToProps = (state, nextOwnProps) => state.user;
 
 const enhance = compose(
   withRouter,
@@ -64,7 +64,7 @@ const SwitchComponent = enhance(props => {
       return <AuthPending height="40" width="40" />;
 
     case signedIn:
-      return <Btn name="Sign out" onClick={handleSignOut("/")} />;
+      return <Btn name="Sign out" onClick={handleSignOut("/sign_in")} />;
 
     default:
       return (
