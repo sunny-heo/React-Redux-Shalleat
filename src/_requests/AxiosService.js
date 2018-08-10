@@ -21,6 +21,7 @@ class AxiosService {
   }
 
   handleError = error => {
+    console.log(error);
     switch (error.response.status) {
       case 401:
         this.redirectTo(document, "/sign_in");

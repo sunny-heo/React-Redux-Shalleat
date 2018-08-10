@@ -1,15 +1,40 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import { compose, withState, withHandlers } from "recompose";
+import { extractType, extractRadius } from "../../_helpers/searchPageHelper";
+import { getRestaurants } from "../../actions/restaurantAction";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import FormControl from "@material-ui/core/FormControl";
 
+const WAIT_INTERVAL = 1000;
 const mapStateToProps = (state, nextOwnProps) => state;
 
-const enhance = compose(connect(mapStateToProps));
+const enhance = compose(
+  connect(mapStateToProps),
+  withState("timerId", "setTimerId", null),
+  withHandlers({
+    handleOnChange: props => evt => {
+      evt.preventDefault();
+      const { timerId, setTimerId, user } = props;
+      const { value: input } = evt.currentTarget;
+      const typeKeyword = extractType(input);
+      const radius = extractRadius(input) || 5000;
+      const currentLocation = user.location;
+      const filters = { ...currentLocation, radius, typeKeyword };
+
+      clearTimeout(timerId);
+
+      setTimerId(
+        setTimeout(() => {
+          props.dispatch(getRestaurants(filters));
+        }, WAIT_INTERVAL)
+      );
+    }
+  })
+);
 const SearchPage = enhance(props => {
   return (
     <div
@@ -31,6 +56,7 @@ const SearchPage = enhance(props => {
             ),
             style: { color: "#424242" }
           }}
+          onChange={props.handleOnChange}
         />
       </FormControl>
     </div>

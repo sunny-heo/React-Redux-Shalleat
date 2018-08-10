@@ -17,7 +17,6 @@ const {
 
 export const getRestaurants = filters => async dispatch => {
   dispatch({ type: RESTAURANT_ALL_PENDING });
-
   try {
     const restaurants = await restaurantService.getAll(filters);
     dispatch({ type: RESTAURANT_ALL_FULFILLED, payload: restaurants });

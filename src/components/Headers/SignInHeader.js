@@ -30,7 +30,6 @@ const enhance = compose(
   withTheme(),
   withStyles(styles),
   withState("index", "setIndex", 0),
-
   withHandlers({
     handleOnChange: props => evt => {
       evt.preventDefault();

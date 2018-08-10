@@ -3,7 +3,10 @@ import service from "./AxiosService";
 export default {
   async getAll(filters) {
     try {
-      const restaurants = await service.post("/restaurants/all", filters);
+      const { results: restaurants } = await service.post(
+        "/restaurants/all",
+        filters
+      );
       return restaurants;
     } catch (error) {
       console.log("Error in getAllRestaurnts request => ", error);
