@@ -29,13 +29,14 @@ const enhance = compose(
   withHandlers({
     handleSignIn: props => evt => {
       evt.preventDefault();
+
       const userInput = getAllFormInput(evt.currentTarget);
       const { setValidEmail, setValidPassword } = props;
       const validEmail = !!userInput.email;
       const validPassword = !!userInput.password;
 
-      setValidEmail(!!userInput.email);
-      setValidPassword(!!userInput.password);
+      setValidEmail(validEmail);
+      setValidPassword(validPassword);
 
       if (validEmail && validPassword) {
         props.dispatch(signInUser(userInput));
@@ -52,17 +53,14 @@ const SwitchComponent = enhance(
   ({
     validEmail,
     validPassword,
-    signedIn,
     pendingSignIn,
     handleSignIn,
-    handleGuestMode
+    handleGuestMode,
+    ...restProps
   }) => {
     switch (true) {
       case pendingSignIn:
         return <AuthPending />;
-      case signedIn:
-        return <Redirect exact to="/" />;
-
       default:
         return (
           <SignInForm
@@ -70,6 +68,7 @@ const SwitchComponent = enhance(
             validPassword={validPassword}
             onSignInClick={handleSignIn}
             handleGuestMode={handleGuestMode}
+            {...restProps}
           />
         );
     }

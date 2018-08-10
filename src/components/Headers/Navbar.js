@@ -38,17 +38,16 @@ const enhance = compose(
       evt.preventDefault();
       props.history.push(path);
     },
-    handleSignOut: props => path => evt => {
+    handleSignOut: props => evt => {
       evt.preventDefault();
       props.dispatch(signOutUser());
-      props.history.push(path);
     }
   })
 );
 
 const SwitchComponent = enhance(props => {
   const {
-    location,
+    history,
     signedIn,
     pendingSignIn,
     pendingSignUp,
@@ -64,7 +63,7 @@ const SwitchComponent = enhance(props => {
       return <AuthPending height="40" width="40" />;
 
     case signedIn:
-      return <Btn name="Sign out" onClick={handleSignOut("/sign_in")} />;
+      return <Btn name="Sign out" onClick={handleSignOut} />;
 
     default:
       return (
@@ -72,12 +71,12 @@ const SwitchComponent = enhance(props => {
           <Btn
             name="Sign in"
             onClick={handleNavigateTo("/sign_in")}
-            currentPath={location.pathname === "/sign_in"}
+            currentPath={history.location.pathname === "/sign_in"}
           />
           <Btn
             name="Sign up"
             onClick={handleNavigateTo("/sign_up")}
-            currentPath={location.pathname === "/sign_up"}
+            currentPath={history.location.pathname === "/sign_up"}
           />
         </Fragment>
       );

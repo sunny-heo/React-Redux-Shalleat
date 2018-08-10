@@ -1,4 +1,5 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { signUpUser } from "../../actions/userAction";
@@ -31,11 +32,7 @@ const SignUpPage = props => {
         );
 
       case signedUp:
-        return (
-          <div className="SignUpPage d-flex flex-column justify-content-center align-items-center w-100">
-            Signed In!
-          </div>
-        );
+        return <Redirect to="/" />;
 
       default:
         return (

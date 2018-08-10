@@ -32,7 +32,8 @@ const SignInForm = enhance(
     handleNavigateTo,
     handleGuestMode,
     validEmail,
-    validPassword
+    validPassword,
+    authError
   }) => (
     <form onSubmit={onSignInClick}>
       <div className="form-group">
@@ -97,6 +98,9 @@ const SignInForm = enhance(
         >
           Forgot password?
         </a>
+      </div>
+      <div className="d-flex justify-content-center align-items-center mt-4">
+        <span className="text-danger">{authError.message} </span>
       </div>
       <div
         className="d-flex justify-content-between align-items-center flex-wrap"

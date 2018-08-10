@@ -26,7 +26,7 @@ const initialState = {
   signedUp: false,
   pendingSignOut: false,
   signedOut: false,
-  authError: null,
+  authError: {},
   pendingGetLocation: true,
   gotUserLocation: false,
   location: null,
@@ -49,6 +49,7 @@ export default (state = initialState, action) => {
         ...state,
         pendingSignIn: false,
         signedIn: true,
+        authError: {},
         user: action.payload
       };
     }
