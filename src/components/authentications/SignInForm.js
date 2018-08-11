@@ -1,22 +1,12 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import { compose, withHandlers } from "recompose";
-import { withStyles } from "@material-ui/core/styles";
 
 import TextField from "@material-ui/core/TextField";
 import Btn from "../common/Button";
 
-const styles = {
-  input: {
-    color: "#424242"
-  },
-  textFieldFormLabel: {
-    color: "#424242"
-  }
-};
 const enhance = compose(
   withRouter,
-  withStyles(styles),
   withHandlers({
     handleNavigateTo: props => path => evt => {
       evt.preventDefault();
@@ -27,7 +17,6 @@ const enhance = compose(
 
 const SignInForm = enhance(
   ({
-    classes,
     onSignInClick,
     handleNavigateTo,
     handleGuestMode,
