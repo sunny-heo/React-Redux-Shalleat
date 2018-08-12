@@ -1,40 +1,29 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose, withState, withHandlers } from "recompose";
-import { extractType, extractRadius } from "../../_helpers/searchPageHelper";
-import { getRestaurants } from "../../actions/restaurantAction";
+import { compose } from "recompose";
 
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
-import FormControl from "@material-ui/core/FormControl";
+import MainSearchForm from "../maps/MainSearchForm";
+import AuthPending from "../pendings/AuthPending";
 
-const WAIT_INTERVAL = 1000;
 const mapStateToProps = (state, nextOwnProps) => state;
 
-const enhance = compose(
-  connect(mapStateToProps),
-  withState("timerId", "setTimerId", null),
-  withHandlers({
-    handleOnChange: props => evt => {
-      evt.preventDefault();
-      const { timerId, setTimerId, user } = props;
-      const { value: input } = evt.currentTarget;
-      const typeKeyword = extractType(input);
-      const radius = extractRadius(input) || 5000;
-      const currentLocation = user.location;
-      const filters = { ...currentLocation, radius, typeKeyword };
-
-      clearTimeout(timerId);
-
-      setTimerId(
-        setTimeout(() => {
-          props.dispatch(getRestaurants(filters));
-        }, WAIT_INTERVAL)
-      );
-    }
-  })
-);
+const enhance = compose(connect(mapStateToProps));
+const SwitchComponent = enhance(({ restaurants }) => {
+  const {
+    pendingGetRestaurants,
+    gotRestaurants,
+    getRestaurantsError
+  } = restaurants;
+  switch (true) {
+    case pendingGetRestaurants:
+      return <AuthPending />;
+    case gotRestaurants:
+      return <Redirect to="/map" />;
+    default:
+      return <MainSearchForm />;
+  }
+});
 const SearchPage = enhance(props => {
   return (
     <div
@@ -42,23 +31,7 @@ const SearchPage = enhance(props => {
       style={{ height: "90vh" }}
     >
       <h1>What shall we eat?</h1>
-      <FormControl className="">
-        <TextField
-          className="mb-0"
-          name="keyword"
-          style={{ width: "50vw" }}
-          placeholder="e.g. Canadian Food in 5km"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-            style: { color: "#424242" }
-          }}
-          onChange={props.handleOnChange}
-        />
-      </FormControl>
+      <SwitchComponent />
     </div>
   );
 });

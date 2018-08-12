@@ -17,7 +17,7 @@ const {
 const initialState = {
   restaurants: {},
   pendingGetRestaurants: false,
-  GotRestaurants: false,
+  gotRestaurants: false,
   getRestaurantsError: null,
   restaurantDetails: {},
   pendingGetRestaurantDetails: false,
@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pendingGetRestaurants: false,
-        GotRestaurants: true,
+        gotRestaurants: true,
         restaurants: action.payload
       };
     }
