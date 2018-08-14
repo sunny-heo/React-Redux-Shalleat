@@ -12,12 +12,14 @@ const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user.user,
     pendingSignUp: state.user.pendingSignUp,
+    signedIn: state.user.signedIn,
     signedUp: state.user.signedUp
   };
 };
 
 const SignUpPage = props => {
-  const { pendingSignUp, signedUp } = props;
+  const { pendingSignUp, signedIn, signedUp } = props;
+  console.log(props);
 
   const handleSignUp = e => {
     e.preventDefault();
@@ -31,6 +33,7 @@ const SignUpPage = props => {
           <Loader type="TailSpin" color="#00BFFF" height="100" width="100" />
         );
 
+      case signedIn:
       case signedUp:
         return <Redirect to="/" />;
 

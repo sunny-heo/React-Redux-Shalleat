@@ -24,6 +24,7 @@ const SwitchComponent = enhance(({ restaurants }) => {
       return <MainSearchForm />;
   }
 });
+
 const SearchPage = enhance(props => {
   return (
     <div
