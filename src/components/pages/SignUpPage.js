@@ -19,13 +19,12 @@ const mapStateToProps = (state, ownProps) => {
 
 const SignUpPage = props => {
   const { pendingSignUp, signedIn, signedUp } = props;
-  console.log(props);
-
   const handleSignUp = e => {
     e.preventDefault();
     const userInput = getAllFormInput(e.currentTarget);
     props.dispatch(signUpUser(userInput));
   };
+
   const SwitchComponent = () => {
     switch (true) {
       case pendingSignUp:

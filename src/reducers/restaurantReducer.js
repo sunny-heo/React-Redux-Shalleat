@@ -15,18 +15,18 @@ const {
 } = restaurantConstants;
 
 const initialState = {
-  restaurants: {},
+  list: {},
   pendingGetRestaurants: false,
   gotRestaurants: false,
   getRestaurantsError: null,
-  restaurantDetails: {},
-  pendingGetRestaurantDetails: false,
-  gotRestaurantDetails: false,
-  getRestaurantDetailsError: null,
-  restaurantPhotos: {},
-  pendingGetRestaurantPhotos: false,
-  gotRestaurantPhotos: false,
-  getRestaurantPhotosError: null
+  details: {},
+  pendingGetDetails: false,
+  gotdetails: false,
+  getDetailsError: null,
+  photos: {},
+  pendingGetPhotos: false,
+  gotPhotos: false,
+  getPhotosError: null
 };
 
 export default (state = initialState, action) => {
@@ -48,49 +48,49 @@ export default (state = initialState, action) => {
         ...state,
         pendingGetRestaurants: false,
         gotRestaurants: true,
-        restaurants: action.payload
+        list: action.payload
       };
     }
 
     case RESTAURANT_DETAILS_PENDING: {
-      return { ...state, pendingGetRestaurantDetails: true };
+      return { ...state, pendingGetDetails: true };
     }
 
     case RESTAURANT_DETAILS_REJECTED: {
       return {
         ...state,
-        pendingGetRestaurantDetails: false,
-        getRestaurantDetailsError: action.payload
+        pendingGetDetails: false,
+        getDetailsError: action.payload
       };
     }
 
     case RESTAURANT_DETAILS_FULFILLED: {
       return {
         ...state,
-        pendingGetRestaurantDetails: false,
-        gotRestaurantDetails: true,
-        restaurantDetails: action.payload
+        pendingGetDetails: false,
+        gotdetails: true,
+        details: action.payload
       };
     }
 
     case RESTAURANT_PHOTOS_PENDING: {
-      return { ...state, pendingGetRestaurantPhotos: true };
+      return { ...state, pendingGetPhotos: true };
     }
 
     case RESTAURANT_PHOTOS_REJECTED: {
       return {
         ...state,
-        pendingGetRestaurantPhotos: false,
-        getRestaurantPhotosError: action.payload
+        pendingGetPhotos: false,
+        getPhotosError: action.payload
       };
     }
 
     case RESTAURANT_PHOTOS_FULFILLED: {
       return {
         ...state,
-        pendingGetRestaurantPhotos: false,
-        gotRestaurantPhotos: true,
-        restaurantPhotos: action.payload
+        pendingGetPhotos: false,
+        gotPhotos: true,
+        photos: action.payload
       };
     }
 

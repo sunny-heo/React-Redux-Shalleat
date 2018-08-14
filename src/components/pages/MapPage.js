@@ -12,7 +12,7 @@ const enhance = compose(
   connect(mapStateToProps),
   lifecycle({
     componentDidMount() {
-      this.props.dispatch(getRestaurants());
+      // this.props.dispatch(getRestaurants());
     }
   })
 );
