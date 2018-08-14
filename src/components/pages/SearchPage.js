@@ -21,7 +21,7 @@ const SwitchComponent = enhance(({ restaurants }) => {
     case gotRestaurants:
       return <Redirect to="/map" />;
     default:
-      return <MainSearchForm />;
+      return <MainSearchForm style={{ width: "50vw" }} />;
   }
 });
 

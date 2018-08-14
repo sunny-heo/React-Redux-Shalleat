@@ -11,7 +11,9 @@ const {
 
   RESTAURANT_PHOTOS_PENDING,
   RESTAURANT_PHOTOS_REJECTED,
-  RESTAURANT_PHOTOS_FULFILLED
+  RESTAURANT_PHOTOS_FULFILLED,
+
+  SET_KEYWORD
 } = restaurantConstants;
 
 const initialState = {
@@ -26,7 +28,8 @@ const initialState = {
   photos: {},
   pendingGetPhotos: false,
   gotPhotos: false,
-  getPhotosError: null
+  getPhotosError: null,
+  keyword: null
 };
 
 export default (state = initialState, action) => {
@@ -91,6 +94,13 @@ export default (state = initialState, action) => {
         pendingGetPhotos: false,
         gotPhotos: true,
         photos: action.payload
+      };
+    }
+
+    case SET_KEYWORD: {
+      return {
+        ...state,
+        keyword: action.payload
       };
     }
 

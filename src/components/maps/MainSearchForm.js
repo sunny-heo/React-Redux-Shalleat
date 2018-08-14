@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, withHandlers } from "recompose";
 import { extractType, extractRadius } from "../../_helpers/searchPageHelper";
-import { getRestaurants } from "../../actions/restaurantAction";
+import { getRestaurants, setKeyword } from "../../actions/restaurantAction";
 
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -14,46 +14,50 @@ const mapStateToProps = (state, nextOwnProps) => state;
 const enhance = compose(
   connect(mapStateToProps),
   withState("filters", "setFilters", {}),
+  withState("userInput", "setUserInput", {}),
   withHandlers({
     handleOnChange: props => evt => {
       evt.preventDefault();
-      const { user, setFilters } = props;
       const { value: input } = evt.currentTarget;
-      const typeKeyword = extractType(input);
-      const radius = extractRadius(input) || 5000;
-      const currentLocation = user.location;
-      setFilters({ ...currentLocation, radius, typeKeyword });
+      props.setUserInput(input);
     },
     handleOnKeyPress: props => evt => {
       if (evt.key === "Enter") {
-        const { filters, dispatch } = props;
-        dispatch(getRestaurants(filters));
+        const { dispatch, user, userInput } = props;
+        const currentLocation = user.location;
+        const typeKeyword = extractType(userInput);
+        const radius = extractRadius(userInput) || 5000;
+
+        dispatch(getRestaurants({ ...currentLocation, radius, typeKeyword }));
+        dispatch(setKeyword(userInput));
       }
     }
   })
 );
 
-const MainSearchForm = enhance(({ handleOnChange, handleOnKeyPress }) => {
-  return (
-    <FormControl>
-      <TextField
-        className="mb-0"
-        name="keyword"
-        style={{ width: "50vw" }}
-        placeholder="e.g. Canadian Food in 5km"
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          ),
-          style: { color: "#424242" }
-        }}
-        onChange={handleOnChange}
-        onKeyPress={handleOnKeyPress}
-      />
-    </FormControl>
-  );
-});
+const MainSearchForm = enhance(
+  ({ handleOnChange, handleOnKeyPress, style }) => {
+    return (
+      <FormControl>
+        <TextField
+          className="mb-0"
+          name="keyword"
+          style={style}
+          placeholder="e.g. Canadian Food in 5km"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+            style: { color: "#424242" }
+          }}
+          onChange={handleOnChange}
+          onKeyPress={handleOnKeyPress}
+        />
+      </FormControl>
+    );
+  }
+);
 
 export default MainSearchForm;
