@@ -12,24 +12,17 @@ const enhance = compose(
   connect(mapStateToProps),
   lifecycle({
     componentDidMount() {
-      this.props.dispatch(getRestaurants());
+      const { user, dispatch } = this.props;
+      const currentLocation = user.location;
+      const radius = 1500;
+      dispatch(getRestaurants({ ...currentLocation, radius }));
     }
   })
 );
 const MapPage = enhance(props => {
   console.log(props);
+  const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
-    // <div>
-    //   <h1>This is map page </h1>;
-    //   <button
-    //     onClick={() => {
-    //       props.dispatch(getRestaurants());
-    //     }}
-    //   >
-    //     button
-    //   </button>
-    //   <Map />
-    // </div>
     <div
       className="MainPage d-flex flex-column justify-content-center m-3"
       style={{ height: "89.5vh" }}
@@ -50,11 +43,8 @@ const MapPage = enhance(props => {
         >
           <Map />
         </div>
-        <div
-          className="RestList-container w-25 ml-3 mt-2"
-          style={{ border: "solid 1px black" }}
-        >
-          <RestaurantsList />
+        <div className="RestList-container w-25 ml-3 mt-2">
+          {gotRestaurants ? <RestaurantsList /> : null}
         </div>
       </div>
     </div>

@@ -12,12 +12,15 @@ const {
 
   RESTAURANT_PHOTOS_PENDING,
   RESTAURANT_PHOTOS_REJECTED,
-  RESTAURANT_PHOTOS_FULFILLED
+  RESTAURANT_PHOTOS_FULFILLED,
+
+  SET_KEYWORD
 } = restaurantConstants;
 
 export const getRestaurants = filters => async dispatch => {
   dispatch({ type: RESTAURANT_ALL_PENDING });
   try {
+    console.log(filters);
     const restaurants = await restaurantService.getAll(filters);
     dispatch({ type: RESTAURANT_ALL_FULFILLED, payload: restaurants });
   } catch (error) {
@@ -57,4 +60,9 @@ export const getPhotos = (photos, width) => async dispatch => {
   } catch (error) {
     dispatch({ type: RESTAURANT_PHOTOS_REJECTED, payload: error });
   }
+};
+
+export const setKeyword = keyword => dispatch => {
+  console.log(keyword);
+  dispatch({ type: SET_KEYWORD, payload: keyword });
 };

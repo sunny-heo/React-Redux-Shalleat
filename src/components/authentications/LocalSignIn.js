@@ -49,31 +49,14 @@ const enhance = compose(
   })
 );
 
-const SwitchComponent = enhance(
-  ({
-    validEmail,
-    validPassword,
-    pendingSignIn,
-    handleSignIn,
-    handleGuestMode,
-    ...restProps
-  }) => {
-    switch (true) {
-      case pendingSignIn:
-        return <AuthPending />;
-      default:
-        return (
-          <SignInForm
-            validEmail={validEmail}
-            validPassword={validPassword}
-            onSignInClick={handleSignIn}
-            handleGuestMode={handleGuestMode}
-            {...restProps}
-          />
-        );
-    }
+const SwitchComponent = enhance(({ pendingSignIn, ...restProps }) => {
+  switch (true) {
+    case pendingSignIn:
+      return <AuthPending />;
+    default:
+      return <SignInForm {...restProps} />;
   }
-);
+});
 
 const LocalSignIn = enhance(props => {
   const { classes, ...restProps } = props;
