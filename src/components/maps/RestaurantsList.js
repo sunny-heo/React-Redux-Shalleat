@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, withState, withHandlers } from "recompose";
+import { compose, withState, withHandlers, lifecycle } from "recompose";
 
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
@@ -17,20 +17,44 @@ const mapStateToProps = (state, nextOwnProps) => state;
 const enhance = compose(
   connect(mapStateToProps),
   withState("revealSubSearch", "setRevealSubSearch", false),
+  withState("filteredRestaurants", "filterRestaurants", null),
+  lifecycle({
+    componentDidMount() {
+      const { filterRestaurants, restaurants } = this.props;
+      filterRestaurants([...restaurants.list]);
+    }
+  }),
   withHandlers({
     handleSearchOnClick: props => evt => {
       evt.preventDefault();
       const { revealSubSearch, setRevealSubSearch } = props;
       setRevealSubSearch(!revealSubSearch);
-      console.log(revealSubSearch);
+    },
+    handleSearchOnChange: props => evt => {
+      evt.preventDefault();
+      const [...restaurants] = props.restaurants.list;
+      const searchKeyword = evt.currentTarget.value;
+      console.log(restaurants);
+      const filteredRestaurants = restaurants.filter(r =>
+        r.name.includes(searchKeyword)
+      );
+      props.filterRestaurants(filteredRestaurants);
+      // console.log(restaurants);
+      // console.log(evt.currentTarget.value);
     }
   })
 );
 
 const RestaurantsList = enhance(props => {
-  const { revealSubSearch, handleSearchOnClick } = props;
+  const {
+    revealSubSearch,
+    handleSearchOnClick,
+    handleSearchOnChange,
+    filteredRestaurants
+  } = props;
+  console.log(filteredRestaurants);
   const { list: restaurants, keyword, ...restProps } = props.restaurants;
-  // console.log(handleSearchOnClick);
+  const foo = filteredRestaurants || restaurants;
   return (
     <div
       className="RestList list-group h-100 shadow-sm rounded"
@@ -80,7 +104,7 @@ const RestaurantsList = enhance(props => {
                   InputProps={{
                     style: { color: "#424242" }
                   }}
-                  // onChange={handleOnChange}
+                  onChange={handleSearchOnChange}
                   // onKeyPress={handleOnKeyPress}
                 />
               </div>
@@ -88,7 +112,7 @@ const RestaurantsList = enhance(props => {
           </ListSubheader>
         }
       >
-        {restaurants.map((r, i) => (
+        {foo.map((r, i) => (
           <RestaurantItem
             key={r.place_id}
             index={i}
