@@ -17,7 +17,6 @@ const RestaurantItem = enhance(props => {
   const { restaurant, handleItemClick, open, index } = props;
   const { opening_hours: hours = {} } = restaurant;
   const { open_now: openNow = false } = hours;
-  // console.log(restaurant.opening_hours);
   return (
     <Fragment>
       <Slide
