@@ -15,9 +15,11 @@ import Slide from "@material-ui/core/Slide";
 const enhance = compose();
 const RestaurantItem = enhance(props => {
   const { restaurant, handleItemClick, open, index } = props;
+  const { opening_hours: hours = {} } = restaurant;
+  const { open_now: openNow = false } = hours;
+  // console.log(restaurant.opening_hours);
   return (
     <Fragment>
-      {/* <Divider /> */}
       <Slide
         in={true}
         direction="left"
@@ -30,7 +32,11 @@ const RestaurantItem = enhance(props => {
             button
             onClick={handleItemClick}
             className="shadow-sm rounded mt-2"
-            style={{ borderLeft: "5px solid #39e4a9", marginTop: "0rem" }}
+            style={
+              openNow
+                ? { borderLeft: "5px solid #39e4a9", marginTop: "0rem" }
+                : { borderLeft: "5px solid #424242", marginTop: "0rem" }
+            }
           >
             <ListItemIcon>
               <img
