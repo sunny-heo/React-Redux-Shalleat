@@ -17,11 +17,17 @@ const mapStateToProps = (state, nextOwnProps) => state;
 const enhance = compose(
   connect(mapStateToProps),
   withState("revealSubSearch", "setRevealSubSearch", false),
-  withState("filteredRestaurants", "filterRestaurants", null),
+  withState("_restaurants", "_setRestaurants", []),
   lifecycle({
     componentDidMount() {
-      const { filterRestaurants, restaurants } = this.props;
-      filterRestaurants([...restaurants.list]);
+      const { _setRestaurants, restaurants } = this.props;
+      _setRestaurants([...restaurants.list]);
+    },
+    componentDidUpdate(prevProps) {
+      const { _setRestaurants, restaurants } = this.props;
+      if (this.props.restaurants !== prevProps.restaurants) {
+        _setRestaurants([...restaurants.list]);
+      }
     }
   }),
   withHandlers({
@@ -32,97 +38,89 @@ const enhance = compose(
     },
     handleSearchOnChange: props => evt => {
       evt.preventDefault();
-      const [...restaurants] = props.restaurants.list;
+      const [...restaurants] = props.restaurants.list || [];
       const searchKeyword = evt.currentTarget.value;
-      console.log(restaurants);
-      const filteredRestaurants = restaurants.filter(r =>
-        r.name.includes(searchKeyword)
+      const filteredRestaurants = restaurants.filter(
+        r =>
+          r.name.toLowerCase().includes(searchKeyword) ||
+          r.vicinity.toLowerCase().includes(searchKeyword)
       );
-      props.filterRestaurants(filteredRestaurants);
-      // console.log(restaurants);
-      // console.log(evt.currentTarget.value);
+      props._setRestaurants(filteredRestaurants);
     }
   })
 );
 
-const RestaurantsList = enhance(props => {
-  const {
+const RestaurantsList = enhance(
+  ({
     revealSubSearch,
     handleSearchOnClick,
     handleSearchOnChange,
-    filteredRestaurants
-  } = props;
-  console.log(filteredRestaurants);
-  const { list: restaurants, keyword, ...restProps } = props.restaurants;
-  const foo = filteredRestaurants || restaurants;
-  return (
-    <div
-      className="RestList list-group h-100 shadow-sm rounded"
-      style={{ overflow: "scroll" }}
-    >
-      <List
-        component="nav"
-        subheader={
-          <ListSubheader
-            component="div"
-            className="bg-white shadow-sm"
-            style={{ marginBottom: "5px" }}
-          >
-            <IconButton
-              className=""
-              aria-label="sub-search-box"
-              style={{ dispaly: "inline-block" }}
-              onClick={handleSearchOnClick}
-            >
-              <SearchIcon />
-              {/* <SubSearchForm style={{ width: "60%" }} /> */}
-            </IconButton>
-            <Grow in={!revealSubSearch}>
-              <div
-                style={
-                  !revealSubSearch
-                    ? { display: "inline-block", width: "75%" }
-                    : { display: "none" }
-                }
-              >
-                {`Search: ${keyword || "no results"}`}
-              </div>
-            </Grow>
-            <Grow in={revealSubSearch}>
-              <div
-                style={
-                  revealSubSearch
-                    ? { display: "inline-block", width: "75%" }
-                    : { display: "none" }
-                }
-              >
-                <TextField
-                  className="mb-0"
-                  name="keyword"
-                  style={{ width: "100%" }}
-                  placeholder=""
-                  InputProps={{
-                    style: { color: "#424242" }
-                  }}
-                  onChange={handleSearchOnChange}
-                  // onKeyPress={handleOnKeyPress}
-                />
-              </div>
-            </Grow>
-          </ListSubheader>
-        }
+    restaurants,
+    _restaurants
+  }) => {
+    return (
+      <div
+        className="RestList list-group h-100 shadow-sm rounded"
+        style={{ overflow: "scroll" }}
       >
-        {foo.map((r, i) => (
-          <RestaurantItem
-            key={r.place_id}
-            index={i}
-            restaurant={r}
-            {...restProps}
-          />
-        ))}
-      </List>
-    </div>
-  );
-});
+        <List
+          component="nav"
+          subheader={
+            <ListSubheader
+              component="div"
+              className="bg-white shadow-sm"
+              style={{ marginBottom: "5px" }}
+            >
+              <IconButton
+                className=""
+                aria-label="sub-search-box"
+                style={{ dispaly: "inline-block" }}
+                onClick={handleSearchOnClick}
+              >
+                <SearchIcon />
+              </IconButton>
+              <Grow in={!revealSubSearch}>
+                <div
+                  style={
+                    !revealSubSearch
+                      ? { display: "inline-block", width: "75%" }
+                      : { display: "none" }
+                  }
+                >
+                  <span>{`Search: ${restaurants.keyword ||
+                    "no results"}`}</span>
+                </div>
+              </Grow>
+              <Grow in={revealSubSearch}>
+                <div
+                  style={
+                    revealSubSearch
+                      ? { display: "inline-block", width: "75%" }
+                      : { display: "none" }
+                  }
+                >
+                  <TextField
+                    className="mb-0"
+                    name="keyword"
+                    style={{ width: "100%" }}
+                    placeholder="Please search name or address"
+                    InputProps={{
+                      style: { color: "#424242" }
+                    }}
+                    onChange={handleSearchOnChange}
+                  />
+                </div>
+              </Grow>
+            </ListSubheader>
+          }
+        >
+          {_restaurants.map((r, i) => (
+            <RestaurantItem key={r.place_id} index={i} restaurant={r} />
+          ))}
+        </List>
+      </div>
+    );
+  }
+);
 
 export default RestaurantsList;
