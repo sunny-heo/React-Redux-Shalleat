@@ -6,48 +6,38 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import RestaurantOutlined from "@material-ui/icons/RestaurantOutlined";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
-import Avatar from "@material-ui/core/Avatar";
-import StarRating from "./StarRating";
 import Divider from "@material-ui/core/Divider";
 import Slide from "@material-ui/core/Slide";
-
-import Paper from "@material-ui/core/Paper";
-import Grow from "@material-ui/core/Grow";
 
 const enhance = compose();
 const RestaurantItem = enhance(props => {
   const { restaurant, handleItemClick, open, index } = props;
+  const { opening_hours: hours = {} } = restaurant;
+  const { open_now: openNow = false } = hours;
   return (
     <Fragment>
-      <Divider />
       <Slide
         in={true}
         direction="left"
-        in={true}
         mountOnEnter
         unmountOnExit
-        // style={{ transformOrigin: "0 0 0" }}
         {...(true ? { timeout: index * 300 - 1.75 ** index } : {})}
       >
-        {/* <Paper elevation={4} className=""> */}
         <div>
           <ListItem
             button
             onClick={handleItemClick}
-            // className="shadow-sm rounded"
-            style={{ borderLeft: "5px solid #39e4a9", marginTop: "0rem" }}
+            className="shadow-sm rounded mt-2"
+            style={
+              openNow
+                ? { borderLeft: "5px solid #39e4a9", marginTop: "0rem" }
+                : { borderLeft: "5px solid #424242", marginTop: "0rem" }
+            }
           >
             <ListItemIcon>
-              {/* {restaurant.rating ? (
-            <StarRating rating={restaurant.rating} />
-          ) : (
-            <div>hello</div>
-          )} */}
               <img
                 src={restaurant.icon}
                 style={{ width: "40px", height: "40px" }}
@@ -70,7 +60,6 @@ const RestaurantItem = enhance(props => {
               </ListItem>
             </List>
           </Collapse>
-          {/* </Paper> */}
         </div>
       </Slide>
     </Fragment>

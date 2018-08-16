@@ -15,7 +15,7 @@ const enhance = compose(
       const { user, dispatch } = this.props;
       const currentLocation = user.location;
       const radius = 1500;
-      dispatch(getRestaurants({ ...currentLocation, radius }));
+      // dispatch(getRestaurants({ ...currentLocation, radius }));
     }
   })
 );

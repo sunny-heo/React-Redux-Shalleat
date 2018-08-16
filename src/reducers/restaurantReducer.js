@@ -17,7 +17,7 @@ const {
 } = restaurantConstants;
 
 const initialState = {
-  list: {},
+  list: [],
   pendingGetRestaurants: false,
   gotRestaurants: false,
   getRestaurantsError: null,
