@@ -12,6 +12,16 @@ import Typography from "@material-ui/core/Typography";
 import Btn from "../common/Button";
 import AuthPending from "../pendings/AuthPending";
 import LocationPending from "../pendings/LocationPending";
+import MainSearchForm from "../maps/MainSearchForm";
+import SearchIcon from "@material-ui/icons/Search";
+import IconButton from "@material-ui/core/IconButton";
+import Zoom from "@material-ui/core/Zoom";
+import Paper from "@material-ui/core/Paper";
+
+import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
+
+import NavSearchForm from "./NavSearchForm";
 
 const styles = theme => ({
   flex: {
@@ -33,6 +43,7 @@ const enhance = compose(
   withStyles(styles),
   withState("activeTabIndex", "setActiveTabIndex", 0),
   withState("selectedBtn", "setSelectedBtn", null),
+  withState("openSearchBar", "setOpenSearchBar", false),
   withHandlers({
     handleNavigateTo: props => path => evt => {
       evt.preventDefault();
@@ -41,6 +52,11 @@ const enhance = compose(
     handleSignOut: props => evt => {
       evt.preventDefault();
       props.dispatch(signOutUser());
+    },
+    handleSearchIcon: props => evt => {
+      evt.preventDefault();
+      const { openSearchBar, setOpenSearchBar } = props;
+      setOpenSearchBar(!openSearchBar);
     }
   })
 );
@@ -53,7 +69,9 @@ const SwitchComponent = enhance(props => {
     pendingSignUp,
     pendingSignOut,
     handleNavigateTo,
-    handleSignOut
+    handleSignOut,
+    openSearchBar,
+    handleSearchIcon
   } = props;
 
   switch (true) {
@@ -62,6 +80,22 @@ const SwitchComponent = enhance(props => {
     case pendingSignOut:
       return <AuthPending height="40" width="40" />;
 
+    case signedIn && history.location.pathname === "/map":
+      return (
+        <Fragment>
+          <IconButton className="" aria-label="MainSearch">
+            <SearchIcon onClick={handleSearchIcon} />
+          </IconButton>
+          <Zoom in={openSearchBar} timeout={{ enter: 500, exit: 500 }}>
+            <div
+              style={openSearchBar ? { display: "block" } : { display: "none" }}
+            >
+              <NavSearchForm style={{ width: "200px" }} />
+            </div>
+          </Zoom>
+          <Btn name="Sign out" onClick={handleSignOut} />
+        </Fragment>
+      );
     case signedIn:
       return <Btn name="Sign out" onClick={handleSignOut} />;
 
