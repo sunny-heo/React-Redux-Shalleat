@@ -44,7 +44,8 @@ const MapPage = enhance(props => {
           <Map />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
-          {gotRestaurants ? <RestaurantsList /> : null}
+          {/* {gotRestaurants ? <RestaurantsList /> : null} */}
+          <RestaurantsList />
         </div>
       </div>
     </div>

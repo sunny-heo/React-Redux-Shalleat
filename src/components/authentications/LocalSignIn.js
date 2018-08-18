@@ -6,7 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { guest, getAllFormInput } from "../../_helpers";
 import { signInUser } from "../../actions/userAction";
 
-import AuthPending from "../pendings/AuthPending";
+import AuthPending from "../pendings/CircularPending";
 import SignInForm from "./SignInForm";
 
 const styles = theme => {

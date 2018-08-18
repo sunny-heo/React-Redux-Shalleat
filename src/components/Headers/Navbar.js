@@ -10,7 +10,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Btn from "../common/Button";
-import AuthPending from "../pendings/AuthPending";
+import AuthPending from "../pendings/CircularPending";
 import LocationPending from "../pendings/LocationPending";
 import MainSearchForm from "../maps/MainSearchForm";
 import SearchIcon from "@material-ui/icons/Search";
@@ -78,7 +78,7 @@ const SwitchComponent = enhance(props => {
     case pendingSignIn:
     case pendingSignUp:
     case pendingSignOut:
-      return <AuthPending height="40" width="40" />;
+      return <AuthPending style={{ height: "40px", width: "40px" }} />;
 
     case signedIn && history.location.pathname === "/map":
       return (

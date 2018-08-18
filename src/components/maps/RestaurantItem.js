@@ -11,11 +11,12 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Slide from "@material-ui/core/Slide";
+import RestaurantDetail from "./RestaurantDetail";
 
 import { setItemOpen } from "../../actions/restaurantAction";
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
-const openItem = ({ openedItem, index: currentIndex, dispatch }) => {
+const openDetail = ({ openedItem, index: currentIndex, dispatch }) => {
   const { openedIndex, opened } = openedItem;
   if (opened && openedIndex !== currentIndex) {
     dispatch(setItemOpen(currentIndex, opened));
@@ -29,12 +30,18 @@ const enhance = compose(
   withHandlers({
     handleItemClick: props => evt => {
       evt.preventDefault();
-      openItem(props);
+      openDetail(props);
     }
   })
 );
 const RestaurantItem = enhance(props => {
-  const { restaurant, handleItemClick, index, openedItem } = props;
+  const {
+    restaurant,
+    handleItemClick,
+    index,
+    openedItem,
+    gotRestaurants
+  } = props;
   const { openedIndex, opened } = openedItem;
   const { opening_hours: hours = {} } = restaurant;
   const { open_now: openNow = false } = hours;
@@ -72,16 +79,7 @@ const RestaurantItem = enhance(props => {
             />
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={openDetail} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className="">
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText inset primary="Starred" />
-              </ListItem>
-            </List>
-          </Collapse>
+          <RestaurantDetail openDetail={openDetail} />
         </div>
       </Slide>
     </Fragment>
