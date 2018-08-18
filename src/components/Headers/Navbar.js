@@ -12,14 +12,9 @@ import Typography from "@material-ui/core/Typography";
 import Btn from "../common/Button";
 import AuthPending from "../pendings/CircularPending";
 import LocationPending from "../pendings/LocationPending";
-import MainSearchForm from "../maps/MainSearchForm";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import Zoom from "@material-ui/core/Zoom";
-import Paper from "@material-ui/core/Paper";
-
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 
 import NavSearchForm from "./NavSearchForm";
 
