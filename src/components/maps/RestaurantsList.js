@@ -5,13 +5,14 @@ import { compose, withState, withHandlers, lifecycle } from "recompose";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import RestaurantItem from "./RestaurantItem";
-import SubSearchForm from "../maps/SubSearchForm";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
+import LocationPending from "../pendings/LocationPending";
 
 import TextField from "@material-ui/core/TextField";
 import Grow from "@material-ui/core/Grow";
 
+import RestaurantTopItem from "./RestaurantTopItem";
 const mapStateToProps = (state, nextOwnProps) => state;
 
 const enhance = compose(
@@ -39,7 +40,7 @@ const enhance = compose(
     handleSearchOnChange: props => evt => {
       evt.preventDefault();
       const [...restaurants] = props.restaurants.list || [];
-      const searchKeyword = evt.currentTarget.value;
+      const searchKeyword = evt.currentTarget.value.toLowerCase();
       const filteredRestaurants = restaurants.filter(
         r =>
           r.name.toLowerCase().includes(searchKeyword) ||
@@ -50,77 +51,43 @@ const enhance = compose(
   })
 );
 
-const RestaurantsList = enhance(
-  ({
-    revealSubSearch,
-    handleSearchOnClick,
-    handleSearchOnChange,
-    restaurants,
-    _restaurants
-  }) => {
-    return (
-      <div
-        className="RestList list-group h-100 shadow-sm rounded"
-        style={{ overflow: "scroll" }}
-      >
-        <List
-          component="nav"
-          subheader={
-            <ListSubheader
-              component="div"
-              className="bg-white shadow-sm"
-              style={{ marginBottom: "5px" }}
+const RestaurantsList = enhance(props => {
+  const { handleSearchOnClick, restaurants, _restaurants } = props;
+  return (
+    <div
+      className="RestList list-group h-100 shadow-sm rounded"
+      style={{ overflow: "scroll" }}
+    >
+      <List
+        component="nav"
+        subheader={
+          <ListSubheader
+            component="div"
+            className="bg-white shadow-sm"
+            style={{ marginBottom: "5px" }}
+          >
+            <IconButton
+              className=""
+              aria-label="sub-search-box"
+              style={{ dispaly: "inline-block" }}
+              onClick={handleSearchOnClick}
             >
-              <IconButton
-                className=""
-                aria-label="sub-search-box"
-                style={{ dispaly: "inline-block" }}
-                onClick={handleSearchOnClick}
-              >
-                <SearchIcon />
-              </IconButton>
-              <Grow in={!revealSubSearch}>
-                <div
-                  style={
-                    !revealSubSearch
-                      ? { display: "inline-block", width: "75%" }
-                      : { display: "none" }
-                  }
-                >
-                  <span>{`Search: ${restaurants.keyword ||
-                    "no results"}`}</span>
-                </div>
-              </Grow>
-              <Grow in={revealSubSearch}>
-                <div
-                  style={
-                    revealSubSearch
-                      ? { display: "inline-block", width: "75%" }
-                      : { display: "none" }
-                  }
-                >
-                  <TextField
-                    className="mb-0"
-                    name="keyword"
-                    style={{ width: "100%" }}
-                    placeholder="Please search name or address"
-                    InputProps={{
-                      style: { color: "#424242" }
-                    }}
-                    onChange={handleSearchOnChange}
-                  />
-                </div>
-              </Grow>
-            </ListSubheader>
-          }
-        >
-          {_restaurants.map((r, i) => (
-            <RestaurantItem key={r.place_id} index={i} restaurant={r} />
-          ))}
-        </List>
-      </div>
-    );
-  }
-);
+              <SearchIcon />
+            </IconButton>
+            <RestaurantTopItem {...props} />
+          </ListSubheader>
+        }
+      >
+        {_restaurants.map((r, i) => (
+          <RestaurantItem key={r.place_id} index={i} restaurant={r} />
+        ))}
+        {/* {!pendingGetRestaurants ? ( */}
+        {/* ) : (
+          <LocationPending pending={pendingGetRestaurants} color="secondary" />
+        )} */}
+      </List>
+    </div>
+  );
+});
 
 export default RestaurantsList;

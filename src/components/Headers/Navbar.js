@@ -10,16 +10,11 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Btn from "../common/Button";
-import AuthPending from "../pendings/AuthPending";
+import AuthPending from "../pendings/CircularPending";
 import LocationPending from "../pendings/LocationPending";
-import MainSearchForm from "../maps/MainSearchForm";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import Zoom from "@material-ui/core/Zoom";
-import Paper from "@material-ui/core/Paper";
-
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 
 import NavSearchForm from "./NavSearchForm";
 
@@ -78,13 +73,17 @@ const SwitchComponent = enhance(props => {
     case pendingSignIn:
     case pendingSignUp:
     case pendingSignOut:
-      return <AuthPending height="40" width="40" />;
+      return <AuthPending style={{ height: "40px", width: "40px" }} />;
 
     case signedIn && history.location.pathname === "/map":
       return (
         <Fragment>
-          <IconButton className="" aria-label="MainSearch">
-            <SearchIcon onClick={handleSearchIcon} />
+          <IconButton
+            className=""
+            aria-label="MainSearch"
+            onClick={handleSearchIcon}
+          >
+            <SearchIcon />
           </IconButton>
           <Zoom in={openSearchBar} timeout={{ enter: 500, exit: 500 }}>
             <div

@@ -6,7 +6,7 @@ import { compose, lifecycle } from "recompose";
 
 import { googleSignInUser } from "../../actions/userAction";
 
-import AuthPending from "../pendings/AuthPending";
+import AuthPending from "../pendings/CircularPending";
 
 const styles = theme => {
   return {

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 
 import MainSearchForm from "../maps/MainSearchForm";
-import AuthPending from "../pendings/AuthPending";
+import AuthPending from "../pendings/CircularPending";
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
