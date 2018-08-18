@@ -83,8 +83,12 @@ const SwitchComponent = enhance(props => {
     case signedIn && history.location.pathname === "/map":
       return (
         <Fragment>
-          <IconButton className="" aria-label="MainSearch">
-            <SearchIcon onClick={handleSearchIcon} />
+          <IconButton
+            className=""
+            aria-label="MainSearch"
+            onClick={handleSearchIcon}
+          >
+            <SearchIcon />
           </IconButton>
           <Zoom in={openSearchBar} timeout={{ enter: 500, exit: 500 }}>
             <div
