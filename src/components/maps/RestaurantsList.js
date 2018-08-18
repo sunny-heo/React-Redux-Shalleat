@@ -39,7 +39,7 @@ const enhance = compose(
     handleSearchOnChange: props => evt => {
       evt.preventDefault();
       const [...restaurants] = props.restaurants.list || [];
-      const searchKeyword = evt.currentTarget.value;
+      const searchKeyword = evt.currentTarget.value.toLowerCase();
       const filteredRestaurants = restaurants.filter(
         r =>
           r.name.toLowerCase().includes(searchKeyword) ||

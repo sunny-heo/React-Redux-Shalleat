@@ -13,7 +13,9 @@ const {
   RESTAURANT_PHOTOS_REJECTED,
   RESTAURANT_PHOTOS_FULFILLED,
 
-  SET_KEYWORD
+  SET_KEYWORD,
+
+  RESTAURANT_OPEN_ITEM
 } = restaurantConstants;
 
 const initialState = {
@@ -29,7 +31,9 @@ const initialState = {
   pendingGetPhotos: false,
   gotPhotos: false,
   getPhotosError: null,
-  keyword: null
+  keyword: null,
+  OpenedItemIdx: null,
+  openedItem: {}
 };
 
 export default (state = initialState, action) => {
@@ -101,6 +105,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         keyword: action.payload
+      };
+    }
+
+    case RESTAURANT_OPEN_ITEM: {
+      return {
+        ...state,
+        openedItem: action.payload
       };
     }
 
