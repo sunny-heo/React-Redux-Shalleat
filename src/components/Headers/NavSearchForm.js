@@ -35,22 +35,25 @@ const enhance = compose(
   })
 );
 
-const NavSearchForm = enhance(({ handleOnChange, handleOnKeyPress, style }) => {
-  return (
-    <FormControl>
-      <TextField
-        className="mb-0"
-        name="keyword"
-        style={style}
-        placeholder=""
-        InputProps={{
-          style: { color: "#424242" }
-        }}
-        onChange={handleOnChange}
-        onKeyPress={handleOnKeyPress}
-      />
-    </FormControl>
-  );
-});
+const NavSearchForm = enhance(
+  ({ handleOnChange, handleOnKeyPress, style, disabled }) => {
+    return (
+      <FormControl>
+        <TextField
+          className="mb-0"
+          name="keyword"
+          style={style}
+          placeholder=""
+          InputProps={{
+            style: { color: "#424242" }
+          }}
+          onChange={handleOnChange}
+          onKeyPress={handleOnKeyPress}
+          disabled={disabled}
+        />
+      </FormControl>
+    );
+  }
+);
 
 export default NavSearchForm;

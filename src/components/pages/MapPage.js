@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, withState, lifecycle } from "recompose";
+import { compose, withState, lifecycle, withHandlers } from "recompose";
 import { getRestaurants } from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
@@ -10,12 +10,30 @@ const mapStateToProps = (state, nextOwnProps) => state;
 
 const enhance = compose(
   connect(mapStateToProps),
+  withState("_restaurants", "_setRestaurants", []),
   lifecycle({
     componentDidMount() {
-      const { user, dispatch } = this.props;
-      const currentLocation = user.location;
-      const radius = 1500;
-      // dispatch(getRestaurants({ ...currentLocation, radius }));
+      const { _setRestaurants, restaurants } = this.props;
+      _setRestaurants([...restaurants.list]);
+    },
+    componentDidUpdate(prevProps) {
+      const { _setRestaurants, restaurants } = this.props;
+      if (this.props.restaurants !== prevProps.restaurants) {
+        _setRestaurants([...restaurants.list]);
+      }
+    }
+  }),
+  withHandlers({
+    handleSearchOnChange: props => evt => {
+      evt.preventDefault();
+      const [...restaurants] = props.restaurants.list || [];
+      const searchKeyword = evt.currentTarget.value.toLowerCase();
+      const filteredRestaurants = restaurants.filter(
+        r =>
+          r.name.toLowerCase().includes(searchKeyword) ||
+          r.vicinity.toLowerCase().includes(searchKeyword)
+      );
+      props._setRestaurants(filteredRestaurants);
     }
   })
 );
@@ -44,8 +62,7 @@ const MapPage = enhance(props => {
           <Map />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
-          {/* {gotRestaurants ? <RestaurantsList /> : null} */}
-          <RestaurantsList />
+          {gotRestaurants ? <RestaurantsList {...props} /> : null}
         </div>
       </div>
     </div>

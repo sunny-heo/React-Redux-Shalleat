@@ -11,12 +11,11 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Slide from "@material-ui/core/Slide";
-import RestaurantDetail from "./RestaurantDetail";
 
 import { setItemOpen } from "../../actions/restaurantAction";
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
-const openDetail = ({ openedItem, index: currentIndex, dispatch }) => {
+const openItem = ({ openedItem, index: currentIndex, dispatch }) => {
   const { openedIndex, opened } = openedItem;
   if (opened && openedIndex !== currentIndex) {
     dispatch(setItemOpen(currentIndex, opened));
@@ -30,18 +29,12 @@ const enhance = compose(
   withHandlers({
     handleItemClick: props => evt => {
       evt.preventDefault();
-      openDetail(props);
+      openItem(props);
     }
   })
 );
 const RestaurantItem = enhance(props => {
-  const {
-    restaurant,
-    handleItemClick,
-    index,
-    openedItem,
-    gotRestaurants
-  } = props;
+  const { restaurant, handleItemClick, index, openedItem } = props;
   const { openedIndex, opened } = openedItem;
   const { opening_hours: hours = {} } = restaurant;
   const { open_now: openNow = false } = hours;
@@ -55,11 +48,11 @@ const RestaurantItem = enhance(props => {
         unmountOnExit
         {...(true ? { timeout: index * 300 - 1.75 ** index } : {})}
       >
-        <div>
+        <div style={{ paddingRight: "2px" }}>
           <ListItem
             button
             onClick={handleItemClick}
-            className="shadow-sm rounded mt-2"
+            className="shadow-sm rounded mb-1"
             style={
               openNow
                 ? { borderLeft: "5px solid #39e4a9" }
@@ -79,7 +72,16 @@ const RestaurantItem = enhance(props => {
             />
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <RestaurantDetail openDetail={openDetail} />
+          <Collapse in={openDetail} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button className="">
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText inset primary="Starred" />
+              </ListItem>
+            </List>
+          </Collapse>
         </div>
       </Slide>
     </Fragment>
