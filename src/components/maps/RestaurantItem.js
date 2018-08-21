@@ -48,11 +48,11 @@ const RestaurantItem = enhance(props => {
         unmountOnExit
         {...(true ? { timeout: index * 300 - 1.75 ** index } : {})}
       >
-        <div>
+        <div style={{ paddingRight: "2px" }}>
           <ListItem
             button
             onClick={handleItemClick}
-            className="shadow-sm rounded mt-2"
+            className="shadow-sm rounded mb-1"
             style={
               openNow
                 ? { borderLeft: "5px solid #39e4a9" }

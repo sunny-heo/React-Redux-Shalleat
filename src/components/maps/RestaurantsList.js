@@ -59,17 +59,15 @@ const RestaurantsList = enhance(
     _restaurants
   }) => {
     return (
-      <div
-        className="RestList list-group h-100 shadow-sm rounded"
-        style={{ overflow: "scroll" }}
-      >
+      <div className="RestList list-group h-100">
         <List
           component="nav"
+          style={{ display: "flex", flexDirection: "column", padding: 0 }}
           subheader={
             <ListSubheader
               component="div"
               className="bg-white shadow-sm"
-              style={{ marginBottom: "5px" }}
+              // style={{ marginBottom: "5px" }}
             >
               <IconButton
                 className=""
@@ -114,9 +112,11 @@ const RestaurantsList = enhance(
             </ListSubheader>
           }
         >
-          {_restaurants.map((r, i) => (
-            <RestaurantItem key={r.place_id} index={i} restaurant={r} />
-          ))}
+          <div className="mt-2" style={{ overflow: "scroll" }}>
+            {_restaurants.map((r, i) => (
+              <RestaurantItem key={r.place_id} index={i} restaurant={r} />
+            ))}
+          </div>
         </List>
       </div>
     );
