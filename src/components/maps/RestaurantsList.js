@@ -1,51 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, withState, withHandlers, lifecycle } from "recompose";
+import { compose, withState, withHandlers } from "recompose";
 
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import RestaurantItem from "./RestaurantItem";
-import SubSearchForm from "../maps/SubSearchForm";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 
 import TextField from "@material-ui/core/TextField";
 import Grow from "@material-ui/core/Grow";
 
+import CircularPending from "../pendings/CircularPending";
+
 const mapStateToProps = (state, nextOwnProps) => state;
 
 const enhance = compose(
   connect(mapStateToProps),
   withState("revealSubSearch", "setRevealSubSearch", false),
-  withState("_restaurants", "_setRestaurants", []),
-  lifecycle({
-    componentDidMount() {
-      const { _setRestaurants, restaurants } = this.props;
-      _setRestaurants([...restaurants.list]);
-    },
-    componentDidUpdate(prevProps) {
-      const { _setRestaurants, restaurants } = this.props;
-      if (this.props.restaurants !== prevProps.restaurants) {
-        _setRestaurants([...restaurants.list]);
-      }
-    }
-  }),
   withHandlers({
     handleSearchOnClick: props => evt => {
       evt.preventDefault();
       const { revealSubSearch, setRevealSubSearch } = props;
       setRevealSubSearch(!revealSubSearch);
-    },
-    handleSearchOnChange: props => evt => {
-      evt.preventDefault();
-      const [...restaurants] = props.restaurants.list || [];
-      const searchKeyword = evt.currentTarget.value.toLowerCase();
-      const filteredRestaurants = restaurants.filter(
-        r =>
-          r.name.toLowerCase().includes(searchKeyword) ||
-          r.vicinity.toLowerCase().includes(searchKeyword)
-      );
-      props._setRestaurants(filteredRestaurants);
     }
   })
 );
@@ -58,25 +35,36 @@ const RestaurantsList = enhance(
     restaurants,
     _restaurants
   }) => {
+    const { pendingGetRestaurants: pending } = restaurants;
     return (
       <div className="RestList list-group h-100">
         <List
           component="nav"
           style={{ display: "flex", flexDirection: "column", padding: 0 }}
           subheader={
-            <ListSubheader
-              component="div"
-              className="bg-white shadow-sm"
-              // style={{ marginBottom: "5px" }}
-            >
+            <ListSubheader component="div" className="bg-white shadow-sm">
+              {pending && (
+                <CircularPending
+                  style={{
+                    position: "absolute",
+                    color: "#ff4081",
+                    top: "2px",
+                    left: "25px"
+                  }}
+                  size={45}
+                  thickness={4}
+                />
+              )}
               <IconButton
                 className=""
                 aria-label="sub-search-box"
                 style={{ dispaly: "inline-block" }}
                 onClick={handleSearchOnClick}
+                disabled={pending}
               >
                 <SearchIcon />
               </IconButton>
+
               <Grow in={!revealSubSearch}>
                 <div
                   style={
@@ -106,6 +94,7 @@ const RestaurantsList = enhance(
                       style: { color: "#424242" }
                     }}
                     onChange={handleSearchOnChange}
+                    disabled={pending}
                   />
                 </div>
               </Grow>
