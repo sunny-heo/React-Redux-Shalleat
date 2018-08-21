@@ -12,14 +12,11 @@ import Typography from "@material-ui/core/Typography";
 import Btn from "../common/Button";
 import AuthPending from "../pendings/AuthPending";
 import LocationPending from "../pendings/LocationPending";
-import MainSearchForm from "../maps/MainSearchForm";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import Zoom from "@material-ui/core/Zoom";
-import Paper from "@material-ui/core/Paper";
-
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import CircularPending from "../pendings/CircularPending";
+import SearchPending from "../pendings/SearchPending";
 
 import NavSearchForm from "./NavSearchForm";
 
@@ -35,7 +32,7 @@ const styles = theme => ({
   }
 });
 
-const mapStateToProps = (state, nextOwnProps) => state.user;
+const mapStateToProps = (state, nextOwnProps) => state;
 
 const enhance = compose(
   withRouter,
@@ -45,34 +42,36 @@ const enhance = compose(
   withState("selectedBtn", "setSelectedBtn", null),
   withState("openSearchBar", "setOpenSearchBar", false),
   withHandlers({
-    handleNavigateTo: props => path => evt => {
-      evt.preventDefault();
-      props.history.push(path);
-    },
     handleSignOut: props => evt => {
       evt.preventDefault();
       props.dispatch(signOutUser());
     },
     handleSearchIcon: props => evt => {
       evt.preventDefault();
+      console.log("handleSearchIcon");
       const { openSearchBar, setOpenSearchBar } = props;
       setOpenSearchBar(!openSearchBar);
+    },
+    handleNavigateTo: props => path => evt => {
+      evt.preventDefault();
+      props.history.push(path);
     }
   })
 );
 
 const SwitchComponent = enhance(props => {
   const {
+    user,
+    restaurants,
     history,
-    signedIn,
-    pendingSignIn,
-    pendingSignUp,
-    pendingSignOut,
-    handleNavigateTo,
-    handleSignOut,
     openSearchBar,
-    handleSearchIcon
+    handleSignOut,
+    handleSearchIcon,
+    handleNavigateTo
   } = props;
+  console.log(props);
+  const { signedIn, pendingSignIn, pendingSignUp, pendingSignOut } = user;
+  const { pendingGetRestaurants: pendingRestaurants } = restaurants;
 
   switch (true) {
     case pendingSignIn:
@@ -83,18 +82,22 @@ const SwitchComponent = enhance(props => {
     case signedIn && history.location.pathname === "/map":
       return (
         <Fragment>
-          <IconButton
-            className=""
-            aria-label="MainSearch"
-            onClick={handleSearchIcon}
-          >
-            <SearchIcon />
-          </IconButton>
+          <SearchPending
+            pending={pendingRestaurants}
+            handleOnClick={handleSearchIcon}
+          />
           <Zoom in={openSearchBar} timeout={{ enter: 500, exit: 500 }}>
             <div
-              style={openSearchBar ? { display: "block" } : { display: "none" }}
+              style={
+                openSearchBar
+                  ? { display: "inline-block" }
+                  : { display: "none" }
+              }
             >
-              <NavSearchForm style={{ width: "200px" }} />
+              <NavSearchForm
+                style={{ width: "200px" }}
+                disabled={pendingRestaurants}
+              />
             </div>
           </Zoom>
           <Btn name="Sign out" onClick={handleSignOut} />

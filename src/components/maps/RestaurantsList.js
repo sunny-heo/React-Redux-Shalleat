@@ -5,13 +5,9 @@ import { compose, withState, withHandlers } from "recompose";
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import RestaurantItem from "./RestaurantItem";
-import SearchIcon from "@material-ui/icons/Search";
-import IconButton from "@material-ui/core/IconButton";
-
 import TextField from "@material-ui/core/TextField";
 import Grow from "@material-ui/core/Grow";
-
-import CircularPending from "../pendings/CircularPending";
+import SearchPending from "../pendings/SearchPending";
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
@@ -35,7 +31,7 @@ const RestaurantsList = enhance(
     restaurants,
     _restaurants
   }) => {
-    const { pendingGetRestaurants: pending } = restaurants;
+    const { pendingGetRestaurants: pendingRestaurants } = restaurants;
     return (
       <div className="RestList list-group h-100">
         <List
@@ -43,28 +39,11 @@ const RestaurantsList = enhance(
           style={{ display: "flex", flexDirection: "column", padding: 0 }}
           subheader={
             <ListSubheader component="div" className="bg-white shadow-sm">
-              {pending && (
-                <CircularPending
-                  style={{
-                    position: "absolute",
-                    color: "#ff4081",
-                    top: "2px",
-                    left: "25px"
-                  }}
-                  size={45}
-                  thickness={4}
-                />
-              )}
-              <IconButton
-                className=""
-                aria-label="sub-search-box"
-                style={{ dispaly: "inline-block" }}
-                onClick={handleSearchOnClick}
-                disabled={pending}
-              >
-                <SearchIcon />
-              </IconButton>
-
+              <SearchPending
+                display="inline-block"
+                pending={pendingRestaurants}
+                handleOnClick={handleSearchOnClick}
+              />
               <Grow in={!revealSubSearch}>
                 <div
                   style={
@@ -94,7 +73,7 @@ const RestaurantsList = enhance(
                       style: { color: "#424242" }
                     }}
                     onChange={handleSearchOnChange}
-                    disabled={pending}
+                    disabled={pendingRestaurants}
                   />
                 </div>
               </Grow>
