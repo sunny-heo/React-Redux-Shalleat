@@ -11,6 +11,7 @@ const mapStateToProps = (state, nextOwnProps) => state;
 const enhance = compose(
   connect(mapStateToProps),
   withState("_restaurants", "_setRestaurants", []),
+  withState("timerId", "setTimerId", null),
   lifecycle({
     componentDidMount() {
       const { _setRestaurants, restaurants } = this.props;
@@ -19,30 +20,35 @@ const enhance = compose(
     componentDidUpdate(prevProps) {
       const { _setRestaurants, restaurants } = this.props;
       if (this.props.restaurants !== prevProps.restaurants) {
-        console.log("prevProps.restaurants");
-        console.log(prevProps.restaurants);
-        console.log("this.props.restaurants");
-        console.log(this.props.restaurants);
         _setRestaurants([...restaurants.list]);
       }
     }
   }),
   withHandlers({
-    handleSearchOnChange: props => evt => {
+    handleSearchOnChange: ({
+      timerId: timer,
+      setTimerId,
+      restaurants,
+      _setRestaurants
+    }) => evt => {
       evt.preventDefault();
-      const [...restaurants] = props.restaurants.list || [];
+      clearTimeout(timer);
       const searchKeyword = evt.currentTarget.value.toLowerCase();
-      const filteredRestaurants = restaurants.filter(
-        r =>
-          r.name.toLowerCase().includes(searchKeyword) ||
-          r.vicinity.toLowerCase().includes(searchKeyword)
-      );
-      props._setRestaurants(filteredRestaurants);
+
+      const timerId = setTimeout(() => {
+        const [...restaurantsClone] = restaurants.list || [];
+        const filteredRestaurants = restaurantsClone.filter(
+          r =>
+            r.name.toLowerCase().includes(searchKeyword) ||
+            r.vicinity.toLowerCase().includes(searchKeyword)
+        );
+        _setRestaurants(filteredRestaurants);
+      }, 200);
+      setTimerId(timerId);
     }
   })
 );
 const MapPage = enhance(props => {
-  console.log(props);
   const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
     <div

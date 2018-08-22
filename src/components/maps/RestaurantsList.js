@@ -13,47 +13,51 @@ import SearchIcon from "@material-ui/icons/Search";
 const mapStateToProps = (state, nextOwnProps) => state;
 
 const enhance = compose(
-  connect(mapStateToProps),
-  withHandlers({
-    handleSearchOnClick: props => evt => {
-      evt.preventDefault();
-      const { revealSubSearch, setRevealSubSearch } = props;
-      setRevealSubSearch(!revealSubSearch);
-    }
-  })
+  connect(mapStateToProps)
+  // withHandlers({
+  //   handleSearchOnClick: props => evt => {
+  //     evt.preventDefault();
+  //     const { revealSubSearch, setRevealSubSearch } = props;
+  //     setRevealSubSearch(!revealSubSearch);
+  //   }
+  // })
 );
 
-const RestaurantsList = enhance(({ restaurants, _restaurants = [] }) => {
-  const { pendingGetRestaurants: pending } = restaurants;
-  return (
-    <div className="RestList list-group h-100">
-      <List
-        component="nav"
-        style={{ display: "flex", flexDirection: "column", padding: 0 }}
-        subheader={
-          <ListSubheader component="div" className="bg-white shadow-sm">
-            {/* <FormControl> */}
-            <Input
-              id="input-with-icon-adornment"
-              startAdornment={
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-              disabled={pending}
-            />
-            {/* </FormControl> */}
-          </ListSubheader>
-        }
-      >
-        <div className="mt-2" style={{ overflow: "scroll" }}>
-          {_restaurants.map((r, i) => (
-            <RestaurantItem key={r.place_id} index={i} restaurant={r} />
-          ))}
-        </div>
-      </List>
-    </div>
-  );
-});
+const RestaurantsList = enhance(
+  ({ restaurants, _restaurants = [], handleSearchOnChange }) => {
+    const { pendingGetRestaurants: pending } = restaurants;
+    return (
+      <div className="RestList list-group h-100">
+        <List
+          component="nav"
+          style={{ display: "flex", flexDirection: "column", padding: 0 }}
+          subheader={
+            <ListSubheader component="div" className="bg-white shadow-sm pt-2">
+              <Input
+                id="input-with-icon-adornment"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+                style={{
+                  width: "100%"
+                }}
+                onChange={handleSearchOnChange}
+                disabled={pending}
+              />
+            </ListSubheader>
+          }
+        >
+          <div className="mt-2" style={{ overflow: "scroll" }}>
+            {_restaurants.map((r, i) => (
+              <RestaurantItem key={r.place_id} index={i} restaurant={r} />
+            ))}
+          </div>
+        </List>
+      </div>
+    );
+  }
+);
 
 export default RestaurantsList;

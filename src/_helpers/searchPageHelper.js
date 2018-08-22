@@ -6,7 +6,7 @@ export const extractType = input => {
 };
 
 export const extractRadius = input => {
-  let [rangeStr, radius, unit] = input.match(UNIT_REGEX) || ["noMatch"];
+  let [, radius, unit] = input.match(UNIT_REGEX) || ["noMatch"];
   if (radius) {
     switch (unit) {
       case "mile" || "miles":
