@@ -19,6 +19,10 @@ const enhance = compose(
     componentDidUpdate(prevProps) {
       const { _setRestaurants, restaurants } = this.props;
       if (this.props.restaurants !== prevProps.restaurants) {
+        console.log("prevProps.restaurants");
+        console.log(prevProps.restaurants);
+        console.log("this.props.restaurants");
+        console.log(this.props.restaurants);
         _setRestaurants([...restaurants.list]);
       }
     }

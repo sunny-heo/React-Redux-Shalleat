@@ -23,7 +23,7 @@ const enhance = compose(
   })
 );
 
-const RestaurantsList = enhance(({ restaurants, _restaurants }) => {
+const RestaurantsList = enhance(({ restaurants, _restaurants = [] }) => {
   const { pendingGetRestaurants: pending } = restaurants;
   return (
     <div className="RestList list-group h-100">
@@ -32,17 +32,17 @@ const RestaurantsList = enhance(({ restaurants, _restaurants }) => {
         style={{ display: "flex", flexDirection: "column", padding: 0 }}
         subheader={
           <ListSubheader component="div" className="bg-white shadow-sm">
-            <FormControl>
-              <Input
-                id="input-with-icon-adornment"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <SearchIcon />
-                  </InputAdornment>
-                }
-                disabled={pending}
-              />
-            </FormControl>
+            {/* <FormControl> */}
+            <Input
+              id="input-with-icon-adornment"
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+              disabled={pending}
+            />
+            {/* </FormControl> */}
           </ListSubheader>
         }
       >

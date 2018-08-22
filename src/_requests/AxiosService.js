@@ -5,7 +5,7 @@ class AxiosService {
     let service = axios.create({
       // baseURL: "https://api.shalleat.com/api/v1",
       baseURL: "http://localhost:3000/api/v1",
-      timeout: 1000,
+      // timeout: 3000,
       withCredentials: true,
       headers: {
         Accept: "application/json",

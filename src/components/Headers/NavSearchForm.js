@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, withHandlers } from "recompose";
 import { extractType, extractRadius } from "../../_helpers/searchPageHelper";
@@ -38,49 +38,49 @@ const NavSearchForm = enhance(
   ({
     classes,
     keyword,
-    revealInput,
-    style,
     pending,
+    revealInput,
     handleSearchIcon,
     handleOnChange,
     handleOnKeyPress
   }) => {
     return (
-      <Fragment>
-        <div className={classes.navItemContainer}>
-          <SearchPending pending={pending} handleOnClick={handleSearchIcon} />
-          <Grow in={!revealInput}>
-            <div
-              style={
-                !revealInput
-                  ? {
-                      width: "160px",
-                      textAlign: "center"
-                    }
-                  : { display: "none" }
-              }
-            >
-              <span>{`Search: ${keyword || "no results"}`}</span>
-            </div>
-          </Grow>
-          <Grow in={revealInput}>
-            <div style={revealInput ? { width: "160px" } : { display: "none" }}>
-              <TextField
-                className="mb-0"
-                name="keyword"
-                style={style}
-                placeholder=""
-                InputProps={{
-                  style: { color: "#424242" }
-                }}
-                onChange={handleOnChange}
-                onKeyPress={handleOnKeyPress}
-                disabled={pending}
-              />
-            </div>
-          </Grow>
-        </div>
-      </Fragment>
+      <div
+        className={classes.navItemContainer}
+        style={{ marginRight: "0.5rem" }}
+      >
+        <SearchPending pending={pending} handleOnClick={handleSearchIcon} />
+        <Grow in={!revealInput}>
+          <div
+            style={
+              !revealInput
+                ? {
+                    width: "160px",
+                    textAlign: "center"
+                  }
+                : { display: "none" }
+            }
+          >
+            <span>{`Search: ${keyword || "no results"}`}</span>
+          </div>
+        </Grow>
+        <Grow in={revealInput}>
+          <div style={revealInput ? { width: "160px" } : { display: "none" }}>
+            <TextField
+              className="mb-0"
+              name="keyword"
+              style={{ width: "100%" }}
+              placeholder=""
+              InputProps={{
+                style: { color: "#424242" }
+              }}
+              onChange={handleOnChange}
+              onKeyPress={handleOnKeyPress}
+              disabled={pending}
+            />
+          </div>
+        </Grow>
+      </div>
     );
   }
 );

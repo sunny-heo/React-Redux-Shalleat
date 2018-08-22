@@ -52,7 +52,6 @@ const enhance = compose(
     },
     handleSearchIcon: props => evt => {
       evt.preventDefault();
-      console.log("handleSearchIcon");
       const { revealInput, setRevealInput } = props;
       setRevealInput(!revealInput);
     },
@@ -74,7 +73,7 @@ const SwitchComponent = enhance(props => {
     handleSearchIcon,
     handleNavigateTo
   } = props;
-  console.log(props);
+
   const { signedIn, pendingSignIn, pendingSignUp, pendingSignOut } = user;
   const { pendingGetRestaurants: pendingRestaurants, keyword } = restaurants;
 
@@ -89,12 +88,11 @@ const SwitchComponent = enhance(props => {
         <Fragment>
           <div className={classes.navItemContainer}>
             <NavSearchForm
-              style={{ width: "100%" }}
-              revealInput={revealInput}
-              pending={pendingRestaurants}
-              handleSearchIcon={handleSearchIcon}
-              keyword={keyword}
               classes={classes}
+              keyword={keyword}
+              pending={pendingRestaurants}
+              revealInput={revealInput}
+              handleSearchIcon={handleSearchIcon}
             />
             <Btn name="Sign out" onClick={handleSignOut} />
           </div>
