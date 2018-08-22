@@ -1,5 +1,5 @@
 import React from "react";
-// import { withStyles } from "@material-ui/core/styles";
+
 import CircularProgress from "@material-ui/core/CircularProgress";
 import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
@@ -27,7 +27,6 @@ const SearchPending = ({
           />
         )}
         <IconButton
-          className="mr-1"
           aria-label="MainSearch"
           onClick={handleOnClick}
           disabled={pending}
