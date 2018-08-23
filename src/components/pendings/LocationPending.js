@@ -18,7 +18,10 @@ const LocationPending = enhance(props => {
       className={classes.LocationPending}
       style={pending ? {} : { visibility: "hidden" }}
     >
-      <LinearProgress variant={variant} color={color} />
+      <LinearProgress
+        variant={variant}
+        /*color={color}*/ style={{ color: "#ff4081" }}
+      />
     </div>
   );
 });
