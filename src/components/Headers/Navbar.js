@@ -75,7 +75,11 @@ const SwitchComponent = enhance(props => {
   } = props;
 
   const { signedIn, pendingSignIn, pendingSignUp, pendingSignOut } = user;
-  const { pendingGetRestaurants: pendingRestaurants, keyword } = restaurants;
+  const {
+    pendingGetRestaurants: pending,
+    gotRestaurants: success,
+    keyword
+  } = restaurants;
 
   switch (true) {
     case pendingSignIn:
@@ -90,7 +94,8 @@ const SwitchComponent = enhance(props => {
             <NavSearchForm
               classes={classes}
               keyword={keyword}
-              pending={pendingRestaurants}
+              pending={pending}
+              success={success}
               revealInput={revealInput}
               handleSearchIcon={handleSearchIcon}
             />

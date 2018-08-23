@@ -39,6 +39,7 @@ const NavSearchForm = enhance(
     classes,
     keyword,
     pending,
+    success,
     revealInput,
     handleSearchIcon,
     handleOnChange,
@@ -49,7 +50,12 @@ const NavSearchForm = enhance(
         className={classes.navItemContainer}
         style={{ marginRight: "0.5rem" }}
       >
-        <SearchPending pending={pending} handleOnClick={handleSearchIcon} />
+        <SearchPending
+          pending={pending}
+          success={success}
+          rootStyle={{ marginRight: "0.5rem" }}
+          handleOnClick={handleSearchIcon}
+        />
         <Grow in={!revealInput}>
           <div
             style={

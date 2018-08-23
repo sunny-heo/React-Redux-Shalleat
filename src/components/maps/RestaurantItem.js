@@ -76,7 +76,7 @@ const RestaurantItem = enhance(props => {
           </ListItem>
           <Collapse in={openDetail} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className="">
+              <ListItem className="">
                 <ListItemIcon>
                   <StarBorder />
                 </ListItemIcon>
