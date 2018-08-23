@@ -39,7 +39,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case RESTAURANT_ALL_PENDING: {
-      return { ...state, pendingGetRestaurants: true };
+      return { ...state, gotRestaurants: false, pendingGetRestaurants: true };
     }
 
     case RESTAURANT_ALL_REJECTED: {

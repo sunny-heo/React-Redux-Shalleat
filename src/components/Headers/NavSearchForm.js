@@ -4,10 +4,9 @@ import { compose, withState, withHandlers } from "recompose";
 import { extractType, extractRadius } from "../../_helpers/searchPageHelper";
 import { getRestaurants, setKeyword } from "../../actions/restaurantAction";
 
+import Grow from "@material-ui/core/Grow";
 import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import SearchIcon from "@material-ui/icons/Search";
-import FormControl from "@material-ui/core/FormControl";
+import SearchPending from "../pendings/SearchPending";
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
@@ -36,22 +35,58 @@ const enhance = compose(
 );
 
 const NavSearchForm = enhance(
-  ({ handleOnChange, handleOnKeyPress, style, disabled }) => {
+  ({
+    classes,
+    keyword,
+    pending,
+    success,
+    revealInput,
+    handleSearchIcon,
+    handleOnChange,
+    handleOnKeyPress
+  }) => {
     return (
-      <FormControl>
-        <TextField
-          className="mb-0"
-          name="keyword"
-          style={style}
-          placeholder=""
-          InputProps={{
-            style: { color: "#424242" }
-          }}
-          onChange={handleOnChange}
-          onKeyPress={handleOnKeyPress}
-          disabled={disabled}
+      <div
+        className={classes.navItemContainer}
+        style={{ marginRight: "0.5rem" }}
+      >
+        <SearchPending
+          pending={pending}
+          success={success}
+          rootStyle={{ marginRight: "0.5rem" }}
+          handleOnClick={handleSearchIcon}
         />
-      </FormControl>
+        <Grow in={!revealInput}>
+          <div
+            style={
+              !revealInput
+                ? {
+                    width: "160px",
+                    textAlign: "center"
+                  }
+                : { display: "none" }
+            }
+          >
+            <span>{`Search: ${keyword || "no results"}`}</span>
+          </div>
+        </Grow>
+        <Grow in={revealInput}>
+          <div style={revealInput ? { width: "160px" } : { display: "none" }}>
+            <TextField
+              className="mb-0"
+              name="keyword"
+              style={{ width: "100%" }}
+              placeholder=""
+              InputProps={{
+                style: { color: "#424242" }
+              }}
+              onChange={handleOnChange}
+              onKeyPress={handleOnKeyPress}
+              disabled={pending}
+            />
+          </div>
+        </Grow>
+      </div>
     );
   }
 );
