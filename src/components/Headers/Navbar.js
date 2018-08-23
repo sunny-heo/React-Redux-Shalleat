@@ -10,13 +10,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Btn from "../common/Button";
-import AuthPending from "../pendings/AuthPending";
-import LocationPending from "../pendings/LocationPending";
-import SearchIcon from "@material-ui/icons/Search";
-import IconButton from "@material-ui/core/IconButton";
-import Zoom from "@material-ui/core/Zoom";
 import CircularPending from "../pendings/CircularPending";
-import SearchPending from "../pendings/SearchPending";
+import LocationPending from "../pendings/LocationPending";
 
 import NavSearchForm from "./NavSearchForm";
 
@@ -85,7 +80,7 @@ const SwitchComponent = enhance(props => {
     case pendingSignIn:
     case pendingSignUp:
     case pendingSignOut:
-      return <AuthPending height="40" width="40" />;
+      return <CircularPending height="40" width="40" />;
 
     case signedIn && history.location.pathname === "/map":
       return (
