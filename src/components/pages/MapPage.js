@@ -19,7 +19,7 @@ const enhance = compose(
     },
     componentDidUpdate(prevProps) {
       const { _setRestaurants, restaurants } = this.props;
-      if (this.props.restaurants !== prevProps.restaurants) {
+      if (this.props.restaurants.list !== prevProps.restaurants.list) {
         _setRestaurants([...restaurants.list]);
       }
     }
@@ -48,6 +48,7 @@ const enhance = compose(
     }
   })
 );
+
 const MapPage = enhance(props => {
   const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
@@ -72,7 +73,8 @@ const MapPage = enhance(props => {
           <Map />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
-          {gotRestaurants ? <RestaurantsList {...props} /> : null}
+          {/* {gotRestaurants ? <RestaurantsList {...props} /> : null} */}
+          <RestaurantsList {...props} />
         </div>
       </div>
     </div>

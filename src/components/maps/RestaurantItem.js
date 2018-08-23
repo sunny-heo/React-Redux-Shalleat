@@ -11,6 +11,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Slide from "@material-ui/core/Slide";
+import Divider from "@material-ui/core/Divider";
 
 import { setItemOpen } from "../../actions/restaurantAction";
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
@@ -52,7 +53,7 @@ const RestaurantItem = enhance(props => {
           <ListItem
             button
             onClick={handleItemClick}
-            className="shadow-sm rounded mb-1"
+            className={openDetail ? "shadow-sm rounded mt-2" : "mt-2"}
             style={
               openNow
                 ? { borderLeft: "5px solid #39e4a9" }
@@ -70,6 +71,7 @@ const RestaurantItem = enhance(props => {
               primary={restaurant.name}
               secondary={restaurant.vicinity}
             />
+
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={openDetail} timeout="auto" unmountOnExit>
@@ -82,6 +84,7 @@ const RestaurantItem = enhance(props => {
               </ListItem>
             </List>
           </Collapse>
+          <Divider />
         </div>
       </Slide>
     </Fragment>

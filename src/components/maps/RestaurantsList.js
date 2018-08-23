@@ -7,7 +7,6 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import RestaurantItem from "./RestaurantItem";
 import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControl from "@material-ui/core/FormControl";
 import SearchIcon from "@material-ui/icons/Search";
 
 const mapStateToProps = (state, nextOwnProps) => state;
@@ -49,11 +48,13 @@ const RestaurantsList = enhance(
             </ListSubheader>
           }
         >
-          <div className="mt-2" style={{ overflow: "scroll" }}>
-            {_restaurants.map((r, i) => (
-              <RestaurantItem key={r.place_id} index={i} restaurant={r} />
-            ))}
-          </div>
+          {!restaurants || _restaurants.length === 0 ? null : (
+            <div className="mt-2" style={{ overflow: "scroll" }}>
+              {_restaurants.map((r, i) => (
+                <RestaurantItem key={r.place_id} index={i} restaurant={r} />
+              ))}
+            </div>
+          )}
         </List>
       </div>
     );
