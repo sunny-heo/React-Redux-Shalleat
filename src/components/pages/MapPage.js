@@ -50,6 +50,7 @@ const enhance = compose(
 );
 
 const MapPage = enhance(props => {
+  const { _restaurants } = props;
   const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
     <div
@@ -70,7 +71,7 @@ const MapPage = enhance(props => {
           className="GoogleMap-container w-75 mt-2 shadow-sm bg-white rounded"
           style={{ position: "relative" }}
         >
-          <Map />
+          <Map restaurants={_restaurants} />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
           {/* {gotRestaurants ? <RestaurantsList {...props} /> : null} */}

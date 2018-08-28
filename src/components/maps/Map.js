@@ -1,64 +1,70 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose } from "recompose";
+import { compose, lifecycle, withState, withHandlers } from "recompose";
 import GoogleMapReact from "google-map-react";
 import { GOOGLE_MAP_API, CUSTOM_MAP_OPTIONS } from "../../_config/myMapConfig";
 
-// import createMapOptions from "../../helper/customGoogleMap";
+import IconButton from "@material-ui/core/IconButton";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
 
-// const restaurantMarkers = cProps => {
-//   const { filteredRests, loading } = cProps;
-//   return filteredRests().map((restaurant, i) => {
-//     const { place_id: placeId, geometry } = restaurant;
-//     const { lat, lng } = geometry.location;
-//     return loading ? null : (
-//       <RestProvider key={`marker-${placeId}`} lat={lat} lng={lng}>
-//         <RestaurantMarker
-//           placeId={placeId}
-//           location={{ lat, lng }}
-//           index={i}
-//           restaurant={restaurant}
-//           {...cProps}
-//         />
-//       </RestProvider>
-//     );
-//   });
-// };
-const mapStateToProps = (state, nextOwnProps) => state;
+import RestaurantMarker from "./RestaurantMarker";
 
-const enhance = compose(connect(mapStateToProps));
+const mapStateToProps = (state, nextOwnProps) => state.user;
+
+const enhance = compose(
+  connect(mapStateToProps),
+  withState("center", "setCenter", null),
+  lifecycle({
+    componentDidMount() {
+      console.log(this.props);
+      const { location, setCenter } = this.props;
+      setCenter(location);
+    }
+  }),
+  withHandlers({
+    centeredMyLocation: props => evt => {
+      evt.preventDefault();
+      const { setCenter, location } = props;
+      setCenter(location);
+    },
+    handleCenterOnChange: props => mapAttr => {
+      const { setCenter } = props;
+      const { center } = mapAttr;
+      setCenter(center);
+    }
+  })
+);
 const Map = enhance(props => {
-  const { user, restaurants } = props;
-  console.log(user.location);
+  const {
+    user,
+    restaurants,
+    location,
+    center,
+    centeredMyLocation,
+    handleCenterOnChange
+  } = props;
   return (
     <div className="GoogleMap mb-8" style={{ height: "100%", width: "100%" }}>
-      {/* <div
-        className="currentLocator mt-3 mr-3 btn d-flex justify-content-center"
+      <IconButton
         style={{
           position: "absolute",
-          minWidth: "25px",
-          top: "0px",
-          right: "0px",
-          zIndex: 15,
-          cursor: "pointer",
-          padding: "10px 5px"
+          top: "5px",
+          right: "5px",
+          zIndex: 15
         }}
-        onClick={e => {
-          e.preventDefault();
-          // setPopover(null, false);
-          // setCenter(currentLocation);
-        }}
+        onClick={centeredMyLocation}
       >
-        <i className="material-icons">my_location</i>
-      </div> */}
+        <MyLocationIcon style={{ color: "#212121" }} />
+      </IconButton>
+
       <GoogleMapReact
         bootstrapURLKeys={GOOGLE_MAP_API}
-        defaultCenter={user.location}
-        // center={center}
+        defaultCenter={location}
+        center={center}
         zoom={11}
         options={CUSTOM_MAP_OPTIONS}
         layerTypes={["TrafficLayer", "TransitLayer"]}
-        // onChange={({ center, zoom }) => setCenter(center)}
+        onChange={handleCenterOnChange}
       >
         {/* <CurrentMarker
               lat={currentLocation.lat}
@@ -68,6 +74,19 @@ const Map = enhance(props => {
               style={{ border: "solid 5px black" }}
             />
             {restaurantMarkers({ ...mcProps })} */}
+        {/* <div lat={location.lat} lng={location.lng}>
+          <IconButton
+
+          // onClick={centeredMyLocation}
+          >
+            <RestaurantIcon style={{ color: "#212121" }} />
+          </IconButton>
+        </div> */}
+        {/* <RestaurantMarker location={location} /> */}
+        {restaurants.map((r, i) => {
+          const { lat, lng } = r.geometry.location;
+          return <RestaurantMarker lat={lat} lng={lng} key={r.id} rest={r} />;
+        })}
       </GoogleMapReact>
     </div>
   );
