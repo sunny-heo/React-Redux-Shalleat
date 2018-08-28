@@ -62,7 +62,8 @@ const NavSearchForm = enhance(
               !revealInput
                 ? {
                     width: "160px",
-                    textAlign: "center"
+                    textAlign: "center",
+                    pointerEvents: "none"
                   }
                 : { display: "none" }
             }
