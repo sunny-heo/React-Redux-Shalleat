@@ -41,7 +41,8 @@ const Map = enhance(props => {
     location,
     center,
     centeredMyLocation,
-    handleCenterOnChange
+    handleCenterOnChange,
+    handleRestaurantClick
   } = props;
   return (
     <div className="GoogleMap mb-8" style={{ height: "100%", width: "100%" }}>
@@ -85,7 +86,16 @@ const Map = enhance(props => {
         {/* <RestaurantMarker location={location} /> */}
         {restaurants.map((r, i) => {
           const { lat, lng } = r.geometry.location;
-          return <RestaurantMarker lat={lat} lng={lng} key={r.id} rest={r} />;
+          return (
+            <RestaurantMarker
+              lat={lat}
+              lng={lng}
+              key={r.id}
+              rest={r}
+              index={i}
+              handleRestaurantClick={handleRestaurantClick}
+            />
+          );
         })}
       </GoogleMapReact>
     </div>

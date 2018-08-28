@@ -34,7 +34,7 @@ const RestaurantMarker = enhance(props => {
   // const openDetail = openedIndex === index && opened;
   //onClick={centeredMyLocation}
   return (
-    <IconButton>
+    <IconButton onClick={props.handleRestaurantClick(props.index)}>
       <RestaurantIcon style={{ color: "#212121" }} />
     </IconButton>
   );

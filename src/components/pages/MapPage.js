@@ -1,10 +1,19 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
-import { getRestaurants } from "../../actions/restaurantAction";
+import { getRestaurants, setItemOpen } from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
 import RestaurantsList from "../maps/RestaurantsList";
+
+const openDetail = (openedItem, dispatch, currentIndex) => {
+  const { openedIndex, opened } = openedItem;
+  if (opened && openedIndex !== currentIndex) {
+    dispatch(setItemOpen(currentIndex, opened));
+  } else {
+    dispatch(setItemOpen(currentIndex, !opened));
+  }
+};
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
@@ -45,12 +54,19 @@ const enhance = compose(
         _setRestaurants(filteredRestaurants);
       }, 200);
       setTimerId(timerId);
+    },
+    handleRestaurantClick: ({
+      restaurants,
+      dispatch
+    }) => currentIndex => evt => {
+      evt.preventDefault();
+      openDetail(restaurants.openedItem, dispatch, currentIndex);
     }
   })
 );
 
 const MapPage = enhance(props => {
-  const { _restaurants } = props;
+  const { _restaurants, handleRestaurantClick } = props;
   const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
     <div
@@ -71,7 +87,10 @@ const MapPage = enhance(props => {
           className="GoogleMap-container w-75 mt-2 shadow-sm bg-white rounded"
           style={{ position: "relative" }}
         >
-          <Map restaurants={_restaurants} />
+          <Map
+            restaurants={_restaurants}
+            handleRestaurantClick={handleRestaurantClick}
+          />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
           {/* {gotRestaurants ? <RestaurantsList {...props} /> : null} */}

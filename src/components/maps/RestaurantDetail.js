@@ -12,22 +12,22 @@ import StarBorder from "@material-ui/icons/StarBorder";
 import { setItemOpen } from "../../actions/restaurantAction";
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
-const openDetail = ({ openedItem, index: currentIndex, dispatch }) => {
-  const { openedIndex, opened } = openedItem;
-  if (opened && openedIndex !== currentIndex) {
-    dispatch(setItemOpen(currentIndex, opened));
-  } else {
-    dispatch(setItemOpen(currentIndex, !opened));
-  }
-};
+// const openDetail = ({ openedItem, index: currentIndex, dispatch }) => {
+//   const { openedIndex, opened } = openedItem;
+//   if (opened && openedIndex !== currentIndex) {
+//     dispatch(setItemOpen(currentIndex, opened));
+//   } else {
+//     dispatch(setItemOpen(currentIndex, !opened));
+//   }
+// };
 
 const enhance = compose(
   connect(mapStateToProps),
   withHandlers({
-    handleItemClick: props => evt => {
-      evt.preventDefault();
-      openDetail(props);
-    }
+    // handleItemClick: props => evt => {
+    //   evt.preventDefault();
+    //   openDetail(props);
+    // }
   })
 );
 const RestaurantDetail = enhance(props => {

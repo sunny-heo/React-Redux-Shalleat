@@ -16,26 +16,32 @@ import Divider from "@material-ui/core/Divider";
 import { setItemOpen } from "../../actions/restaurantAction";
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
-const openItem = ({ openedItem, index: currentIndex, dispatch }) => {
-  const { openedIndex, opened } = openedItem;
-  if (opened && openedIndex !== currentIndex) {
-    dispatch(setItemOpen(currentIndex, opened));
-  } else {
-    dispatch(setItemOpen(currentIndex, !opened));
-  }
-};
+// const openItem = ({ openedItem, index: currentIndex, dispatch }) => {
+//   const { openedIndex, opened } = openedItem;
+//   if (opened && openedIndex !== currentIndex) {
+//     dispatch(setItemOpen(currentIndex, opened));
+//   } else {
+//     dispatch(setItemOpen(currentIndex, !opened));
+//   }
+// };
 
 const enhance = compose(
   connect(mapStateToProps),
   withHandlers({
-    handleItemClick: props => evt => {
-      evt.preventDefault();
-      openItem(props);
-    }
+    // handleItemClick: props => evt => {
+    //   evt.preventDefault();
+    //   openItem(props);
+    // }
   })
 );
 const RestaurantItem = enhance(props => {
-  const { restaurant, handleItemClick, index, openedItem } = props;
+  const {
+    restaurant,
+    handleItemClick,
+    index,
+    openedItem,
+    handleRestaurantClick
+  } = props;
   const { openedIndex, opened } = openedItem;
   const { opening_hours: hours = {} } = restaurant;
   const { open_now: openNow = false } = hours;
@@ -52,7 +58,7 @@ const RestaurantItem = enhance(props => {
         <div style={{ paddingRight: "2px" }}>
           <ListItem
             button
-            onClick={handleItemClick}
+            onClick={handleRestaurantClick(index)}
             className={openDetail ? "shadow-sm rounded mt-2" : "mt-2"}
             style={
               openNow
