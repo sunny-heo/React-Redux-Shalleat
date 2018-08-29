@@ -77,7 +77,6 @@ const RestaurantItem = enhance(props => {
               primary={restaurant.name}
               secondary={restaurant.vicinity}
             />
-
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={openDetail} timeout="auto" unmountOnExit>

@@ -40,6 +40,7 @@ const NavSearchForm = enhance(
     keyword,
     pending,
     success,
+    resultLength,
     revealInput,
     handleSearchIcon,
     handleOnChange,
@@ -68,7 +69,7 @@ const NavSearchForm = enhance(
                 : { display: "none" }
             }
           >
-            <span>{`Search: ${keyword || "no results"}`}</span>
+            <span>{`#${resultLength} search result(s)`}</span>
           </div>
         </Grow>
         <Grow in={revealInput}>

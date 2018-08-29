@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { compose, withState, withHandlers, isClassComponent } from "recompose";
-import { setItemOpen } from "../../actions/restaurantAction";
 
 import IconButton from "@material-ui/core/IconButton";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
@@ -18,18 +18,23 @@ const enhance = compose(
   })
 );
 const RestaurantMarker = enhance(props => {
-  //  const { restaurant, handleItemClick, index, openedItem } = props;
-  // const { openedIndex, opened } = openedItem;
-  // const { opening_hours: hours = {} } = restaurant;
-  // const { open_now: openNow = false } = hours;
-  // const openDetail = openedIndex === index && opened;
-  //onClick={centeredMyLocation}
+  const { lat, lng, index, handleRestaurantClick, restaurant } = props;
+
+  const { opening_hours: hours = {} } = restaurant;
+  const { open_now: openNow = false } = hours;
   return (
-    <IconButton
-      onClick={props.handleRestaurantClick(props.index, props.location)}
-    >
-      <RestaurantIcon style={{ color: "#212121" }} />
-    </IconButton>
+    <Tooltip disableHoverListener title="Add">
+      <IconButton
+        style={
+          openNow
+            ? { backgroundColor: "#39e4a9" }
+            : { backgroundColor: "#424242" }
+        }
+        onClick={handleRestaurantClick(index, { lat, lng })}
+      >
+        <RestaurantIcon style={{ color: "#fff" }} />
+      </IconButton>
+    </Tooltip>
   );
 });
 

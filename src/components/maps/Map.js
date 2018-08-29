@@ -13,90 +13,61 @@ const mapStateToProps = (state, nextOwnProps) => state.user;
 
 const enhance = compose(
   connect(mapStateToProps),
-  // withState("center", "setCenter", null),
-  lifecycle({
-    componentDidMount() {
-      // const { location, setCenter } = this.props;
-      // setCenter(location);
-    }
-  }),
   withHandlers({
     centeredMyLocation: ({ setCenter, location }) => evt => {
       evt.preventDefault();
       setCenter(location);
-    },
-    handleCenterOnChange: ({ setCenter }) => ({ center }) => {
-      setCenter(center);
     }
   })
 );
-const Map = enhance(props => {
-  const {
-    user,
+const Map = enhance(
+  ({
     restaurants,
     location,
     center,
     centeredMyLocation,
-    handleCenterOnChange,
     handleRestaurantClick
-  } = props;
-  return (
-    <div className="GoogleMap mb-8" style={{ height: "100%", width: "100%" }}>
-      <IconButton
-        style={{
-          position: "absolute",
-          top: "5px",
-          right: "5px",
-          zIndex: 15
-        }}
-        onClick={centeredMyLocation}
-      >
-        <MyLocationIcon style={{ color: "#212121" }} />
-      </IconButton>
+  }) => {
+    return (
+      <div className="GoogleMap mb-8" style={{ height: "100%", width: "100%" }}>
+        <IconButton
+          style={{
+            position: "absolute",
+            top: "5px",
+            right: "5px",
+            zIndex: 15
+          }}
+          onClick={centeredMyLocation}
+        >
+          <MyLocationIcon style={{ color: "#212121" }} />
+        </IconButton>
 
-      <GoogleMapReact
-        bootstrapURLKeys={GOOGLE_MAP_API}
-        defaultCenter={location}
-        center={center}
-        zoom={11}
-        options={CUSTOM_MAP_OPTIONS}
-        layerTypes={["TrafficLayer", "TransitLayer"]}
-        // onChange={handleCenterOnChange}
-      >
-        {/* <CurrentMarker
-              lat={currentLocation.lat}
-              lng={currentLocation.lng}
-              text={user.firstName}
-              {...mcProps}
-              style={{ border: "solid 5px black" }}
-            />
-            {restaurantMarkers({ ...mcProps })} */}
-        {/* <div lat={location.lat} lng={location.lng}>
-          <IconButton
-
-          // onClick={centeredMyLocation}
-          >
-            <RestaurantIcon style={{ color: "#212121" }} />
-          </IconButton>
-        </div> */}
-        {/* <RestaurantMarker location={location} /> */}
-        {restaurants.map((r, i) => {
-          const { lat, lng } = r.geometry.location;
-          return (
-            <RestaurantMarker
-              lat={lat}
-              lng={lng}
-              key={r.id}
-              rest={r}
-              index={i}
-              handleRestaurantClick={handleRestaurantClick}
-              location={r.geometry.location}
-            />
-          );
-        })}
-      </GoogleMapReact>
-    </div>
-  );
-});
+        <GoogleMapReact
+          bootstrapURLKeys={GOOGLE_MAP_API}
+          defaultCenter={location}
+          center={center}
+          zoom={11}
+          options={CUSTOM_MAP_OPTIONS}
+          layerTypes={["TrafficLayer", "TransitLayer"]}
+        >
+          {restaurants.map((r, i) => {
+            const { lat, lng } = r.geometry.location;
+            return (
+              <RestaurantMarker
+                lat={lat}
+                lng={lng}
+                key={r.place_id}
+                restaurant={r}
+                index={i}
+                // location={r.geometry.location}
+                handleRestaurantClick={handleRestaurantClick}
+              />
+            );
+          })}
+        </GoogleMapReact>
+      </div>
+    );
+  }
+);
 
 export default Map;

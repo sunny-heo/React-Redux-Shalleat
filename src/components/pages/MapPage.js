@@ -73,7 +73,13 @@ const enhance = compose(
 );
 
 const MapPage = enhance(props => {
-  const { _restaurants, handleRestaurantClick, center, setCenter } = props;
+  const {
+    _restaurants,
+    handleRestaurantClick,
+    center,
+    setCenter,
+    handleSearchOnChange
+  } = props;
   const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
     <div
@@ -102,8 +108,12 @@ const MapPage = enhance(props => {
           />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
-          {/* {gotRestaurants ? <RestaurantsList {...props} /> : null} */}
-          <RestaurantsList {...props} />
+          <RestaurantsList
+            restaurants={restaurants}
+            _restaurants={_restaurants}
+            handleRestaurantClick={handleRestaurantClick}
+            handleSearchOnChange={handleSearchOnChange}
+          />
         </div>
       </div>
     </div>
