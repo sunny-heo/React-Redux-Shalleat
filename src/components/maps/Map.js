@@ -59,7 +59,6 @@ const Map = enhance(
                 key={r.place_id}
                 restaurant={r}
                 index={i}
-                // location={r.geometry.location}
                 handleRestaurantClick={handleRestaurantClick}
               />
             );

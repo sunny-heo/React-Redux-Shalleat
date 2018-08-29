@@ -22,9 +22,13 @@ const RestaurantMarker = enhance(props => {
 
   const { opening_hours: hours = {} } = restaurant;
   const { open_now: openNow = false } = hours;
+
+  // const { openedIndex, opened } = openedItem;
+  // const openDetail = openedIndex === index && opened;
   return (
     <Tooltip disableHoverListener title="Add">
       <IconButton
+        // className={openDetail ? "shadow-sm rounded mt-2" : "mt-2"}
         style={
           openNow
             ? { backgroundColor: "#39e4a9" }
