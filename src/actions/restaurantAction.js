@@ -16,7 +16,8 @@ const {
 
   SET_KEYWORD,
 
-  RESTAURANT_OPEN_ITEM
+  RESTAURANT_OPEN_ITEM,
+  SLECTED_RESTAURANT_LOCATION
 } = restaurantConstants;
 
 export const getRestaurants = filters => async dispatch => {
@@ -71,4 +72,8 @@ export const setKeyword = keyword => dispatch => {
 
 export const setItemOpen = (openedIndex, opened) => dispatch => {
   dispatch({ type: RESTAURANT_OPEN_ITEM, payload: { openedIndex, opened } });
+};
+
+export const setSelectedLocation = location => dispatch => {
+  dispatch({ type: RESTAURANT_OPEN_ITEM, payload: location });
 };

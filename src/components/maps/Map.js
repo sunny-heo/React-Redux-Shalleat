@@ -13,23 +13,19 @@ const mapStateToProps = (state, nextOwnProps) => state.user;
 
 const enhance = compose(
   connect(mapStateToProps),
-  withState("center", "setCenter", null),
+  // withState("center", "setCenter", null),
   lifecycle({
     componentDidMount() {
-      console.log(this.props);
-      const { location, setCenter } = this.props;
-      setCenter(location);
+      // const { location, setCenter } = this.props;
+      // setCenter(location);
     }
   }),
   withHandlers({
-    centeredMyLocation: props => evt => {
+    centeredMyLocation: ({ setCenter, location }) => evt => {
       evt.preventDefault();
-      const { setCenter, location } = props;
       setCenter(location);
     },
-    handleCenterOnChange: props => mapAttr => {
-      const { setCenter } = props;
-      const { center } = mapAttr;
+    handleCenterOnChange: ({ setCenter }) => ({ center }) => {
       setCenter(center);
     }
   })
@@ -65,7 +61,7 @@ const Map = enhance(props => {
         zoom={11}
         options={CUSTOM_MAP_OPTIONS}
         layerTypes={["TrafficLayer", "TransitLayer"]}
-        onChange={handleCenterOnChange}
+        // onChange={handleCenterOnChange}
       >
         {/* <CurrentMarker
               lat={currentLocation.lat}
@@ -94,6 +90,7 @@ const Map = enhance(props => {
               rest={r}
               index={i}
               handleRestaurantClick={handleRestaurantClick}
+              location={r.geometry.location}
             />
           );
         })}

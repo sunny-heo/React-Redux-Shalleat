@@ -8,22 +8,13 @@ import RestaurantIcon from "@material-ui/icons/Restaurant";
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
-const openItem = ({ openedItem, index: currentIndex, dispatch }) => {
-  const { openedIndex, opened } = openedItem;
-  if (opened && openedIndex !== currentIndex) {
-    dispatch(setItemOpen(currentIndex, opened));
-  } else {
-    dispatch(setItemOpen(currentIndex, !opened));
-  }
-};
-
 const enhance = compose(
   connect(mapStateToProps),
   withHandlers({
-    handleItemClick: props => evt => {
-      evt.preventDefault();
-      openItem(props);
-    }
+    // handleItemClick: props => evt => {
+    //   evt.preventDefault();
+    //   openItem(props);
+    // }
   })
 );
 const RestaurantMarker = enhance(props => {
@@ -34,7 +25,9 @@ const RestaurantMarker = enhance(props => {
   // const openDetail = openedIndex === index && opened;
   //onClick={centeredMyLocation}
   return (
-    <IconButton onClick={props.handleRestaurantClick(props.index)}>
+    <IconButton
+      onClick={props.handleRestaurantClick(props.index, props.location)}
+    >
       <RestaurantIcon style={{ color: "#212121" }} />
     </IconButton>
   );

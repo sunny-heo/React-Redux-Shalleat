@@ -43,7 +43,7 @@ const RestaurantItem = enhance(props => {
     handleRestaurantClick
   } = props;
   const { openedIndex, opened } = openedItem;
-  const { opening_hours: hours = {} } = restaurant;
+  const { opening_hours: hours = {}, geometry } = restaurant;
   const { open_now: openNow = false } = hours;
   const openDetail = openedIndex === index && opened;
   return (
@@ -58,7 +58,7 @@ const RestaurantItem = enhance(props => {
         <div style={{ paddingRight: "2px" }}>
           <ListItem
             button
-            onClick={handleRestaurantClick(index)}
+            onClick={handleRestaurantClick(index, geometry.location)}
             className={openDetail ? "shadow-sm rounded mt-2" : "mt-2"}
             style={
               openNow

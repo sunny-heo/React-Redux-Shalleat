@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
-import { getRestaurants, setItemOpen } from "../../actions/restaurantAction";
+import {
+  getRestaurants,
+  setItemOpen,
+  setSelectedLocation
+} from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
 import RestaurantsList from "../maps/RestaurantsList";
@@ -20,6 +24,7 @@ const mapStateToProps = (state, nextOwnProps) => state;
 const enhance = compose(
   connect(mapStateToProps),
   withState("_restaurants", "_setRestaurants", []),
+  withState("center", "setCenter", null),
   withState("timerId", "setTimerId", null),
   lifecycle({
     componentDidMount() {
@@ -55,18 +60,20 @@ const enhance = compose(
       }, 200);
       setTimerId(timerId);
     },
-    handleRestaurantClick: ({
-      restaurants,
-      dispatch
-    }) => currentIndex => evt => {
+    handleRestaurantClick: ({ restaurants, setCenter, dispatch }) => (
+      currentIndex,
+      location
+    ) => evt => {
       evt.preventDefault();
       openDetail(restaurants.openedItem, dispatch, currentIndex);
+      // setSelectedLocation(location);
+      setCenter(location);
     }
   })
 );
 
 const MapPage = enhance(props => {
-  const { _restaurants, handleRestaurantClick } = props;
+  const { _restaurants, handleRestaurantClick, center, setCenter } = props;
   const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
     <div
@@ -90,6 +97,8 @@ const MapPage = enhance(props => {
           <Map
             restaurants={_restaurants}
             handleRestaurantClick={handleRestaurantClick}
+            center={center}
+            setCenter={setCenter}
           />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
