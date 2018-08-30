@@ -51,22 +51,13 @@ const enhance = compose(
 
       const timerId = setTimeout(() => {
         const [...restaurantsClone] = restaurants.list || [];
-        // const filteredRestaurants = restaurantsClone.filter(
-        //   r =>
-        //     r.name.toLowerCase().includes(searchKeyword) ||
-        //     r.vicinity.toLowerCase().includes(searchKeyword)
-        // );
-        // _setRestaurants(filteredRestaurants);
         const filteredRestaurants = restaurantsClone.map(r => {
-          if (
+          const _in =
             r.name.toLowerCase().includes(searchKeyword) ||
-            r.vicinity.toLowerCase().includes(searchKeyword)
-          )
-            return { _in: true, ...r };
-          return { _in: false, ...r };
+            r.vicinity.toLowerCase().includes(searchKeyword);
+          return { _in, ...r };
         });
         _setRestaurants(filteredRestaurants);
-        console.log(filteredRestaurants);
       }, 200);
       setTimerId(timerId);
     },
