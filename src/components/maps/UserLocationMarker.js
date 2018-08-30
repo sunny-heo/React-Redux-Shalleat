@@ -1,11 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, withState, withHandlers, isClassComponent } from "recompose";
+import { compose, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
-import RestaurantIcon from "@material-ui/icons/Restaurant";
-import Tooltip from "@material-ui/core/Tooltip";
 import Avatar from "@material-ui/core/Avatar";
 
 const mapStateToProps = (state, nextOwnProps) => state.user;
@@ -28,21 +26,10 @@ const styles = theme => ({
 const enhance = compose(
   connect(mapStateToProps),
   withStyles(styles),
-  withHandlers({
-    // handleItemClick: props => evt => {
-    //   evt.preventDefault();
-    //   openItem(props);
-    // }
-  })
+  withHandlers({})
 );
 const UserLocationMarker = enhance(props => {
-  const { location, classes, user } = props;
-
-  // const { opening_hours: hours = {} } = restaurant;
-  // const { open_now: openNow = false } = hours;
-  // const location = { lat, lng };
-  // const { openedIndex, opened } = openedItem;
-  // const openDetail = openedIndex === index && opened;
+  const { classes, user } = props;
   return (
     <IconButton className={classes.userIcon}>
       <Avatar className={classes.avatar}>

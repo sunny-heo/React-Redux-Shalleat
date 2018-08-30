@@ -14,9 +14,7 @@ const {
   RESTAURANT_PHOTOS_FULFILLED,
 
   SET_KEYWORD,
-
-  RESTAURANT_OPEN_ITEM,
-  SLECTED_RESTAURANT_LOCATION
+  RESTAURANT_OPEN_ITEM
 } = restaurantConstants;
 
 const initialState = {
@@ -34,8 +32,7 @@ const initialState = {
   getPhotosError: null,
   keyword: null,
   OpenedItemIdx: null,
-  openedItem: {},
-  selectedLocation: null
+  openedItem: {}
 };
 
 export default (state = initialState, action) => {
@@ -114,13 +111,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         openedItem: action.payload
-      };
-    }
-
-    case SLECTED_RESTAURANT_LOCATION: {
-      return {
-        ...state,
-        selectedLocation: action.payload
       };
     }
 

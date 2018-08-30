@@ -12,16 +12,13 @@ const styles = {
 const enhance = compose(withStyles(styles));
 
 const LocationPending = enhance(props => {
-  const { classes, color, variant, pending } = props;
+  const { classes, color = "#ff4081", variant, pending } = props;
   return (
     <div
       className={classes.LocationPending}
       style={pending ? {} : { visibility: "hidden" }}
     >
-      <LinearProgress
-        variant={variant}
-        /*color={color}*/ style={{ color: "#ff4081" }}
-      />
+      <LinearProgress variant={variant} style={{ color }} />
     </div>
   );
 });

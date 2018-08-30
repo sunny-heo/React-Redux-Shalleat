@@ -1,11 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
-import {
-  getRestaurants,
-  setItemOpen,
-  setSelectedLocation
-} from "../../actions/restaurantAction";
+import { setItemOpen } from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
 import RestaurantsList from "../maps/RestaurantsList";
@@ -48,7 +44,6 @@ const enhance = compose(
       evt.preventDefault();
       clearTimeout(timer);
       const searchKeyword = evt.currentTarget.value.toLowerCase();
-
       const timerId = setTimeout(() => {
         const [...restaurantsClone] = restaurants.list || [];
         const filteredRestaurants = restaurantsClone.map(r => {
@@ -67,7 +62,6 @@ const enhance = compose(
     ) => evt => {
       evt.preventDefault();
       openDetail(restaurants.openedItem, dispatch, currentIndex);
-      // setSelectedLocation(location);
       setCenter(location);
     }
   })
@@ -75,13 +69,13 @@ const enhance = compose(
 
 const MapPage = enhance(props => {
   const {
-    _restaurants,
-    handleRestaurantClick,
     center,
     setCenter,
-    handleSearchOnChange
+    _restaurants,
+    handleSearchOnChange,
+    handleRestaurantClick
   } = props;
-  const { list: restaurants, gotRestaurants } = props.restaurants;
+  const { list: restaurants } = props.restaurants;
   return (
     <div
       className="MainPage d-flex flex-column justify-content-center m-3"
@@ -102,10 +96,10 @@ const MapPage = enhance(props => {
           style={{ position: "relative" }}
         >
           <Map
-            restaurants={_restaurants}
-            handleRestaurantClick={handleRestaurantClick}
             center={center}
             setCenter={setCenter}
+            restaurants={_restaurants}
+            handleRestaurantClick={handleRestaurantClick}
           />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">

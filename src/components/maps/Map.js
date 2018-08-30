@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, lifecycle, withState, withHandlers } from "recompose";
+import { compose, withHandlers } from "recompose";
 import GoogleMapReact from "google-map-react";
 import { GOOGLE_MAP_API, CUSTOM_MAP_OPTIONS } from "../../_config/myMapConfig";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, withState, withHandlers } from "recompose";
+import { compose } from "recompose";
 
 import List from "@material-ui/core/List";
 import ListSubheader from "@material-ui/core/ListSubheader";

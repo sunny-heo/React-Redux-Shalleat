@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, withState, withHandlers, isClassComponent } from "recompose";
+import { compose, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 
 import IconButton from "@material-ui/core/IconButton";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
-import Tooltip from "@material-ui/core/Tooltip";
 import Grow from "@material-ui/core/Grow";
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
@@ -31,14 +30,14 @@ const RestaurantMarker = enhance(props => {
     index,
     handleRestaurantClick,
     restaurant,
-    classes,
-    openedItem
+    classes
+    // openedItem
   } = props;
 
   const { _in = true, opening_hours: hours = {} } = restaurant;
   const { open_now: openNow = false } = hours;
   const location = { lat, lng };
-  const { openedIndex, opened } = openedItem;
+  // const { openedIndex, opened } = openedItem;
   // const openDetail = openedIndex === index && opened;
   return (
     <Grow

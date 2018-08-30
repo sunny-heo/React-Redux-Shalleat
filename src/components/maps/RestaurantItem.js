@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 
 import { connect } from "react-redux";
-import { compose, withState, withHandlers, isClassComponent } from "recompose";
+import { compose, withHandlers } from "recompose";
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -15,7 +15,6 @@ import Slide from "@material-ui/core/Slide";
 import Divider from "@material-ui/core/Divider";
 import RestaurantRating from "./RestaurantRating";
 
-import { setItemOpen } from "../../actions/restaurantAction";
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
 const enhance = compose(
@@ -54,6 +53,7 @@ const RestaurantItem = enhance(props => {
           >
             <ListItemIcon>
               <img
+                alt="Restaurant type icon"
                 src={restaurant.icon}
                 style={{ width: "40px", height: "40px" }}
               />
