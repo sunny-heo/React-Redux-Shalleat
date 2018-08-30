@@ -64,7 +64,6 @@ export const getPhotos = (photos, width) => async dispatch => {
 };
 
 export const setKeyword = keyword => dispatch => {
-  console.log(keyword);
   dispatch({ type: SET_KEYWORD, payload: keyword });
 };
 
