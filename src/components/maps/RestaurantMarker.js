@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import RestaurantIcon from "@material-ui/icons/Restaurant";
 import Tooltip from "@material-ui/core/Tooltip";
+import Grow from "@material-ui/core/Grow";
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
@@ -21,33 +22,48 @@ const styles = theme => ({
 const enhance = compose(
   connect(mapStateToProps),
   withStyles(styles),
-  withHandlers({
-    // handleItemClick: props => evt => {
-    //   evt.preventDefault();
-    //   openItem(props);
-    // }
-  })
+  withHandlers({})
 );
 const RestaurantMarker = enhance(props => {
-  const { lat, lng, index, handleRestaurantClick, restaurant, classes } = props;
+  const {
+    lat,
+    lng,
+    index,
+    handleRestaurantClick,
+    restaurant,
+    classes,
+    openedItem
+  } = props;
 
-  const { opening_hours: hours = {} } = restaurant;
+  const { _in = true, opening_hours: hours = {} } = restaurant;
   const { open_now: openNow = false } = hours;
   const location = { lat, lng };
-  // const { openedIndex, opened } = openedItem;
+  const { openedIndex, opened } = openedItem;
   // const openDetail = openedIndex === index && opened;
   return (
-    <IconButton
-      className={classes.markerIcon}
-      style={
-        openNow
-          ? { backgroundColor: "#39e4a9" }
-          : { backgroundColor: "#424242" }
-      }
-      onClick={handleRestaurantClick(index, location)}
+    <Grow
+      in={_in}
+      mountOnEnter
+      unmountOnExit
+      {...{
+        timeout: {
+          enter: index * 50,
+          exit: index * 20
+        }
+      }}
     >
-      <RestaurantIcon style={{ color: "#fff" }} />
-    </IconButton>
+      <IconButton
+        className={classes.markerIcon}
+        style={
+          openNow
+            ? { backgroundColor: "#39e4a9" }
+            : { backgroundColor: "#424242" }
+        }
+        onClick={handleRestaurantClick(index, location)}
+      >
+        <RestaurantIcon style={{ color: "#fff", borderRadius: "2px" }} />
+      </IconButton>
+    </Grow>
   );
 });
 
