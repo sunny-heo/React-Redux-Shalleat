@@ -43,6 +43,7 @@ const theme = createMuiTheme({
 });
 
 const { store, persistor } = storage();
+
 ReactDOM.render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>

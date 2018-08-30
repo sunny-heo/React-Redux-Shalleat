@@ -29,7 +29,7 @@ const enhance = compose(
   withHandlers({
     handleSignIn: props => evt => {
       evt.preventDefault();
-
+      console.log("handleSignIn");
       const userInput = getAllFormInput(evt.currentTarget);
       const { setValidEmail, setValidPassword } = props;
       const validEmail = !!userInput.email;

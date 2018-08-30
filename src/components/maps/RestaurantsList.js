@@ -11,19 +11,10 @@ import SearchIcon from "@material-ui/icons/Search";
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
-const enhance = compose(
-  connect(mapStateToProps)
-  // withHandlers({
-  //   handleSearchOnClick: props => evt => {
-  //     evt.preventDefault();
-  //     const { revealSubSearch, setRevealSubSearch } = props;
-  //     setRevealSubSearch(!revealSubSearch);
-  //   }
-  // })
-);
+const enhance = compose(connect(mapStateToProps));
 
 const RestaurantsList = enhance(
-  ({ restaurants, _restaurants = [], handleSearchOnChange }) => {
+  ({ restaurants, _restaurants = [], handleSearchOnChange, ...restProps }) => {
     const { pendingGetRestaurants: pending } = restaurants;
     return (
       <div className="RestList list-group h-100">
@@ -48,10 +39,15 @@ const RestaurantsList = enhance(
             </ListSubheader>
           }
         >
-          {!restaurants || _restaurants.length === 0 ? null : (
+          {_restaurants.length === 0 ? null : (
             <div className="mt-2" style={{ overflow: "scroll" }}>
               {_restaurants.map((r, i) => (
-                <RestaurantItem key={r.place_id} index={i} restaurant={r} />
+                <RestaurantItem
+                  key={r.place_id}
+                  index={i}
+                  restaurant={r}
+                  {...restProps}
+                />
               ))}
             </div>
           )}

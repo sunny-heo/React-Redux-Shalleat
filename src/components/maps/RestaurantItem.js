@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+
 import { connect } from "react-redux";
 import { compose, withState, withHandlers, isClassComponent } from "recompose";
 
@@ -12,47 +13,38 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Slide from "@material-ui/core/Slide";
 import Divider from "@material-ui/core/Divider";
+import RestaurantRating from "./RestaurantRating";
 
 import { setItemOpen } from "../../actions/restaurantAction";
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
-const openItem = ({ openedItem, index: currentIndex, dispatch }) => {
-  const { openedIndex, opened } = openedItem;
-  if (opened && openedIndex !== currentIndex) {
-    dispatch(setItemOpen(currentIndex, opened));
-  } else {
-    dispatch(setItemOpen(currentIndex, !opened));
-  }
-};
-
 const enhance = compose(
   connect(mapStateToProps),
-  withHandlers({
-    handleItemClick: props => evt => {
-      evt.preventDefault();
-      openItem(props);
-    }
-  })
+  withHandlers({})
 );
 const RestaurantItem = enhance(props => {
-  const { restaurant, handleItemClick, index, openedItem } = props;
+  const { index, restaurant, openedItem, handleRestaurantClick } = props;
   const { openedIndex, opened } = openedItem;
-  const { opening_hours: hours = {} } = restaurant;
+  const { _in = true, opening_hours: hours = {}, geometry } = restaurant;
   const { open_now: openNow = false } = hours;
   const openDetail = openedIndex === index && opened;
   return (
     <Fragment>
       <Slide
-        in={true}
+        in={_in}
         direction="left"
-        mountOnEnter
         unmountOnExit
-        {...(true ? { timeout: index * 300 - 1.75 ** index } : {})}
+        {...{
+          timeout: {
+            enter: index * 50,
+            exit: index * 20
+          }
+        }}
       >
         <div style={{ paddingRight: "2px" }}>
           <ListItem
             button
-            onClick={handleItemClick}
+            onClick={handleRestaurantClick(index, geometry.location)}
             className={openDetail ? "shadow-sm rounded mt-2" : "mt-2"}
             style={
               openNow
@@ -68,10 +60,14 @@ const RestaurantItem = enhance(props => {
             </ListItemIcon>
             <ListItemText
               inset
-              primary={restaurant.name}
-              secondary={restaurant.vicinity}
+              disableTypography={true}
+              primary={
+                <span style={{ display: "block", marginBottom: "3px" }}>
+                  {restaurant.name}
+                </span>
+              }
+              secondary={<RestaurantRating rating={restaurant.rating} />}
             />
-
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
           <Collapse in={openDetail} timeout="auto" unmountOnExit>

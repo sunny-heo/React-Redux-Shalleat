@@ -1,16 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
-import { getRestaurants } from "../../actions/restaurantAction";
+import {
+  getRestaurants,
+  setItemOpen,
+  setSelectedLocation
+} from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
 import RestaurantsList from "../maps/RestaurantsList";
+
+const openDetail = (openedItem, dispatch, currentIndex) => {
+  const { openedIndex, opened } = openedItem;
+  if (opened && openedIndex !== currentIndex) {
+    dispatch(setItemOpen(currentIndex, opened));
+  } else {
+    dispatch(setItemOpen(currentIndex, !opened));
+  }
+};
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
 const enhance = compose(
   connect(mapStateToProps),
   withState("_restaurants", "_setRestaurants", []),
+  withState("center", "setCenter", null),
   withState("timerId", "setTimerId", null),
   lifecycle({
     componentDidMount() {
@@ -37,19 +51,45 @@ const enhance = compose(
 
       const timerId = setTimeout(() => {
         const [...restaurantsClone] = restaurants.list || [];
-        const filteredRestaurants = restaurantsClone.filter(
-          r =>
+        // const filteredRestaurants = restaurantsClone.filter(
+        //   r =>
+        //     r.name.toLowerCase().includes(searchKeyword) ||
+        //     r.vicinity.toLowerCase().includes(searchKeyword)
+        // );
+        // _setRestaurants(filteredRestaurants);
+        const filteredRestaurants = restaurantsClone.map(r => {
+          if (
             r.name.toLowerCase().includes(searchKeyword) ||
             r.vicinity.toLowerCase().includes(searchKeyword)
-        );
+          )
+            return { _in: true, ...r };
+          return { _in: false, ...r };
+        });
         _setRestaurants(filteredRestaurants);
+        console.log(filteredRestaurants);
       }, 200);
       setTimerId(timerId);
+    },
+    handleRestaurantClick: ({ restaurants, setCenter, dispatch }) => (
+      currentIndex,
+      location
+    ) => evt => {
+      evt.preventDefault();
+      openDetail(restaurants.openedItem, dispatch, currentIndex);
+      // setSelectedLocation(location);
+      setCenter(location);
     }
   })
 );
 
 const MapPage = enhance(props => {
+  const {
+    _restaurants,
+    handleRestaurantClick,
+    center,
+    setCenter,
+    handleSearchOnChange
+  } = props;
   const { list: restaurants, gotRestaurants } = props.restaurants;
   return (
     <div
@@ -70,11 +110,20 @@ const MapPage = enhance(props => {
           className="GoogleMap-container w-75 mt-2 shadow-sm bg-white rounded"
           style={{ position: "relative" }}
         >
-          <Map />
+          <Map
+            restaurants={_restaurants}
+            handleRestaurantClick={handleRestaurantClick}
+            center={center}
+            setCenter={setCenter}
+          />
         </div>
         <div className="RestList-container w-25 ml-3 mt-2">
-          {/* {gotRestaurants ? <RestaurantsList {...props} /> : null} */}
-          <RestaurantsList {...props} />
+          <RestaurantsList
+            restaurants={restaurants}
+            _restaurants={_restaurants}
+            handleRestaurantClick={handleRestaurantClick}
+            handleSearchOnChange={handleSearchOnChange}
+          />
         </div>
       </div>
     </div>

@@ -73,7 +73,8 @@ const SwitchComponent = enhance(props => {
   const {
     pendingGetRestaurants: pending,
     gotRestaurants: success,
-    keyword
+    keyword,
+    list
   } = restaurants;
 
   switch (true) {
@@ -91,6 +92,7 @@ const SwitchComponent = enhance(props => {
               keyword={keyword}
               pending={pending}
               success={success}
+              resultLength={list.length}
               revealInput={revealInput}
               handleSearchIcon={handleSearchIcon}
             />
