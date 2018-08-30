@@ -15,9 +15,7 @@ const {
   RESTAURANT_PHOTOS_FULFILLED,
 
   SET_KEYWORD,
-
-  RESTAURANT_OPEN_ITEM,
-  SLECTED_RESTAURANT_LOCATION
+  RESTAURANT_OPEN_ITEM
 } = restaurantConstants;
 
 export const getRestaurants = filters => async dispatch => {
@@ -66,14 +64,9 @@ export const getPhotos = (photos, width) => async dispatch => {
 };
 
 export const setKeyword = keyword => dispatch => {
-  console.log(keyword);
   dispatch({ type: SET_KEYWORD, payload: keyword });
 };
 
 export const setItemOpen = (openedIndex, opened) => dispatch => {
   dispatch({ type: RESTAURANT_OPEN_ITEM, payload: { openedIndex, opened } });
-};
-
-export const setSelectedLocation = location => dispatch => {
-  dispatch({ type: RESTAURANT_OPEN_ITEM, payload: location });
 };

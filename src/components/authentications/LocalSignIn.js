@@ -1,5 +1,4 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
 import { compose, withState, withHandlers } from "recompose";
 import { withStyles } from "@material-ui/core/styles";
 

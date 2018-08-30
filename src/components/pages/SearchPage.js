@@ -10,11 +10,7 @@ const mapStateToProps = (state, nextOwnProps) => state;
 
 const enhance = compose(connect(mapStateToProps));
 const SwitchComponent = enhance(({ restaurants }) => {
-  const {
-    pendingGetRestaurants,
-    gotRestaurants,
-    getRestaurantsError
-  } = restaurants;
+  const { pendingGetRestaurants, gotRestaurants } = restaurants;
   switch (true) {
     case pendingGetRestaurants:
       return <AuthPending />;
