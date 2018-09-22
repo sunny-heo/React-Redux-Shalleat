@@ -18,10 +18,22 @@ import {
 import "../styles/css/App.css";
 
 const mapStateToProps = (state, nextOwnProps) => state;
+const mapDispatchToProps = dispatch => {
+  return {
+    getLocation: async () => {
+      try {
+        await dispatch(getUserLocation());
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+};
 
 class App extends Component {
   componentDidMount() {
-    if (!this.props.user.location) this.props.dispatch(getUserLocation());
+    const { user, getLocation } = this.props;
+    !user.location && getLocation();
   }
 
   render() {
@@ -43,4 +55,7 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
