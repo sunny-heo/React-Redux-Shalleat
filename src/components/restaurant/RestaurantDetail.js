@@ -31,14 +31,9 @@ const enhance = compose(
   ),
   lifecycle({
     async componentDidMount() {
-      const { getDetails, restaurant } = this.props;
-      console.log("getRestaurantDetails");
-      console.log("getRestaurantDetails");
-      console.log("getRestaurantDetails");
-      console.log("getRestaurantDetails");
-      console.log("getRestaurantDetails");
-      console.log("getRestaurantDetails");
-      await getDetails(restaurant.place_id);
+      const { getDetails, restaurant, openDetail } = this.props;
+
+      // await getDetails(restaurant.place_id);
     }
   })
 );

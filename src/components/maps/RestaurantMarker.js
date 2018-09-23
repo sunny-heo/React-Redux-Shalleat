@@ -34,11 +34,10 @@ const RestaurantMarker = enhance(props => {
     // openedItem
   } = props;
 
-  const { _in = true, opening_hours: hours = {} } = restaurant;
+  const { _in = true, opening_hours: hours = {}, place_id } = restaurant;
   const { open_now: openNow = false } = hours;
   const location = { lat, lng };
-  // const { openedIndex, opened } = openedItem;
-  // const openDetail = openedIndex === index && opened;
+
   return (
     <Grow
       in={_in}
@@ -58,7 +57,7 @@ const RestaurantMarker = enhance(props => {
             ? { backgroundColor: "#39e4a9" }
             : { backgroundColor: "#424242" }
         }
-        onClick={handleRestaurantClick(index, location)}
+        onClick={handleRestaurantClick(place_id, location)}
       >
         <RestaurantIcon style={{ color: "#fff", borderRadius: "2px" }} />
       </IconButton>

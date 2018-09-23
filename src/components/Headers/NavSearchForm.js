@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, withHandlers } from "recompose";
-import { extractType, extractRadius } from "../../_helpers/searchPageHelper";
+import { extractType, extractRadius } from "../../_helpers/_searchPageHelper";
 import { getRestaurants, setKeyword } from "../../actions/restaurantAction";
 
 import Grow from "@material-ui/core/Grow";

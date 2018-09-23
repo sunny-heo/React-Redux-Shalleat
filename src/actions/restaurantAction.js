@@ -21,7 +21,6 @@ const {
 export const getRestaurants = filters => async dispatch => {
   dispatch({ type: RESTAURANT_ALL_PENDING });
   try {
-    console.log(filters);
     const restaurants = await restaurantService.getAll(filters);
     dispatch({ type: RESTAURANT_ALL_FULFILLED, payload: restaurants });
   } catch (error) {
@@ -70,6 +69,6 @@ export const setKeyword = keyword => dispatch => {
   dispatch({ type: SET_KEYWORD, payload: keyword });
 };
 
-export const setItemOpen = (openedIndex, opened) => dispatch => {
-  dispatch({ type: RESTAURANT_OPEN_ITEM, payload: { openedIndex, opened } });
+export const setItemOpen = (openedPlaceId, opened) => dispatch => {
+  dispatch({ type: RESTAURANT_OPEN_ITEM, payload: { openedPlaceId, opened } });
 };

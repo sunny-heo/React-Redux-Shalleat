@@ -22,7 +22,7 @@ const initialState = {
   pendingGetRestaurants: false,
   gotRestaurants: false,
   getRestaurantsError: null,
-  details: {},
+  details: [],
   pendingGetDetails: false,
   gotdetails: false,
   getDetailsError: null,
@@ -31,7 +31,6 @@ const initialState = {
   gotPhotos: false,
   getPhotosError: null,
   keyword: null,
-  OpenedItemIdx: null,
   openedItem: {}
 };
 
@@ -59,7 +58,7 @@ export default (state = initialState, action) => {
     }
 
     case RESTAURANT_DETAILS_PENDING: {
-      return { ...state, pendingGetDetails: true };
+      return { ...state, gotdetails: false, pendingGetDetails: true };
     }
 
     case RESTAURANT_DETAILS_REJECTED: {
@@ -75,7 +74,7 @@ export default (state = initialState, action) => {
         ...state,
         pendingGetDetails: false,
         gotdetails: true,
-        details: action.payload
+        details: state.details.concat(action.payload)
       };
     }
 

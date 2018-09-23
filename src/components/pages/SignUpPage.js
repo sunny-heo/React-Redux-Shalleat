@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { signUpUser } from "../../actions/userAction";
-import { getAllFormInput } from "../../_helpers/formHelper.js";
+import { getAllFormInput } from "../../_helpers/_formHelper";
 
 import Loader from "react-loader-spinner";
 import SignUpForm from "../authentications/SignUpForm";
