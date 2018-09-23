@@ -1,6 +1,6 @@
 import userConstants from "../_constants/userConstants";
 import userService from "../_requests/userService";
-import { parseCurrentLocation } from "../_helpers/locationHelper";
+import { parseCurrentLocation } from "../_helpers/_locationHelper";
 
 const {
   SIGNIN_USER_PENDING,

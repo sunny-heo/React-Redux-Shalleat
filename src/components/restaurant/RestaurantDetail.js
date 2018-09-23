@@ -33,7 +33,7 @@ const enhance = compose(
     async componentDidMount() {
       const { getDetails, restaurant, openDetail } = this.props;
 
-      openDetail && (await getDetails(restaurant.place_id));
+      // await getDetails(restaurant.place_id);
     }
   })
 );

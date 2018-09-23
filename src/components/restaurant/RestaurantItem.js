@@ -24,7 +24,6 @@ const enhance = compose(
 );
 const RestaurantItem = enhance(props => {
   const { index, restaurant, openedItem, handleRestaurantClick } = props;
-  console.log(props);
   const { openedPlaceId, opened } = openedItem;
   const {
     _in = true,

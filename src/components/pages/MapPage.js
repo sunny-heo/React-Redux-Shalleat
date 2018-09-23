@@ -2,8 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
 
+import { heightAnimation, _array } from "../../_helpers";
+
 import { setItemOpen } from "../../actions/restaurantAction";
-import { heightAnimation } from "../../_helpers";
+import { getRestaurantDetails } from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
 import { RestaurantsList } from "../restaurant";
@@ -17,6 +19,13 @@ const mapDispatchToProps = dispatch => {
         dispatch(setItemOpen(currPlaceId, opened));
       } else {
         dispatch(setItemOpen(currPlaceId, !opened));
+      }
+    },
+    getDetails: async placeId => {
+      try {
+        await dispatch(getRestaurantDetails(placeId));
+      } catch (error) {
+        console.log(error);
       }
     }
   };
@@ -64,12 +73,14 @@ const enhance = compose(
       }, 200);
       setTimerId(timerId);
     },
-    handleRestaurantClick: ({ restaurants, setCenter, openDetail }) => (
-      currPlaceId,
-      location
-    ) => async evt => {
+    handleRestaurantClick: ({
+      restaurants,
+      setCenter,
+      openDetail,
+      getDetails
+    }) => (currPlaceId, location) => async evt => {
       evt.preventDefault();
-      const { openedItem } = restaurants;
+      const { openedItem, details } = restaurants;
       const { openedPlaceId, opened } = openedItem;
       const open = openedPlaceId === currPlaceId && opened;
 
@@ -79,6 +90,10 @@ const enhance = compose(
       if (openedPlaceId === currPlaceId || !opened) {
         heightAnimation(!open, ".photos-container", "0%", "50%");
         heightAnimation(!open, ".google-map", "100%", "50%");
+      }
+
+      if (!details._contains("placeId", currPlaceId)) {
+        await getDetails(currPlaceId);
       }
     }
   })
