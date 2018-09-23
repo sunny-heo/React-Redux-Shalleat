@@ -14,6 +14,7 @@ import StarBorder from "@material-ui/icons/StarBorder";
 import Slide from "@material-ui/core/Slide";
 import Divider from "@material-ui/core/Divider";
 import RestaurantRating from "./RestaurantRating";
+import RestaurantDetail from "./RestaurantDetail";
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
@@ -45,11 +46,9 @@ const RestaurantItem = enhance(props => {
             button
             onClick={handleRestaurantClick(index, geometry.location)}
             className={openDetail ? "shadow-sm rounded mt-2" : "mt-2"}
-            style={
-              openNow
-                ? { borderLeft: "5px solid #39e4a9" }
-                : { borderLeft: "5px solid #424242" }
-            }
+            style={{
+              borderLeft: openNow ? "5px solid #39e4a9" : "5px solid #424242"
+            }}
           >
             <ListItemIcon>
               <img
@@ -70,7 +69,7 @@ const RestaurantItem = enhance(props => {
             />
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={openDetail} timeout="auto" unmountOnExit>
+          {/* <Collapse in={openDetail} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem className="">
                 <ListItemIcon>
@@ -79,7 +78,8 @@ const RestaurantItem = enhance(props => {
                 <ListItemText inset primary="Starred" />
               </ListItem>
             </List>
-          </Collapse>
+          </Collapse> */}
+          <RestaurantDetail restaurant={restaurant} openDetail={openDetail} />
           <Divider />
         </div>
       </Slide>
