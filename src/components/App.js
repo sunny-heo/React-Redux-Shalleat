@@ -39,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className="App d-flex flex-column" style={{ height: "100vh" }}>
           <Navbar />
           <Switch>
             <AuthRoute exact path="/" component={SearchPage} />

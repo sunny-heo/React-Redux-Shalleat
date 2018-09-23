@@ -34,43 +34,48 @@ const Map = enhance(
     handleRestaurantClick
   }) => {
     return (
-      <div className="GoogleMap mb-8" style={{ height: "100%", width: "100%" }}>
-        <IconButton
-          style={{
-            position: "absolute",
-            top: "5px",
-            right: "5px",
-            zIndex: 15
-          }}
-          onClick={centeredMyLocation}
-        >
-          <MyLocationIcon style={{ color: "#424242" }} />
-        </IconButton>
+      <div
+        className="google-map shadow-sm bg-white rounded"
+        style={{ height: "100%" }}
+      >
+        <div className="h-100" style={{ position: "relative" }}>
+          <IconButton
+            style={{
+              position: "absolute",
+              top: "5px",
+              right: "5px",
+              zIndex: 15
+            }}
+            onClick={centeredMyLocation}
+          >
+            <MyLocationIcon style={{ color: "#424242" }} />
+          </IconButton>
 
-        <GoogleMapReact
-          bootstrapURLKeys={GOOGLE_MAP_API}
-          defaultCenter={location}
-          center={center}
-          zoom={11}
-          options={CUSTOM_MAP_OPTIONS}
-          layerTypes={["TrafficLayer", "TransitLayer"]}
-          onChange={handleMapOnChange}
-        >
-          <UserLocationMarker lat={location.lat} lng={location.lng} />
-          {restaurants.map((r, i) => {
-            const { lat, lng } = r.geometry.location;
-            return (
-              <RestaurantMarker
-                lat={lat}
-                lng={lng}
-                key={r.place_id}
-                restaurant={r}
-                index={i}
-                handleRestaurantClick={handleRestaurantClick}
-              />
-            );
-          })}
-        </GoogleMapReact>
+          <GoogleMapReact
+            bootstrapURLKeys={GOOGLE_MAP_API}
+            defaultCenter={location}
+            center={center}
+            zoom={11}
+            options={CUSTOM_MAP_OPTIONS}
+            layerTypes={["TrafficLayer", "TransitLayer"]}
+            onChange={handleMapOnChange}
+          >
+            <UserLocationMarker lat={location.lat} lng={location.lng} />
+            {restaurants.map((r, i) => {
+              const { lat, lng } = r.geometry.location;
+              return (
+                <RestaurantMarker
+                  lat={lat}
+                  lng={lng}
+                  key={r.place_id}
+                  restaurant={r}
+                  index={i}
+                  handleRestaurantClick={handleRestaurantClick}
+                />
+              );
+            })}
+          </GoogleMapReact>
+        </div>
       </div>
     );
   }

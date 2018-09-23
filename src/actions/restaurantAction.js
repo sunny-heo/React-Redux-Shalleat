@@ -70,6 +70,6 @@ export const setKeyword = keyword => dispatch => {
   dispatch({ type: SET_KEYWORD, payload: keyword });
 };
 
-export const setItemOpen = (openedIndex, opened) => dispatch => {
-  dispatch({ type: RESTAURANT_OPEN_ITEM, payload: { openedIndex, opened } });
+export const setItemOpen = (openedPlaceId, opened) => dispatch => {
+  dispatch({ type: RESTAURANT_OPEN_ITEM, payload: { openedPlaceId, opened } });
 };

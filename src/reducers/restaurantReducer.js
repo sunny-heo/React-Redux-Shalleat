@@ -31,7 +31,6 @@ const initialState = {
   gotPhotos: false,
   getPhotosError: null,
   keyword: null,
-  OpenedItemIdx: null,
   openedItem: {}
 };
 

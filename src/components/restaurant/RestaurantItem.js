@@ -24,10 +24,16 @@ const enhance = compose(
 );
 const RestaurantItem = enhance(props => {
   const { index, restaurant, openedItem, handleRestaurantClick } = props;
-  const { openedIndex, opened } = openedItem;
-  const { _in = true, opening_hours: hours = {}, geometry } = restaurant;
+  console.log(props);
+  const { openedPlaceId, opened } = openedItem;
+  const {
+    _in = true,
+    opening_hours: hours = {},
+    geometry,
+    place_id
+  } = restaurant;
   const { open_now: openNow = false } = hours;
-  const openDetail = openedIndex === index && opened;
+  const openDetail = openedPlaceId === place_id && opened;
   return (
     <Fragment>
       <Slide
@@ -44,7 +50,7 @@ const RestaurantItem = enhance(props => {
         <div style={{ paddingRight: "2px" }}>
           <ListItem
             button
-            onClick={handleRestaurantClick(index, geometry.location)}
+            onClick={handleRestaurantClick(place_id, geometry.location)}
             className={openDetail ? "shadow-sm rounded mt-2" : "mt-2"}
             style={{
               borderLeft: openNow ? "5px solid #39e4a9" : "5px solid #424242"
@@ -69,16 +75,6 @@ const RestaurantItem = enhance(props => {
             />
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          {/* <Collapse in={openDetail} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem className="">
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText inset primary="Starred" />
-              </ListItem>
-            </List>
-          </Collapse> */}
           <RestaurantDetail restaurant={restaurant} openDetail={openDetail} />
           <Divider />
         </div>

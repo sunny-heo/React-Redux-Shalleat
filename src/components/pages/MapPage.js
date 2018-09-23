@@ -1,24 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
+
 import { setItemOpen } from "../../actions/restaurantAction";
+import { heightAnimation } from "../../_helpers";
 
 import Map from "../maps/Map";
 import { RestaurantsList } from "../restaurant";
 
-const openDetail = (openedItem, dispatch, currentIndex) => {
-  const { openedIndex, opened } = openedItem;
-  if (opened && openedIndex !== currentIndex) {
-    dispatch(setItemOpen(currentIndex, opened));
-  } else {
-    dispatch(setItemOpen(currentIndex, !opened));
-  }
+const mapStateToProps = (state, nextOwnProps) => state;
+const mapDispatchToProps = dispatch => {
+  return {
+    openDetail: (openedItem, currPlaceId) => {
+      const { openedPlaceId, opened } = openedItem;
+      if (opened && openedPlaceId !== currPlaceId) {
+        dispatch(setItemOpen(currPlaceId, opened));
+      } else {
+        dispatch(setItemOpen(currPlaceId, !opened));
+      }
+    }
+  };
 };
 
-const mapStateToProps = (state, nextOwnProps) => state;
-
 const enhance = compose(
-  connect(mapStateToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withState("_restaurants", "_setRestaurants", []),
   withState("center", "setCenter", null),
   withState("timerId", "setTimerId", null),
@@ -56,13 +64,22 @@ const enhance = compose(
       }, 200);
       setTimerId(timerId);
     },
-    handleRestaurantClick: ({ restaurants, setCenter, dispatch }) => (
-      currentIndex,
+    handleRestaurantClick: ({ restaurants, setCenter, openDetail }) => (
+      currPlaceId,
       location
-    ) => evt => {
+    ) => async evt => {
       evt.preventDefault();
-      openDetail(restaurants.openedItem, dispatch, currentIndex);
+      const { openedItem } = restaurants;
+      const { openedPlaceId, opened } = openedItem;
+      const open = openedPlaceId === currPlaceId && opened;
+
+      openDetail(openedItem, currPlaceId);
       setCenter(location);
+
+      if (openedPlaceId === currPlaceId || !opened) {
+        heightAnimation(!open, ".photos-container", "0%", "50%");
+        heightAnimation(!open, ".google-map", "100%", "50%");
+      }
     }
   })
 );
@@ -77,24 +94,18 @@ const MapPage = enhance(props => {
   } = props;
   const { list: restaurants } = props.restaurants;
   return (
-    <div
-      className="MainPage d-flex flex-column justify-content-center m-3"
-      style={{ height: "89.5vh" }}
-    >
-      {/* <div className="input-container d-flex align-items-center">
-        <div className="RadiusBar-container w-75"><RadiusBar /></div>
+    <div className="MainPage d-flex flex-column flex-grow-1">
+      <div className="map-photos-container d-flex flex-grow-1 p-4">
         <div
-          className="SearchBar-container w-25 ml-3"
-          style={{ marginBottom: "19px" }}
-        >
-        </div>
-      </div> */}
-
-      <div className="map-review-wrapper d-flex h-100">
-        <div
-          className="GoogleMap-container w-75 mt-2 shadow-sm bg-white rounded"
+          className="google-map-container w-75 mr-3"
           style={{ position: "relative" }}
         >
+          <div
+            className="photos-container shadow-sm bg-white rounded"
+            style={{ position: "relative", height: "0%" }}
+          >
+            <div className="w-25 h-25 shadow-sm rounded" />
+          </div>
           <Map
             center={center}
             setCenter={setCenter}
@@ -102,7 +113,7 @@ const MapPage = enhance(props => {
             handleRestaurantClick={handleRestaurantClick}
           />
         </div>
-        <div className="RestList-container w-25 ml-3 mt-2">
+        <div className="RestList-container w-25 ml-2 rounded">
           <RestaurantsList
             restaurants={restaurants}
             _restaurants={_restaurants}

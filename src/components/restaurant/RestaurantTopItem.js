@@ -11,7 +11,6 @@ const RestaurantTopItem = ({
   _restaurants
 }) => {
   const { pendingGetRestaurants } = restaurants;
-  console.log(pendingGetRestaurants);
   const TextFieldComponent = () => (
     <TextField
       className="mb-0"
