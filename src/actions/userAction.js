@@ -35,9 +35,9 @@ export const signInUser = userInput => async dispatch => {
   dispatch({ type: SIGNIN_USER_PENDING });
   try {
     const user = await userService.signIn(userInput);
-    if (user.error)
-      dispatch({ type: SIGNIN_USER_REJECTED, payload: user.error });
-    else dispatch({ type: SIGNIN_USER_FULFILLED, payload: user });
+    user.error
+      ? dispatch({ type: SIGNIN_USER_REJECTED, payload: user.error })
+      : dispatch({ type: SIGNIN_USER_FULFILLED, payload: user });
   } catch (error) {
     dispatch({ type: SIGNIN_USER_REJECTED, payload: error });
   }

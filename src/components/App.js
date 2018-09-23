@@ -4,22 +4,36 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { getUserLocation } from "../actions/userAction";
 
-import Navbar from "./Headers/Navbar";
-import AuthRoute from "./authentications/AuthRoute";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import OAuthPage from "./pages/OAuthPage";
-import SearchPage from "./pages/SearchPage";
-import MapPage from "./pages/MapPage";
-import NoMatchPage from "./pages/NoMatchPage";
+import { Navbar } from "./Headers";
+import { AuthRoute } from "./authentications";
+import {
+  SignInPage,
+  SignUpPage,
+  OAuthPage,
+  SearchPage,
+  MapPage,
+  NoMatchPage
+} from "./pages";
 
 import "../styles/css/App.css";
 
 const mapStateToProps = (state, nextOwnProps) => state;
+const mapDispatchToProps = dispatch => {
+  return {
+    getLocation: async () => {
+      try {
+        await dispatch(getUserLocation());
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+};
 
 class App extends Component {
   componentDidMount() {
-    if (!this.props.user.location) this.props.dispatch(getUserLocation());
+    const { user, getLocation } = this.props;
+    !user.location && getLocation();
   }
 
   render() {
@@ -41,4 +55,7 @@ class App extends Component {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

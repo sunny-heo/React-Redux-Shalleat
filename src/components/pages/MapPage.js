@@ -4,7 +4,7 @@ import { compose, withState, lifecycle, withHandlers } from "recompose";
 import { setItemOpen } from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
-import RestaurantsList from "../maps/RestaurantsList";
+import { RestaurantsList } from "../restaurant";
 
 const openDetail = (openedItem, dispatch, currentIndex) => {
   const { openedIndex, opened } = openedItem;

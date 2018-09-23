@@ -41,10 +41,13 @@ export const getRestaurantDetails = placeId => async dispatch => {
     "photos",
     "reviews"
   ];
+  const date = new Date();
+  const day = date.getDay();
   try {
     const restaurants = await restaurantService.getDetails({
       placeId,
-      filters
+      filters,
+      day
     });
     dispatch({ type: RESTAURANT_DETAILS_FULFILLED, payload: restaurants });
   } catch (error) {

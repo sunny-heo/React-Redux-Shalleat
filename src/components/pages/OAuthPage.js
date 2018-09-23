@@ -43,7 +43,7 @@ const OAuthPage = enhance(props => {
     case error:
       return <div>{error}</div>;
     default:
-      return <AuthPending />;
+      return null;
   }
 });
 
