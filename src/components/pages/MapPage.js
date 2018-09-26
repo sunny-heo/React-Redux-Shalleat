@@ -8,7 +8,7 @@ import { setItemOpen } from "../../actions/restaurantAction";
 import { getRestaurantDetails } from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
-import { RestaurantsList } from "../restaurant";
+import { RestaurantsList, RestaurantDetail } from "../restaurant";
 
 const mapStateToProps = (state, nextOwnProps) => state;
 const mapDispatchToProps = dispatch => {
@@ -39,6 +39,8 @@ const enhance = compose(
   withState("_restaurants", "_setRestaurants", []),
   withState("center", "setCenter", null),
   withState("timerId", "setTimerId", null),
+  withState("detailOpened", "setDetailOpen", false),
+  withState("currPlaceId", "setCurrPlaceId", null),
   lifecycle({
     componentDidMount() {
       const { _setRestaurants, restaurants } = this.props;
@@ -77,7 +79,10 @@ const enhance = compose(
       restaurants,
       setCenter,
       openDetail,
-      getDetails
+      getDetails,
+      detailOpened,
+      setDetailOpen,
+      setCurrPlaceId
     }) => (currPlaceId, location) => async evt => {
       evt.preventDefault();
       const { openedItem, details } = restaurants;
@@ -87,13 +92,17 @@ const enhance = compose(
       openDetail(openedItem, currPlaceId);
       setCenter(location);
 
-      if (openedPlaceId === currPlaceId || !opened) {
-        heightAnimation(!open, ".photos-container", "0%", "50%");
-        heightAnimation(!open, ".google-map", "100%", "50%");
+      if (!details._contains("placeId", currPlaceId)) {
+        console.log("fecthed");
+        await getDetails(currPlaceId);
       }
 
-      if (!details._contains("placeId", currPlaceId)) {
-        await getDetails(currPlaceId);
+      setDetailOpen(open);
+      // await setCurrPlaceId(currPlaceId);
+      if (openedPlaceId === currPlaceId || !opened) {
+        heightAnimation(!open, ".detailContainer", "0%", "50%");
+        heightAnimation(!open, ".google-map", "100%", "50%");
+        heightAnimation(!open, ".map-detail-divider", "0px", "24px");
       }
     }
   })
@@ -104,38 +113,38 @@ const MapPage = enhance(props => {
     center,
     setCenter,
     _restaurants,
+    detailOpened,
+    currPlaceId,
     handleSearchOnChange,
     handleRestaurantClick
   } = props;
-  const { list: restaurants } = props.restaurants;
+  const { list: restaurants, openedItem } = props.restaurants;
+  const { openedPlaceId, opened } = openedItem;
+  const open = openedPlaceId === currPlaceId && opened;
+
   return (
-    <div className="MainPage d-flex flex-column flex-grow-1">
-      <div className="map-photos-container d-flex flex-grow-1 p-4">
-        <div
-          className="google-map-container w-75 mr-3"
-          style={{ position: "relative" }}
-        >
-          <div
-            className="photos-container shadow-sm bg-white rounded"
-            style={{ position: "relative", height: "0%" }}
-          >
-            <div className="w-25 h-25 shadow-sm rounded" />
-          </div>
-          <Map
-            center={center}
-            setCenter={setCenter}
-            restaurants={_restaurants}
-            handleRestaurantClick={handleRestaurantClick}
-          />
-        </div>
-        <div className="RestList-container w-25 ml-2 rounded">
-          <RestaurantsList
-            restaurants={restaurants}
-            _restaurants={_restaurants}
-            handleRestaurantClick={handleRestaurantClick}
-            handleSearchOnChange={handleSearchOnChange}
-          />
-        </div>
+    <div className="map-photos-container d-flex flex-grow-1 p-4">
+      <div
+        className="google-map-container d-flex flex-column w-75 mr-3"
+        style={{ position: "relative" }}
+      >
+        {/* {open ? <RestaurantDetail detailOpened={detailOpened} /> : null} */}
+        <RestaurantDetail detailOpened={detailOpened} />
+        <div className="map-detail-divider" />
+        <Map
+          center={center}
+          setCenter={setCenter}
+          restaurants={_restaurants}
+          handleRestaurantClick={handleRestaurantClick}
+        />
+      </div>
+      <div className="RestList-container w-25 ml-2 rounded">
+        <RestaurantsList
+          restaurants={restaurants}
+          _restaurants={_restaurants}
+          handleRestaurantClick={handleRestaurantClick}
+          handleSearchOnChange={handleSearchOnChange}
+        />
       </div>
     </div>
   );

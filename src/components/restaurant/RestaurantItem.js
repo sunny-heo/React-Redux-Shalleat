@@ -14,7 +14,7 @@ import StarBorder from "@material-ui/icons/StarBorder";
 import Slide from "@material-ui/core/Slide";
 import Divider from "@material-ui/core/Divider";
 import RestaurantRating from "./RestaurantRating";
-import RestaurantDetail from "./RestaurantDetail";
+import RestaurantReview from "./RestaurantReview";
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
@@ -74,7 +74,7 @@ const RestaurantItem = enhance(props => {
             />
             {openDetail ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <RestaurantDetail restaurant={restaurant} openDetail={openDetail} />
+          <RestaurantReview restaurant={restaurant} openDetail={openDetail} />
           <Divider />
         </div>
       </Slide>
