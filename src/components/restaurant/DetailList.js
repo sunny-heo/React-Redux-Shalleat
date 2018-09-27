@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { compose, withState, withHandlers, lifecycle } from "recompose";
 
+import Grow from "@material-ui/core/Grow";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -71,15 +72,16 @@ const DEFAULT_MESSAGE = "Not available";
 
 const enhance = compose(
   withStyles(styles),
-  // connect(
-  //   mapStateToProps,
-  //   mapDispatchToProps
-  // ),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withState("remainingTime", "setRemainingTime", ""),
   withState("timerId", "setTimerId", null),
-  lifecycle({
-    async componentDidMount() {
-      const { schedule, setRemainingTime, setTimerId } = this.props;
+  withState("prevPlaceId", "setPrevPlaceId", null),
+  withHandlers({
+    handleRemainingTime: props => async () => {
+      const { schedule, setRemainingTime, setTimerId } = props;
       const businessHours = _getTodayHours(schedule);
       const edgeCases = ["Not available", "Open 24 hours"];
       if (edgeCases.includes(businessHours)) {
@@ -95,7 +97,14 @@ const enhance = compose(
           console.log(error);
         }
       }
+    }
+  }),
+  lifecycle({
+    async componentDidMount() {
+      this.props.setPrevPlaceId();
+      this.props.handleRemainingTime();
     },
+    async componentDidUpdate(prevProps) {},
     componentWillUnmount() {
       const { timerId } = this.props;
       clearInterval(timerId);
@@ -112,20 +121,34 @@ const DetailList = enhance(props => {
   } = detail;
 
   const { isOpenNow } = schedule || {};
-
   return (
     <div className={classes.listContainer}>
+      <button onClick={e => console.log(props.mounted)}>button</button>
       <List>
-        <ListItem>
-          <Avatar className={classes.avatar}>
-            {isOpenNow ? (
-              <BatteryFullIcon className={classes.iconHover} />
-            ) : (
-              <BatteryChargingIcon className={classes.iconHover} />
-            )}
-          </Avatar>
-          <ListItemText primary={remainingTime} />
-        </ListItem>
+        <Grow
+          in={props.detailOpened}
+          direction="right"
+          unmountOnExit
+          {...{
+            timeout: {
+              // enter: index * 50,
+              // exit: index * 20
+              enter: 3000,
+              exit: 3000
+            }
+          }}
+        >
+          <ListItem>
+            <Avatar className={classes.avatar}>
+              {isOpenNow ? (
+                <BatteryFullIcon className={classes.iconHover} />
+              ) : (
+                <BatteryChargingIcon className={classes.iconHover} />
+              )}
+            </Avatar>
+            <ListItemText primary={remainingTime} />
+          </ListItem>
+        </Grow>
         <ListItem>
           <Avatar className={classes.avatar}>
             <PhoneIcon className={classes.iconHover} />
