@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { compose } from "recompose";
 
 import MainSearchForm from "../maps/MainSearchForm";
-import AuthPending from "../pendings/CircularPending";
+import { CircularPending } from "../utils";
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
@@ -13,7 +13,7 @@ const SwitchComponent = enhance(({ restaurants }) => {
   const { pendingGetRestaurants, gotRestaurants } = restaurants;
   switch (true) {
     case pendingGetRestaurants:
-      return <AuthPending />;
+      return <CircularPending />;
     case gotRestaurants:
       return <Redirect to="/map" />;
     default:

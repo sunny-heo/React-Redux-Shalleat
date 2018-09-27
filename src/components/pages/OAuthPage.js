@@ -6,7 +6,7 @@ import { compose, lifecycle } from "recompose";
 
 import { googleSignInUser } from "../../actions/userAction";
 
-import AuthPending from "../pendings/CircularPending";
+import { CircularPending } from "../utils";
 
 const styles = theme => {
   return {
@@ -37,7 +37,7 @@ const OAuthPage = enhance(props => {
   const { pendingSignIn, signedIn, error } = props;
   switch (true) {
     case pendingSignIn:
-      return <AuthPending />;
+      return <CircularPending />;
     case signedIn:
       return <Redirect to="/sign_in" />;
     case error:

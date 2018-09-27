@@ -55,22 +55,22 @@ const RestaurantDetail = enhance(props => {
 
   return (
     <div className="detailContainer shadow-sm bg-white rounded">
-      {detailOpened && detail ? (
+      {detail ? (
         <Fragment>
           <Fade
-            in={true}
+            in={detailOpened}
             direction="right"
             unmountOnExit
             {...{
               timeout: {
                 // enter: index * 50,
                 // exit: index * 20
-                enter: 1800,
-                exit: 1800
+                enter: 2000,
+                exit: 700
               }
             }}
           >
-            <h1 className={`${classes.title} my-4`}>{detail.name}</h1>
+            <h2 className={`${classes.title} my-4`}>{detail.name}</h2>
           </Fade>
           <DetailList
             placeId={openedItem.openedPlaceId}

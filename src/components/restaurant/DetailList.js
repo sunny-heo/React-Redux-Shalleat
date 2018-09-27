@@ -100,17 +100,22 @@ const enhance = compose(
     }
   }),
   lifecycle({
-    async componentDidMount() {
+    componentDidMount() {
       this.props.setPrevPlaceId();
       this.props.handleRemainingTime();
     },
-    async componentDidUpdate(prevProps) {},
+    componentDidUpdate(prevProps) {
+      if (this.props.placeId !== prevProps.openedItem.openedPlaceId) {
+        clearInterval(this.props.timerId);
+        this.props.handleRemainingTime();
+      }
+    },
     componentWillUnmount() {
-      const { timerId } = this.props;
-      clearInterval(timerId);
+      clearInterval(this.props.timerId);
     }
   })
 );
+
 const DetailList = enhance(props => {
   const { classes, detail, address, schedule, placeId, remainingTime } = props;
   const {
@@ -123,7 +128,6 @@ const DetailList = enhance(props => {
   const { isOpenNow } = schedule || {};
   return (
     <div className={classes.listContainer}>
-      <button onClick={e => console.log(props.mounted)}>button</button>
       <List>
         <Grow
           in={props.detailOpened}
@@ -134,7 +138,7 @@ const DetailList = enhance(props => {
               // enter: index * 50,
               // exit: index * 20
               enter: 3000,
-              exit: 3000
+              exit: 600
             }
           }}
         >
@@ -149,34 +153,62 @@ const DetailList = enhance(props => {
             <ListItemText primary={remainingTime} />
           </ListItem>
         </Grow>
-        <ListItem>
-          <Avatar className={classes.avatar}>
-            <PhoneIcon className={classes.iconHover} />
-          </Avatar>
-          <ListItemText
-            primary={
-              <a href={`tel:${intPhone}`}>
-                <span>{phone}</span>
-              </a>
+        <Grow
+          in={props.detailOpened}
+          direction="right"
+          unmountOnExit
+          {...{
+            timeout: {
+              // enter: index * 50,
+              // exit: index * 20
+              enter: 3000,
+              exit: 500
             }
-          />
-        </ListItem>
-        <ListItem>
-          <Avatar className={classes.avatar}>
-            <LocationIcon className={classes.iconHover} />
-          </Avatar>
-          <ListItemText
-            primary={
-              address === DEFAULT_MESSAGE ? (
-                <span>{address}</span>
-              ) : (
-                <a className={classes.address} href={placeSearchURL(placeId)}>
-                  <span>{address}</span>
+          }}
+        >
+          <ListItem>
+            <Avatar className={classes.avatar}>
+              <PhoneIcon className={classes.iconHover} />
+            </Avatar>
+            <ListItemText
+              primary={
+                <a href={`tel:${intPhone}`}>
+                  <span>{phone}</span>
                 </a>
-              )
+              }
+            />
+          </ListItem>
+        </Grow>
+        <Grow
+          in={props.detailOpened}
+          direction="right"
+          unmountOnExit
+          {...{
+            timeout: {
+              // enter: index * 50,
+              // exit: index * 20
+              enter: 3500,
+              exit: 400
             }
-          />
-        </ListItem>
+          }}
+        >
+          <ListItem>
+            <Avatar className={classes.avatar}>
+              <LocationIcon className={classes.iconHover} />
+            </Avatar>
+            <ListItemText
+              primary={
+                address === DEFAULT_MESSAGE ? (
+                  <span>{address}</span>
+                ) : (
+                  <a className={classes.address} href={placeSearchURL(placeId)}>
+                    <span>{address}</span>
+                  </a>
+                )
+              }
+            />
+          </ListItem>
+        </Grow>
       </List>
     </div>
   );

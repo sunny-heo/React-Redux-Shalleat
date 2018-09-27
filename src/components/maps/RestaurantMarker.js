@@ -45,13 +45,13 @@ const RestaurantMarker = enhance(props => {
       unmountOnExit
       {...{
         timeout: {
-          enter: index * 50,
-          exit: index * 20
+          enter: index * 80,
+          exit: index * 50
         }
       }}
     >
       <IconButton
-        className={classes.markerIcon}
+        className={`${classes.markerIcon} shadow-sm rounded`}
         style={
           openNow
             ? { backgroundColor: "#39e4a9" }

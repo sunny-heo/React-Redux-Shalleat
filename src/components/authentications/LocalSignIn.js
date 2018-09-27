@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { guest, getAllFormInput } from "../../_helpers";
 import { signInUser } from "../../actions/userAction";
 
-import AuthPending from "../pendings/CircularPending";
+import { CircularPending } from "../utils";
 import SignInForm from "./SignInForm";
 
 const styles = theme => {
@@ -51,7 +51,7 @@ const enhance = compose(
 const SwitchComponent = enhance(({ pendingSignIn, ...restProps }) => {
   switch (true) {
     case pendingSignIn:
-      return <AuthPending />;
+      return <CircularPending />;
     default:
       return <SignInForm {...restProps} />;
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
 
-import { _heightAnimation, _array } from "../../_helpers";
+import { _heightAnimation, _widthAnimation, _array } from "../../_helpers";
 
 import { setItemOpen } from "../../actions/restaurantAction";
 import { getRestaurantDetails } from "../../actions/restaurantAction";
@@ -88,9 +88,12 @@ const enhance = compose(
       // await setCurrPlaceId(currPlaceId);
       setDetailOpen(!open);
       if (openedPlaceId === currPlaceId || !opened) {
-        _heightAnimation(!open, ".detailContainer", "0%", "50%");
-        _heightAnimation(!open, ".google-map", "100%", "50%");
-        _heightAnimation(!open, ".map-detail-divider", "0px", "24px");
+        // _heightAnimation(!open, ".detailContainer", "0%", "50%");
+        // _heightAnimation(!open, ".google-map", "100%", "50%");
+        // _heightAnimation(!open, ".map-detail-divider", "0px", "24px");
+        _widthAnimation(!open, ".detailContainer", "0%", "50%");
+        _widthAnimation(!open, ".google-map", "100%", "50%");
+        _widthAnimation(!open, ".map-detail-divider", "0px", "24px");
       }
     }
   }),
@@ -127,17 +130,26 @@ const MapPage = enhance(props => {
   return (
     <div className="map-photos-container d-flex flex-grow-1 p-4">
       <div
-        className="google-map-container d-flex flex-column w-75 mr-3"
+        // className="google-map-container d-flex flex-column w-75 mr-3"
+        className="google-map-container d-flex w-75 mr-3"
         style={{ position: "relative" }}
       >
-        <RestaurantDetail detailOpened={detailOpened} />
+        {/* <RestaurantDetail detailOpened={detailOpened} />
         <div className="map-detail-divider" />
         <Map
           center={center}
           setCenter={setCenter}
           restaurants={_restaurants}
           handleRestaurantClick={handleRestaurantClick}
+        /> */}
+        <Map
+          center={center}
+          setCenter={setCenter}
+          restaurants={_restaurants}
+          handleRestaurantClick={handleRestaurantClick}
         />
+        <div className="map-detail-divider" />
+        <RestaurantDetail detailOpened={detailOpened} />
       </div>
       <div className="RestList-container w-25 ml-2 rounded">
         <RestaurantsList

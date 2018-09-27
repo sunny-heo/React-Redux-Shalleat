@@ -36,7 +36,7 @@ const Map = enhance(
     return (
       <div
         className="google-map shadow-sm bg-white rounded"
-        style={{ height: "100%" }}
+        style={{ width: "100%" }}
       >
         <div className="h-100" style={{ position: "relative" }}>
           <IconButton
