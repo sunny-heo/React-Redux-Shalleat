@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
 
-import { heightAnimation, _array } from "../../_helpers";
+import { _heightAnimation, _widthAnimation, _array } from "../../_helpers";
 
 import { setItemOpen } from "../../actions/restaurantAction";
 import { getRestaurantDetails } from "../../actions/restaurantAction";
@@ -41,18 +41,6 @@ const enhance = compose(
   withState("timerId", "setTimerId", null),
   withState("detailOpened", "setDetailOpen", false),
   withState("currPlaceId", "setCurrPlaceId", null),
-  lifecycle({
-    componentDidMount() {
-      const { _setRestaurants, restaurants } = this.props;
-      _setRestaurants([...restaurants.list]);
-    },
-    componentDidUpdate(prevProps) {
-      const { _setRestaurants, restaurants } = this.props;
-      if (this.props.restaurants.list !== prevProps.restaurants.list) {
-        _setRestaurants([...restaurants.list]);
-      }
-    }
-  }),
   withHandlers({
     handleSearchOnChange: ({
       timerId: timer,
@@ -97,12 +85,27 @@ const enhance = compose(
         await getDetails(currPlaceId);
       }
 
-      setDetailOpen(open);
       // await setCurrPlaceId(currPlaceId);
+      setDetailOpen(!open);
       if (openedPlaceId === currPlaceId || !opened) {
-        heightAnimation(!open, ".detailContainer", "0%", "50%");
-        heightAnimation(!open, ".google-map", "100%", "50%");
-        heightAnimation(!open, ".map-detail-divider", "0px", "24px");
+        // _heightAnimation(!open, ".detailContainer", "0%", "50%");
+        // _heightAnimation(!open, ".google-map", "100%", "50%");
+        // _heightAnimation(!open, ".map-detail-divider", "0px", "24px");
+        _widthAnimation(!open, ".detailContainer", "0%", "50%");
+        _widthAnimation(!open, ".google-map", "100%", "50%");
+        _widthAnimation(!open, ".map-detail-divider", "0px", "24px");
+      }
+    }
+  }),
+  lifecycle({
+    componentDidMount() {
+      const { _setRestaurants, restaurants } = this.props;
+      _setRestaurants([...restaurants.list]);
+    },
+    componentDidUpdate(prevProps) {
+      const { _setRestaurants, restaurants } = this.props;
+      if (this.props.restaurants.list !== prevProps.restaurants.list) {
+        _setRestaurants([...restaurants.list]);
       }
     }
   })
@@ -121,22 +124,32 @@ const MapPage = enhance(props => {
   const { list: restaurants, openedItem } = props.restaurants;
   const { openedPlaceId, opened } = openedItem;
   const open = openedPlaceId === currPlaceId && opened;
-
+  console.log("openedPlaceId => ", openedPlaceId);
+  console.log("currPlaceId => ", currPlaceId);
+  console.log(openedPlaceId === currPlaceId);
   return (
     <div className="map-photos-container d-flex flex-grow-1 p-4">
       <div
-        className="google-map-container d-flex flex-column w-75 mr-3"
+        // className="google-map-container d-flex flex-column w-75 mr-3"
+        className="google-map-container d-flex w-75 mr-3"
         style={{ position: "relative" }}
       >
-        {/* {open ? <RestaurantDetail detailOpened={detailOpened} /> : null} */}
-        <RestaurantDetail detailOpened={detailOpened} />
+        {/* <RestaurantDetail detailOpened={detailOpened} />
         <div className="map-detail-divider" />
         <Map
           center={center}
           setCenter={setCenter}
           restaurants={_restaurants}
           handleRestaurantClick={handleRestaurantClick}
+        /> */}
+        <Map
+          center={center}
+          setCenter={setCenter}
+          restaurants={_restaurants}
+          handleRestaurantClick={handleRestaurantClick}
         />
+        <div className="map-detail-divider" />
+        <RestaurantDetail detailOpened={detailOpened} />
       </div>
       <div className="RestList-container w-25 ml-2 rounded">
         <RestaurantsList

@@ -36,7 +36,7 @@ const Map = enhance(
     return (
       <div
         className="google-map shadow-sm bg-white rounded"
-        style={{ height: "100%" }}
+        style={{ width: "100%" }}
       >
         <div className="h-100" style={{ position: "relative" }}>
           <IconButton
@@ -64,14 +64,13 @@ const Map = enhance(
             {restaurants.map((r, i) => {
               const { lat, lng } = r.geometry.location;
               return (
-                <RestaurantMarker
-                  lat={lat}
-                  lng={lng}
-                  key={r.place_id}
-                  restaurant={r}
-                  index={i}
-                  handleRestaurantClick={handleRestaurantClick}
-                />
+                <div lat={lat} lng={lng} key={r.place_id}>
+                  <RestaurantMarker
+                    restaurant={r}
+                    index={i}
+                    handleRestaurantClick={handleRestaurantClick}
+                  />
+                </div>
               );
             })}
           </GoogleMapReact>

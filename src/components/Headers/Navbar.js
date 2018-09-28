@@ -10,8 +10,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Btn from "../common/Button";
-import CircularPending from "../pendings/CircularPending";
-import LocationPending from "../pendings/LocationPending";
+import { CircularPending, LocationPending } from "../utils";
 
 import NavSearchForm from "./NavSearchForm";
 

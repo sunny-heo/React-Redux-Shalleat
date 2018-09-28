@@ -3,21 +3,8 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { compose, withState, withHandlers, lifecycle } from "recompose";
 
+import Fade from "@material-ui/core/Fade";
 import DetailList from "./DetailList";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
-import ImageIcon from "@material-ui/icons/Image";
-import BatteryFullIcon from "@material-ui/icons/BatteryFullRounded";
-import BatteryChargingIcon from "@material-ui/icons/BatteryCharging50Rounded";
-import PhoneIcon from "@material-ui/icons/LocalPhoneRounded";
-import LocationIcon from "@material-ui/icons/LocationOnRounded";
-
-import WorkIcon from "@material-ui/icons/Work";
-import BeachAccessIcon from "@material-ui/icons/BeachAccess";
-
-import red from "@material-ui/core/colors/red";
 
 import { getRestaurantDetails } from "../../actions/restaurantAction";
 
@@ -32,6 +19,9 @@ const styles = theme => ({
   detailContainer: {
     position: "relative",
     height: "0%"
+  },
+  title: {
+    "text-align": "center"
   }
 });
 
@@ -40,15 +30,7 @@ const placeSearchURL = placeId =>
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 const mapDispatchToProps = dispatch => {
-  return {
-    getDetails: async placeId => {
-      try {
-        await dispatch(getRestaurantDetails(placeId));
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  return {};
 };
 
 const DEFAULT_MESSAGE = "Not available";
@@ -58,78 +40,16 @@ const enhance = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
-  ),
-  withState("remainingTime", "setRemainingTime", ""),
-  withState("timerId", "setTimerId", null),
-  lifecycle({
-    async componentDidMount() {
-      // const { details, openedItem } = this.props;
-      // // if (details !== prevProps.details) {
-      // const { setRemainingTime, setTimerId } = this.props;
-      // const { detail, schedule } = details._find(
-      //   "placeId",
-      //   openedItem.openedPlaceId
-      // );
-      // const businessHours = _getTodayHours(schedule);
-      // const edgeCases = ["Not available", "Open 24 hours"];
-      // if (edgeCases.includes(businessHours)) {
-      //   setRemainingTime(businessHours);
-      // } else {
-      //   try {
-      //     const timerId = await _repeat(
-      //       () => setRemainingTime(_calcRemainingTime(businessHours)),
-      //       1000
-      //     );
-      //     await setTimerId(timerId);
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // }
-      // }
-    },
-    async componentDidUpdate(prevProps) {
-      // const { details, openedItem } = this.props;
-      // if (
-      //   openedItem.openedPlaceId !== prevProps.openedItem.openedPlaceId &&
-      //   details.length !== 0
-      // ) {
-      //   const { setRemainingTime, setTimerId } = this.props;
-      //   const { detail, schedule } = details._find(
-      //     "placeId",
-      //     openedItem.openedPlaceId
-      //   );
-      //   const businessHours = _getTodayHours(schedule);
-      //   const edgeCases = ["Not available", "Open 24 hours"];
-      //   if (edgeCases.includes(businessHours)) {
-      //     setRemainingTime(businessHours);
-      //   } else {
-      //     try {
-      //       const timerId = await _repeat(
-      //         () => setRemainingTime(_calcRemainingTime(businessHours)),
-      //         1000
-      //       );
-      //       await setTimerId(timerId);
-      //     } catch (error) {
-      //       console.log(error);
-      //     }
-      //   }
-      // }
-    },
-    componentWillUnmount() {
-      const { timerId } = this.props;
-      clearInterval(timerId);
-    }
-  })
+  )
 );
 const RestaurantDetail = enhance(props => {
-  const { classes, list, details, openedItem } = props;
-  console.log(props);
+  const { classes, list, details, openedItem, detailOpened } = props;
   const { detail, schedule } = details._find(
     "placeId",
     openedItem.openedPlaceId
   );
   const { vicinity: address = DEFAULT_MESSAGE } = list._find(
-    "placeId",
+    "place_id",
     openedItem.openedPlaceId
   );
 
@@ -137,12 +57,27 @@ const RestaurantDetail = enhance(props => {
     <div className="detailContainer shadow-sm bg-white rounded">
       {detail ? (
         <Fragment>
-          <h1 className={classes.title}>{detail.name}</h1>
+          <Fade
+            in={detailOpened}
+            direction="right"
+            unmountOnExit
+            {...{
+              timeout: {
+                // enter: index * 50,
+                // exit: index * 20
+                enter: 2000,
+                exit: 700
+              }
+            }}
+          >
+            <h2 className={`${classes.title} my-4`}>{detail.name}</h2>
+          </Fade>
           <DetailList
             placeId={openedItem.openedPlaceId}
             detail={detail}
             address={address}
             schedule={schedule}
+            detailOpened={detailOpened}
           />
         </Fragment>
       ) : null}

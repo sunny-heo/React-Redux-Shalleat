@@ -36,3 +36,26 @@ button:focus {
 .gm-style-cc {
   display: none;
 }
+
+.markerButtonOff:before {
+  content: "";
+  position: absolute;
+  right: 25%;
+  top: 80%;
+  width: 0px;
+  height: 0px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 18px solid #424242;
+}
+.markerButtonOn:before {
+  content: "";
+  position: absolute;
+  right: 25%;
+  top: 80%;
+  width: 0px;
+  height: 0px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 18px solid #39e4a9;
+}

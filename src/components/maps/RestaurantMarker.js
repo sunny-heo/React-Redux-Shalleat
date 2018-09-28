@@ -11,8 +11,10 @@ const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 
 const styles = theme => ({
   markerIcon: {
+    width: "36px",
+    height: "36px",
     borderRadius: "2px",
-    transform: "translate(-50%, -50%)",
+    transform: "translate(-50%, -70%)",
     boxShadow:
       "0 0 4px 0 rgba(0, 0, 0, 0.14), 0 3px 4px 0 rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2)"
   }
@@ -45,13 +47,15 @@ const RestaurantMarker = enhance(props => {
       unmountOnExit
       {...{
         timeout: {
-          enter: index * 50,
-          exit: index * 20
+          enter: index * 80,
+          exit: index * 50
         }
       }}
     >
       <IconButton
-        className={classes.markerIcon}
+        className={`${classes.markerIcon} shadow-sm rounded ${
+          openNow ? "markerButtonOn" : "markerButtonOff"
+        }`}
         style={
           openNow
             ? { backgroundColor: "#39e4a9" }

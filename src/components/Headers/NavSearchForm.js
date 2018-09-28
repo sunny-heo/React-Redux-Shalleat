@@ -6,7 +6,7 @@ import { getRestaurants, setKeyword } from "../../actions/restaurantAction";
 
 import Grow from "@material-ui/core/Grow";
 import TextField from "@material-ui/core/TextField";
-import SearchPending from "../pendings/SearchPending";
+import { SearchPending } from "../utils";
 
 const mapStateToProps = (state, nextOwnProps) => state;
 
