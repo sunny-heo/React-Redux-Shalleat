@@ -43,13 +43,13 @@ const enhance = compose(
   )
 );
 const RestaurantDetail = enhance(props => {
-  const { classes, list, details, openedItem, detailOpened, hello } = props;
+  const { classes, list, details, openedItem, detailOpened } = props;
   const { detail, schedule } = details._find(
     "placeId",
     openedItem.openedPlaceId
   );
   const { vicinity: address = DEFAULT_MESSAGE } = list._find(
-    "placeId",
+    "place_id",
     openedItem.openedPlaceId
   );
 

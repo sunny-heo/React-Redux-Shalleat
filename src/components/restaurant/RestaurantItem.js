@@ -66,9 +66,11 @@ const RestaurantItem = enhance(props => {
               inset
               disableTypography={true}
               primary={
-                <span style={{ display: "block", marginBottom: "3px" }}>
-                  {restaurant.name}
-                </span>
+                <strong>
+                  <span style={{ display: "block", marginBottom: "3px" }}>
+                    {restaurant.name}
+                  </span>
+                </strong>
               }
               secondary={<RestaurantRating rating={restaurant.rating} />}
             />

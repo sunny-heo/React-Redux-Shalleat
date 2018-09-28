@@ -64,14 +64,13 @@ const Map = enhance(
             {restaurants.map((r, i) => {
               const { lat, lng } = r.geometry.location;
               return (
-                <RestaurantMarker
-                  lat={lat}
-                  lng={lng}
-                  key={r.place_id}
-                  restaurant={r}
-                  index={i}
-                  handleRestaurantClick={handleRestaurantClick}
-                />
+                <div lat={lat} lng={lng} key={r.place_id}>
+                  <RestaurantMarker
+                    restaurant={r}
+                    index={i}
+                    handleRestaurantClick={handleRestaurantClick}
+                  />
+                </div>
               );
             })}
           </GoogleMapReact>

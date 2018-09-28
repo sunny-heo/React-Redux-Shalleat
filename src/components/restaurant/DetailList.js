@@ -3,15 +3,16 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { compose, withState, withHandlers, lifecycle } from "recompose";
 
-import Grow from "@material-ui/core/Grow";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
-import BatteryFullIcon from "@material-ui/icons/BatteryFullRounded";
-import BatteryChargingIcon from "@material-ui/icons/BatteryCharging50Rounded";
-import PhoneIcon from "@material-ui/icons/LocalPhoneRounded";
-import LocationIcon from "@material-ui/icons/LocationOnRounded";
+import { Grow, List, ListItem, ListItemText, Avatar } from "@material-ui/core";
+import {
+  BatteryFullRounded as BatteryFullIcon,
+  BatteryCharging50Rounded as BatteryChargingIcon,
+  LocalPhoneRounded as PhoneIcon,
+  LocationOnRounded as LocationIcon,
+  HomeRounded as HomeIcon
+} from "@material-ui/icons";
+
+import DetailListItem from "./DetailListItem";
 
 import red from "@material-ui/core/colors/red";
 
@@ -117,7 +118,15 @@ const enhance = compose(
 );
 
 const DetailList = enhance(props => {
-  const { classes, detail, address, schedule, placeId, remainingTime } = props;
+  const {
+    classes,
+    detail,
+    address,
+    schedule,
+    placeId,
+    remainingTime,
+    detailOpened
+  } = props;
   const {
     formatted_phone_number: phone = DEFAULT_MESSAGE,
     international_phone_number: intPhone = DEFAULT_MESSAGE,
@@ -129,6 +138,17 @@ const DetailList = enhance(props => {
   return (
     <div className={classes.listContainer}>
       <List>
+        {/* <DetailListItem
+          _in={detailOpened}
+          primary={remainingTime}
+          Component={
+            isOpenNow ? (
+              <BatteryFullIcon className={classes.iconHover} />
+            ) : (
+              <BatteryChargingIcon className={classes.iconHover} />
+            )
+          }
+        /> */}
         <Grow
           in={props.detailOpened}
           direction="right"
@@ -203,6 +223,36 @@ const DetailList = enhance(props => {
                 ) : (
                   <a className={classes.address} href={placeSearchURL(placeId)}>
                     <span>{address}</span>
+                  </a>
+                )
+              }
+            />
+          </ListItem>
+        </Grow>
+        <Grow
+          in={props.detailOpened}
+          direction="right"
+          unmountOnExit
+          {...{
+            timeout: {
+              // enter: index * 50,
+              // exit: index * 20
+              enter: 4000,
+              exit: 300
+            }
+          }}
+        >
+          <ListItem>
+            <Avatar className={classes.avatar}>
+              <HomeIcon className={classes.iconHover} />
+            </Avatar>
+            <ListItemText
+              primary={
+                website === DEFAULT_MESSAGE ? (
+                  <span>{website}</span>
+                ) : (
+                  <a className={classes.address} href={website}>
+                    <span>{website}</span>
                   </a>
                 )
               }
