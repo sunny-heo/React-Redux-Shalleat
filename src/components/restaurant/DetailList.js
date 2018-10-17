@@ -12,8 +12,6 @@ import {
   HomeRounded as HomeIcon
 } from "@material-ui/icons";
 
-import DetailListItem from "./DetailListItem";
-
 import red from "@material-ui/core/colors/red";
 
 import { getRestaurantDetails } from "../../actions/restaurantAction";
@@ -22,6 +20,7 @@ import {
   _array,
   _getTodayHours,
   _calcRemainingTime,
+  _calcTest,
   _repeat
 } from "../../_helpers";
 
@@ -102,7 +101,6 @@ const enhance = compose(
   }),
   lifecycle({
     componentDidMount() {
-      this.props.setPrevPlaceId();
       this.props.handleRemainingTime();
     },
     componentDidUpdate(prevProps) {
@@ -135,20 +133,10 @@ const DetailList = enhance(props => {
   } = detail;
 
   const { isOpenNow } = schedule || {};
+
   return (
     <div className={classes.listContainer}>
       <List>
-        {/* <DetailListItem
-          _in={detailOpened}
-          primary={remainingTime}
-          Component={
-            isOpenNow ? (
-              <BatteryFullIcon className={classes.iconHover} />
-            ) : (
-              <BatteryChargingIcon className={classes.iconHover} />
-            )
-          }
-        /> */}
         <Grow
           in={props.detailOpened}
           direction="right"

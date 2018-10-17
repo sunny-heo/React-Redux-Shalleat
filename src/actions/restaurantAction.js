@@ -1,5 +1,6 @@
 import restaurantConstants from "../_constants/restaurantConstants";
 import restaurantService from "../_requests/restaurantService";
+import { format } from "date-fns";
 
 const {
   RESTAURANT_ALL_PENDING,
@@ -42,11 +43,14 @@ export const getRestaurantDetails = placeId => async dispatch => {
   ];
   const date = new Date();
   const day = date.getDay();
+  const hour_and_munites = format(date, "HHMM");
+
   try {
     const restaurants = await restaurantService.getDetails({
       placeId,
       filters,
-      day
+      day,
+      hour_and_munites
     });
     dispatch({ type: RESTAURANT_DETAILS_FULFILLED, payload: restaurants });
   } catch (error) {

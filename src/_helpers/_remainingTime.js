@@ -42,8 +42,6 @@ export const _getTodayHours = ({
       } else {
         // Already closed today
         const nextOpenHours = timeFormatter(nextOpen.time);
-        // const diff = Math.abs(nextOpen.day - close.day);
-        const diff = calcDiff(nextOpen.day, close.day);
         const yearDateHours = addYearDateToHours(nextOpenHours);
         diff
           ? (closeTime = moment(yearDateHours).add(diff, "d"))
@@ -65,4 +63,12 @@ export const _calcRemainingTime = ({ openTime = false, closeTime }) => {
   return openTime
     ? moment(currentYearDateTime()).preciseDiff(openTime)
     : moment(currentYearDateTime()).preciseDiff(closeTime);
+};
+
+export const _calcTest = ({ openTime = false, closeTime }) => {
+  return openTime
+    ? moment(currentYearDateTime()).preciseDiff(openTime)
+    : moment(moment("20180928 19:20:50", "YYYYMMDD HH:mm:ss")).preciseDiff(
+        closeTime
+      );
 };
