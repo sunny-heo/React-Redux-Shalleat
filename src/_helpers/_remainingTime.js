@@ -6,17 +6,6 @@ const addYearDateToHours = hours =>
   moment(moment().format(`YYYY-MM-DD ${hours}:00`));
 const currentYearDateTime = () => moment().format("YYYY-MM-DD HH:mm:ss");
 const calcDiff = (closeDay, openDay) => {
-  console.log("closeDay");
-  console.log(closeDay); // 1
-  console.log("openDay");
-  console.log(openDay); // 5
-  // 5  1 => 2 (0 + 3) % 7 = 3
-  // 5  1 => 2 (1 + 3) % 7 = 4
-  // 5  1 => 2 (2 + 3) % 7 = 5
-  // 5  1 => 2 (3 + 3) % 7 = 6
-  // 5  1 => 2 (4 + 3) % 7 = 0
-  // 5  1 => 2 (5 + 3) % 7 = 1
-  // 5  1 => 2 (6 + 3) % 7 = 2
   if (closeDay === openDay) return 0;
   if (closeDay < openDay) return 1;
   if (closeDay > openDay) return closeDay - openDay;
@@ -53,12 +42,6 @@ export const _getTodayHours = ({
       } else {
         // Already closed today
         const nextOpenHours = timeFormatter(nextOpen.time);
-        console.log("nextOpenHours");
-        console.log(nextOpenHours);
-        // const diff = Math.abs(nextOpen.day - close.day);
-        const diff = calcDiff(nextOpen.day, close.day);
-        console.log("diff");
-        console.log(diff);
         const yearDateHours = addYearDateToHours(nextOpenHours);
         diff
           ? (closeTime = moment(yearDateHours).add(diff, "d"))
