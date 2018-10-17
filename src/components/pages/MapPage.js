@@ -130,18 +130,9 @@ const MapPage = enhance(props => {
   return (
     <div className="map-photos-container d-flex flex-grow-1 p-4">
       <div
-        // className="google-map-container d-flex flex-column w-75 mr-3"
         className="google-map-container d-flex w-75 mr-3"
         style={{ position: "relative" }}
       >
-        {/* <RestaurantDetail detailOpened={detailOpened} />
-        <div className="map-detail-divider" />
-        <Map
-          center={center}
-          setCenter={setCenter}
-          restaurants={_restaurants}
-          handleRestaurantClick={handleRestaurantClick}
-        /> */}
         <Map
           center={center}
           setCenter={setCenter}
