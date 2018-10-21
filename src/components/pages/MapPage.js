@@ -5,11 +5,15 @@ import { compose, withState, lifecycle, withHandlers } from "recompose";
 import { _heightAnimation, _widthAnimation, _array } from "../../_helpers";
 
 import { setItemOpen } from "../../actions/restaurantAction";
-import { getRestaurantDetails } from "../../actions/restaurantAction";
+import {
+  getRestaurantDetails,
+  getRestaurantPhotos
+} from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
 import { RestaurantsList, RestaurantDetail } from "../restaurant";
 
+const MAX_WIDTH = 400;
 const mapStateToProps = (state, nextOwnProps) => state;
 const mapDispatchToProps = dispatch => {
   return {
@@ -24,6 +28,13 @@ const mapDispatchToProps = dispatch => {
     getDetails: async placeId => {
       try {
         await dispatch(getRestaurantDetails(placeId));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getPhotos: async photos => {
+      try {
+        await dispatch(getRestaurantPhotos(photos, MAX_WIDTH));
       } catch (error) {
         console.log(error);
       }
@@ -63,15 +74,18 @@ const enhance = compose(
       }, 200);
       setTimerId(timerId);
     },
-    handleRestaurantClick: ({
-      restaurants,
-      setCenter,
-      openDetail,
-      getDetails,
-      detailOpened,
-      setDetailOpen,
-      setCurrPlaceId
-    }) => (currPlaceId, location) => async evt => {
+    handleRestaurantClick: props => (currPlaceId, location) => async evt => {
+      const {
+        restaurants,
+        setCenter,
+        openDetail,
+        getDetails,
+        getPhotos,
+        detailOpened,
+        setDetailOpen,
+        setCurrPlaceId,
+        _restaurants
+      } = props;
       evt.preventDefault();
       const { openedItem, details } = restaurants;
       const { openedPlaceId, opened } = openedItem;
@@ -83,14 +97,14 @@ const enhance = compose(
       if (!details._contains("placeId", currPlaceId)) {
         console.log("fecthed");
         await getDetails(currPlaceId);
+        // await getPhotos(_restaurants.details.det)
       }
-
+      console.log(props.restaurants.details);
+      console.log(_restaurants);
       // await setCurrPlaceId(currPlaceId);
+
       setDetailOpen(!open);
       if (openedPlaceId === currPlaceId || !opened) {
-        // _heightAnimation(!open, ".detailContainer", "0%", "50%");
-        // _heightAnimation(!open, ".google-map", "100%", "50%");
-        // _heightAnimation(!open, ".map-detail-divider", "0px", "24px");
         _widthAnimation(!open, ".detailContainer", "0%", "50%");
         _widthAnimation(!open, ".google-map", "100%", "50%");
         _widthAnimation(!open, ".map-detail-divider", "0px", "24px");

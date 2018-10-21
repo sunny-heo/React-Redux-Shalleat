@@ -6,9 +6,10 @@ const addYearDateToHours = hours =>
   moment(moment().format(`YYYY-MM-DD ${hours}:00`));
 const currentYearDateTime = () => moment().format("YYYY-MM-DD HH:mm:ss");
 const calcDiff = (closeDay, openDay) => {
-  if (closeDay === openDay) return 0;
-  if (closeDay < openDay) return 1;
-  if (closeDay > openDay) return closeDay - openDay;
+  return 0;
+  // if (closeDay === openDay) return 0;
+  // if (closeDay < openDay) return 1;
+  // if (closeDay > openDay) return closeDay - openDay;
 };
 
 export const _getTodayHours = ({
@@ -16,7 +17,7 @@ export const _getTodayHours = ({
   immortal,
   isOpenToday,
   isOpenNow,
-  todayHours,
+  todayHours = {},
   nextDayHours
 }) => {
   if (notAvailable) return "Not available";
@@ -28,6 +29,7 @@ export const _getTodayHours = ({
 
   if (isOpenToday) {
     if (isOpenNow) {
+      console.log("isOpenNow");
       const closeHours = timeFormatter(close.time);
       const diff = calcDiff(close.day, open.day); //close day >= open.day except close is 0 open is 6
       const yearDateHours = addYearDateToHours(closeHours);
@@ -42,6 +44,7 @@ export const _getTodayHours = ({
       } else {
         // Already closed today
         const nextOpenHours = timeFormatter(nextOpen.time);
+        const diff = calcDiff(nextOpen.day, close.day);
         const yearDateHours = addYearDateToHours(nextOpenHours);
         diff
           ? (closeTime = moment(yearDateHours).add(diff, "d"))
@@ -60,6 +63,16 @@ export const _getTodayHours = ({
 };
 
 export const _calcRemainingTime = ({ openTime = false, closeTime }) => {
+  console.log("closeTime");
+
+  console.log(currentYearDateTime());
+  console.log(closeTime);
+
+  console.log(moment(currentYearDateTime()).preciseDiff(closeTime));
+  console.log("closeTime");
+  // console.log("openTime");
+  // console.log(openTime);
+  // console.log("openTime");
   return openTime
     ? moment(currentYearDateTime()).preciseDiff(openTime)
     : moment(currentYearDateTime()).preciseDiff(closeTime);

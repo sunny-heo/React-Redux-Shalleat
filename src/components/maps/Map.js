@@ -21,6 +21,10 @@ const enhance = compose(
     },
     handleMapOnChange: ({ setCenter }) => ({ center }) => {
       setCenter(center);
+    },
+    handleOnZoomChange: radius => {
+      const scale = radius / 500;
+      return +(16 - Math.log(scale) / Math.log(2));
     }
   })
 );

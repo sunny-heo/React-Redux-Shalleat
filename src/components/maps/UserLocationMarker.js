@@ -29,6 +29,7 @@ const enhance = compose(
 );
 const UserLocationMarker = enhance(props => {
   const { classes, user } = props;
+
   return (
     <IconButton className={classes.userIcon}>
       <Avatar className={classes.avatar}>

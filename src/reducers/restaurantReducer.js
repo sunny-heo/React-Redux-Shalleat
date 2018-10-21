@@ -26,7 +26,7 @@ const initialState = {
   pendingGetDetails: false,
   gotdetails: false,
   getDetailsError: null,
-  photos: {},
+  photos: null,
   pendingGetPhotos: false,
   gotPhotos: false,
   getPhotosError: null,
