@@ -97,11 +97,7 @@ const enhance = compose(
       if (!details._contains("placeId", currPlaceId)) {
         console.log("fecthed");
         await getDetails(currPlaceId);
-        // await getPhotos(_restaurants.details.det)
       }
-      console.log(props.restaurants.details);
-      console.log(_restaurants);
-      // await setCurrPlaceId(currPlaceId);
 
       setDetailOpen(!open);
       if (openedPlaceId === currPlaceId || !opened) {
@@ -109,6 +105,7 @@ const enhance = compose(
         _widthAnimation(!open, ".google-map", "100%", "50%");
         _widthAnimation(!open, ".map-detail-divider", "0px", "24px");
       }
+      debugger;
     }
   }),
   lifecycle({

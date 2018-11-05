@@ -6,10 +6,11 @@ const addYearDateToHours = hours =>
   moment(moment().format(`YYYY-MM-DD ${hours}:00`));
 const currentYearDateTime = () => moment().format("YYYY-MM-DD HH:mm:ss");
 const calcDiff = (closeDay, openDay) => {
-  return 0;
+  // return 0;
   // if (closeDay === openDay) return 0;
   // if (closeDay < openDay) return 1;
-  // if (closeDay > openDay) return closeDay - openDay;
+  if (closeDay > openDay) return closeDay - openDay;
+  else return 0;
 };
 
 export const _getTodayHours = ({

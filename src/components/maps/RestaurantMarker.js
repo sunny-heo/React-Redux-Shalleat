@@ -26,19 +26,15 @@ const enhance = compose(
   withHandlers({})
 );
 const RestaurantMarker = enhance(props => {
+  const { index, classes, restaurant, handleRestaurantClick } = props;
   const {
-    lat,
-    lng,
-    index,
-    handleRestaurantClick,
-    restaurant,
-    classes
-    // openedItem
-  } = props;
-
-  const { _in = true, opening_hours: hours = {}, place_id } = restaurant;
+    _in = true,
+    opening_hours: hours = {},
+    place_id,
+    geometry
+  } = restaurant;
   const { open_now: openNow = false } = hours;
-  const location = { lat, lng };
+  const { location } = geometry;
 
   return (
     <Grow
