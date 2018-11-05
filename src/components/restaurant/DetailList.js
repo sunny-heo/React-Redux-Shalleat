@@ -12,15 +12,15 @@ import {
   HomeRounded as HomeIcon
 } from "@material-ui/icons";
 
-import red from "@material-ui/core/colors/red";
+// import red from "@material-ui/core/colors/red";
 
 import { getRestaurantDetails } from "../../actions/restaurantAction";
 
 import {
-  _array,
+  // _array,
   _getTodayHours,
   _calcRemainingTime,
-  _calcTest,
+  // _calcTest,
   _repeat
 } from "../../_helpers";
 
@@ -45,10 +45,10 @@ const styles = theme => ({
     whiteSpace: "nowrap"
   },
   iconHover: {
-    margin: theme.spacing.unit * 2,
-    "&:hover": {
-      color: red[800]
-    }
+    margin: theme.spacing.unit * 2
+    // "&:hover": {
+    //   color: red[800]
+    // }
   }
 });
 
@@ -122,13 +122,13 @@ const DetailList = enhance(props => {
     address,
     schedule,
     placeId,
-    remainingTime,
-    detailOpened
+    remainingTime
+    // detailOpened
   } = props;
   const {
     formatted_phone_number: phone = DEFAULT_MESSAGE,
     international_phone_number: intPhone = DEFAULT_MESSAGE,
-    price_level: price = DEFAULT_MESSAGE,
+    // price_level: price = DEFAULT_MESSAGE,
     website = DEFAULT_MESSAGE
   } = detail;
 

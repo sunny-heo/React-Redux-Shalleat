@@ -3,14 +3,14 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { compose, withHandlers } from "recompose";
 
-import List from "@material-ui/core/List";
+// import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
+// import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
+// import StarBorder from "@material-ui/icons/StarBorder";
 import Slide from "@material-ui/core/Slide";
 import Divider from "@material-ui/core/Divider";
 import RestaurantRating from "./RestaurantRating";

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
 
-import { _heightAnimation, _widthAnimation, _array } from "../../_helpers";
+import { _widthAnimation } from "../../_helpers";
 
 import { setItemOpen } from "../../actions/restaurantAction";
 import {
@@ -80,11 +80,11 @@ const enhance = compose(
         setCenter,
         openDetail,
         getDetails,
-        getPhotos,
-        detailOpened,
-        setDetailOpen,
-        setCurrPlaceId,
-        _restaurants
+        // getPhotos,
+        // detailOpened,
+        setDetailOpen
+        // setCurrPlaceId,
+        // _restaurants
       } = props;
       evt.preventDefault();
       const { openedItem, details } = restaurants;
@@ -105,7 +105,6 @@ const enhance = compose(
         _widthAnimation(!open, ".google-map", "100%", "50%");
         _widthAnimation(!open, ".map-detail-divider", "0px", "24px");
       }
-      debugger;
     }
   }),
   lifecycle({
@@ -128,16 +127,13 @@ const MapPage = enhance(props => {
     setCenter,
     _restaurants,
     detailOpened,
-    currPlaceId,
+    // currPlaceId,
     handleSearchOnChange,
     handleRestaurantClick
   } = props;
-  const { list: restaurants, openedItem } = props.restaurants;
-  const { openedPlaceId, opened } = openedItem;
-  const open = openedPlaceId === currPlaceId && opened;
-  console.log("openedPlaceId => ", openedPlaceId);
-  console.log("currPlaceId => ", currPlaceId);
-  console.log(openedPlaceId === currPlaceId);
+  const { list: restaurants } = props.restaurants;
+  // const { openedPlaceId, opened } = openedItem;
+  // const open = openedPlaceId === currPlaceId && opened;
   return (
     <div className="map-photos-container d-flex flex-grow-1 p-4">
       <div
