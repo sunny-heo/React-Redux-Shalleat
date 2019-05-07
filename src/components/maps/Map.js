@@ -5,7 +5,7 @@ import GoogleMapReact from "google-map-react";
 import { GOOGLE_MAP_API, CUSTOM_MAP_OPTIONS } from "../../_config/myMapConfig";
 
 import IconButton from "@material-ui/core/IconButton";
-import MyLocationIcon from "@material-ui/icons/MyLocation";
+import NearMe from "@material-ui/icons/NearMe";
 
 import UserLocationMarker from "./UserLocationMarker";
 import RestaurantMarker from "./RestaurantMarker";
@@ -52,7 +52,7 @@ const Map = enhance(
             }}
             onClick={centeredMyLocation}
           >
-            <MyLocationIcon style={{ color: "#424242" }} />
+            <NearMe style={{ color: "#424242" }} />
           </IconButton>
 
           <GoogleMapReact

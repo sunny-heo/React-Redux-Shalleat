@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "rmwc/TextField";
+import { TextField } from "@rmwc/textfield";
 
 const SignUpForm = ({ onSignUpClick }) => (
   <div

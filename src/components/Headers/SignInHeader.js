@@ -62,7 +62,7 @@ const SignInHeader = enhance(props => {
           onChange={handleChange}
           indicatorColor="secondary"
           textColor="secondary"
-          fullWidth
+          variant="fullWidth"
         >
           <Tab label="Social" />
           <Tab label="ShallEat" />

@@ -101,8 +101,8 @@ const enhance = compose(
 
       setDetailOpen(!open);
       if (openedPlaceId === currPlaceId || !opened) {
-        _widthAnimation(!open, ".detailContainer", "0%", "50%");
-        _widthAnimation(!open, ".google-map", "100%", "50%");
+        _widthAnimation(!open, ".detailContainer", "0%", "35%");
+        _widthAnimation(!open, ".google-map", "100%", "65%");
         _widthAnimation(!open, ".map-detail-divider", "0px", "24px");
       }
     }
@@ -135,9 +135,9 @@ const MapPage = enhance(props => {
   // const { openedPlaceId, opened } = openedItem;
   // const open = openedPlaceId === currPlaceId && opened;
   return (
-    <div className="map-photos-container d-flex flex-grow-1 p-4">
+    <div className="map-and-list-container d-flex flex-grow-1 p-4">
       <div
-        className="google-map-container d-flex w-75 mr-3"
+        className="google-map-container d-flex w-80 mr-3"
         style={{ position: "relative" }}
       >
         <Map
@@ -149,7 +149,7 @@ const MapPage = enhance(props => {
         <div className="map-detail-divider" />
         <RestaurantDetail detailOpened={detailOpened} />
       </div>
-      <div className="RestList-container w-25 ml-2 rounded">
+      <div className="RestList-container w-20 ml-2 rounded">
         <RestaurantsList
           restaurants={restaurants}
           _restaurants={_restaurants}

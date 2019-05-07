@@ -13,7 +13,9 @@ import registerServiceWorker from "./registerServiceWorker";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
-  // overrides: {
+  typography: {
+    useNextVariants: true
+  },
   palette: {
     // type: "dark",
     primary: {
@@ -35,7 +37,7 @@ const theme = createMuiTheme({
       root: {
         color: "rgba(200, 200, 200, 0.54) !important"
       },
-      selected: {
+      "&$selected": {
         color: "white !important"
       }
     }
