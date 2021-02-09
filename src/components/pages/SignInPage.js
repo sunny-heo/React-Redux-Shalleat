@@ -21,12 +21,14 @@ const mapStateToProps = (state, nextOwnProps) => state.user;
 
 const enhance = compose(
   connect(mapStateToProps),
-  withStyles(styles),
+  withStyles(styles)
 );
 
 const SignInPage = enhance(props => {
-  const { classes, signedIn, ...restProps,  } = props;
-  return signedIn ? <Redirect exact to="/" /> : (
+  const { classes, signedIn, ...restProps } = props;
+  return signedIn ? (
+    <Redirect exact to="/" />
+  ) : (
     <div className={classes.SignInPage}>
       <SignInHeader {...restProps} />
     </div>

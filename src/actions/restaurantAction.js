@@ -52,13 +52,22 @@ export const getRestaurantDetails = placeId => async dispatch => {
       day,
       hour_and_munites
     });
+
     dispatch({ type: RESTAURANT_DETAILS_FULFILLED, payload: restaurants });
+
+    const photosData = restaurants.detail.photos;
+    const width = 400;
+    const photos = await restaurantService.getPhotos(photosData, width);
+
+    console.log("<<<<<<<<<<<<<<<   photos  >>>>>>>>>>>>>>>>");
+    console.log(photos);
+    console.log("<<<<<<<<<<<<<<<   photos  >>>>>>>>>>>>>>>>");
   } catch (error) {
     dispatch({ type: RESTAURANT_DETAILS_REJECTED, payload: error });
   }
 };
 
-export const getPhotos = (photos, width) => async dispatch => {
+export const getRestaurantPhotos = (photos, width) => async dispatch => {
   dispatch({ type: RESTAURANT_PHOTOS_PENDING });
 
   try {

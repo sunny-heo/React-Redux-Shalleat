@@ -2,14 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose, withState, lifecycle, withHandlers } from "recompose";
 
-import { _heightAnimation, _widthAnimation, _array } from "../../_helpers";
+import { _widthAnimation } from "../../_helpers";
 
 import { setItemOpen } from "../../actions/restaurantAction";
-import { getRestaurantDetails } from "../../actions/restaurantAction";
+import {
+  getRestaurantDetails,
+  getRestaurantPhotos
+} from "../../actions/restaurantAction";
 
 import Map from "../maps/Map";
 import { RestaurantsList, RestaurantDetail } from "../restaurant";
 
+const MAX_WIDTH = 400;
 const mapStateToProps = (state, nextOwnProps) => state;
 const mapDispatchToProps = dispatch => {
   return {
@@ -24,6 +28,13 @@ const mapDispatchToProps = dispatch => {
     getDetails: async placeId => {
       try {
         await dispatch(getRestaurantDetails(placeId));
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    getPhotos: async photos => {
+      try {
+        await dispatch(getRestaurantPhotos(photos, MAX_WIDTH));
       } catch (error) {
         console.log(error);
       }
@@ -63,15 +74,18 @@ const enhance = compose(
       }, 200);
       setTimerId(timerId);
     },
-    handleRestaurantClick: ({
-      restaurants,
-      setCenter,
-      openDetail,
-      getDetails,
-      detailOpened,
-      setDetailOpen,
-      setCurrPlaceId
-    }) => (currPlaceId, location) => async evt => {
+    handleRestaurantClick: props => (currPlaceId, location) => async evt => {
+      const {
+        restaurants,
+        setCenter,
+        openDetail,
+        getDetails,
+        // getPhotos,
+        // detailOpened,
+        setDetailOpen
+        // setCurrPlaceId,
+        // _restaurants
+      } = props;
       evt.preventDefault();
       const { openedItem, details } = restaurants;
       const { openedPlaceId, opened } = openedItem;
@@ -85,14 +99,10 @@ const enhance = compose(
         await getDetails(currPlaceId);
       }
 
-      // await setCurrPlaceId(currPlaceId);
       setDetailOpen(!open);
       if (openedPlaceId === currPlaceId || !opened) {
-        // _heightAnimation(!open, ".detailContainer", "0%", "50%");
-        // _heightAnimation(!open, ".google-map", "100%", "50%");
-        // _heightAnimation(!open, ".map-detail-divider", "0px", "24px");
-        _widthAnimation(!open, ".detailContainer", "0%", "50%");
-        _widthAnimation(!open, ".google-map", "100%", "50%");
+        _widthAnimation(!open, ".detailContainer", "0%", "35%");
+        _widthAnimation(!open, ".google-map", "100%", "65%");
         _widthAnimation(!open, ".map-detail-divider", "0px", "24px");
       }
     }
@@ -117,20 +127,17 @@ const MapPage = enhance(props => {
     setCenter,
     _restaurants,
     detailOpened,
-    currPlaceId,
+    // currPlaceId,
     handleSearchOnChange,
     handleRestaurantClick
   } = props;
-  const { list: restaurants, openedItem } = props.restaurants;
-  const { openedPlaceId, opened } = openedItem;
-  const open = openedPlaceId === currPlaceId && opened;
-  console.log("openedPlaceId => ", openedPlaceId);
-  console.log("currPlaceId => ", currPlaceId);
-  console.log(openedPlaceId === currPlaceId);
+  const { list: restaurants } = props.restaurants;
+  // const { openedPlaceId, opened } = openedItem;
+  // const open = openedPlaceId === currPlaceId && opened;
   return (
-    <div className="map-photos-container d-flex flex-grow-1 p-4">
+    <div className="map-and-list-container d-flex flex-grow-1 p-4">
       <div
-        className="google-map-container d-flex w-75 mr-3"
+        className="google-map-container d-flex w-80 mr-3"
         style={{ position: "relative" }}
       >
         <Map
@@ -142,7 +149,7 @@ const MapPage = enhance(props => {
         <div className="map-detail-divider" />
         <RestaurantDetail detailOpened={detailOpened} />
       </div>
-      <div className="RestList-container w-25 ml-2 rounded">
+      <div className="RestList-container w-20 ml-2 rounded">
         <RestaurantsList
           restaurants={restaurants}
           _restaurants={_restaurants}

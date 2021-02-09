@@ -1,19 +1,19 @@
 import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { compose, withState, withHandlers, lifecycle } from "recompose";
+import { compose } from "recompose";
 
 import Fade from "@material-ui/core/Fade";
 import DetailList from "./DetailList";
 
-import { getRestaurantDetails } from "../../actions/restaurantAction";
+// import { getRestaurantDetails } from "../../actions/restaurantAction";
 
-import {
-  _array,
-  _getTodayHours,
-  _calcRemainingTime,
-  _repeat
-} from "../../_helpers";
+// import {
+//   // _array,
+//   // _getTodayHours,
+//   // _calcRemainingTime,
+//   // _repeat
+// } from "../../_helpers";
 
 const styles = theme => ({
   detailContainer: {
@@ -25,8 +25,8 @@ const styles = theme => ({
   }
 });
 
-const placeSearchURL = placeId =>
-  `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`;
+// const placeSearchURL = placeId =>
+//   `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${placeId}`;
 
 const mapStateToProps = (state, nextOwnProps) => state.restaurants;
 const mapDispatchToProps = dispatch => {

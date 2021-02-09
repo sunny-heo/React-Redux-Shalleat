@@ -18,10 +18,13 @@ export default {
       console.log("Error in getRestaurntDetails request => ", error);
     }
   },
-  async getPhotos(photosData) {
+  async getPhotos(photos, width) {
     try {
-      const photos = await service.post("/restaurants/photos", photosData);
-      return photos;
+      const photoUrls = await service.post("/restaurants/photos", {
+        photos,
+        width
+      });
+      return photoUrls;
     } catch (error) {
       console.log("Error in getRestaurantPhotos request => ", error);
     }

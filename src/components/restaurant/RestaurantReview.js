@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { compose, withState, withHandlers, lifecycle } from "recompose";
+import { compose, lifecycle } from "recompose";
 
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -31,9 +31,8 @@ const enhance = compose(
   ),
   lifecycle({
     async componentDidMount() {
-      const { getDetails, restaurant, openDetail } = this.props;
-
-      // await getDetails(restaurant.place_id);
+      // const { getDetails, restaurant, openDetail } = this.props;
+      // // await getDetails(restaurant.place_id);
     }
   })
 );
